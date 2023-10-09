@@ -12,6 +12,15 @@
 /.next/
 /out/
 
+# .env
+.env
+
+#.idea
+/.idea/
+
+#.yarn
+/.yarn/
+
 # production
 /build
 
