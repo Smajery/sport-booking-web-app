@@ -2,26 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --background-100: 240, 5%, 96%;
+    --foreground: 210 13% 11%;
+    --divider: 210 17% 7%;
+    --focus: 208 100% 47%;
+
+    --content1: 0 0% 100%;
+    --content2: 240 8% 96%;
+    --content3: 240 8% 90%;
+    --content4: 240 8% 84%;
+
+    --default: 240 8% 84%;
+    --primary: 208 100% 47%;
+    --secondary: 270 60% 53%;
+    --secondary-600: 277, 100%, 31%;
+    --success: 141 82% 38%;
+    --warning: 39 89% 52%;
+    --danger: 336 91% 44%;
+
+    --box-shadow-sm: '0px 0px 1px 0px hsl(0, 0%, 5%), 0px 2px 30px 0px hsl(0, 0%, 6%), 0px 0px 15px 0px hsl(0, 0%, 30%)';
+    --box-shadow-md: '0px 0px 15px 0px hsl(0, 0%, 3%), 0px 2px 30px 0px hsl(0, 0%, 8%), 0px 0px 1px 0px hsl(0, 0%, 30%)';
+    --box-shadow-lg: '0px 0px 30px 0px hsl(0, 0%, 4%), 0px 30px 60px 0px hsl(0, 0%, 12%), 0px 0px 1px 0px hsl(0, 0%, 30%)';
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --background-100: 240, 4%, 16%;
+    --foreground: 210 1% 93%;
+    --divider: 0 0% 96%;
+    --focus: 208 100% 47%;
+
+    --content1: 240 7% 10%;
+    --content2: 240 5% 16%;
+    --content3: 240 12% 30%;
+    --content4: 240 13% 35%;
+
+    --default: 240 12% 30%;
+    --primary: 208 100% 47%;
+    --secondary: 262 53% 53%;
+    --secondary-600: 270, 59%, 68%;
+    --success: 141 81% 40%;
+    --warning: 39 90% 53%;
+    --danger: 334 94% 45%;
+
+    --box-shadow-sm: '0px 0px 1px 0px hsl(0, 0%, 5%), 0px 2px 30px 0px hsl(0, 0%, 20%), inset 0px 0px 15px 0px hsl(0, 0%, 85%)';
+    --box-shadow-md: '0px 0px 15px 0px hsl(0, 0%, 6%), 0px 2px 30px 0px hsl(0, 0%, 22%), inset 0px 0px 1px 0px hsl(0, 0%, 85%)';
+    --box-shadow-lg: '0px 0px 30px 0px hsl(0, 0%, 7%), 0px 30px 60px 0px hsl(0, 0%, 26%), inset 0px 0px 1px 0px hsl(0, 0%, 85%)';
+  }
+
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  body {
+    @apply bg-no-repeat bg-cover bg-center
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer utilities {
+  .facebook-gradient {
+    background: linear-gradient(to right, #3b5998, #1877f2);
+  }
+  .facebook-gradient:hover {
+    background: linear-gradient(to right, #3b5998, #145b9d);
+  }
+  .google-gradient {
+    background: linear-gradient(to right, #b94032, #dc4136);
+  }
+  .google-gradient:hover {
+    background: linear-gradient(to right, #b94032, #b02e26);
+  }
 }
