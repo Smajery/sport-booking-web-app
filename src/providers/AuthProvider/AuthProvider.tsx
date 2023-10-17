@@ -30,6 +30,7 @@ type AuthActions = {
   setIsLogoutLoading: (value: boolean) => void;
   setIsAuthLoading: (value: boolean) => void;
   setIsAuth: (value: boolean) => void;
+  handleLogin: () => void;
   handleLogout: () => void;
 };
 
@@ -64,6 +65,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
   };
 
+  const handleLogin = () => {
+    setIsAuth(true);
+    setCookie("isAuth", JSON.stringify(true));
+  };
+
   const authContextData: AuthContextData = {
     isAuthLoading,
     isLogoutLoading,
@@ -75,12 +81,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLogoutLoading,
     setIsAuthLoading,
     setIsAuth,
+    handleLogin,
     handleLogout,
   };
 
   React.useEffect(() => {
-    const token = getCookie("accessToken");
-    if (token) {
+    const isAuthUser = getCookie("isAuth");
+    if (isAuthUser) {
       setIsAuth(true);
     } else {
       setIsAuth(false);
@@ -89,8 +96,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   React.useEffect(() => {
-    const token = getCookie("accessToken");
-    if (token) {
+    const isAuthUser = getCookie("isAuth");
+    if (isAuthUser) {
       const cachedUserData = getCookie("cachedUserData");
       if (cachedUserData) {
         setUser(JSON.parse(cachedUserData));
@@ -99,11 +106,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           .then((response) => {
             const userData = response.data;
             setUser(userData);
-            setCookie(
-              "cachedUserData",
-              JSON.stringify(userData),
-              token.expires_in,
-            );
+            setCookie("cachedUserData", JSON.stringify(userData));
           })
           .catch((error) =>
             ErrorHandler.handle(error, { componentName: "AuthProvider" }),

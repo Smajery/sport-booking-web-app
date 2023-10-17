@@ -1,8 +1,5 @@
-export const setCookie = (name: string, value: string, lifetime: number) => {
-  const date = new Date();
-  date.setTime(date.getTime() + lifetime * 1000);
-  const expires = "expires=" + date.toUTCString();
-  document.cookie = name + "=" + value + "; " + expires + "; path=/";
+export const setCookie = (name: string, value: string) => {
+  document.cookie = name + "=" + value + "; " + "; path=/";
 };
 
 export const getCookie = (name: string) => {

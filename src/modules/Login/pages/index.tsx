@@ -1,6 +1,10 @@
+import LoginSection from "@/modules/Login/organisms/LoginSection/LoginSection";
+
 const Login = () => {
   return (
-    <div className="container mx-auto flex justify-center">Login page</div>
+    <div className="container mx-auto flex justify-center">
+      <LoginSection />
+    </div>
   );
 };
 

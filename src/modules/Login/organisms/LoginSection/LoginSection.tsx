@@ -1,77 +1,71 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import FacebookAuthButton from "@/components/atoms/Buttons/FacebookAuthButton/FacebookAuthButton";
+import GoogleAuthButton from "@/components/atoms/Buttons/GoogleAuthButton/GoogleAuthButton";
 import DefaultField from "@/components/molecules/Fields/DefaultField/DefaultField";
 import { Button } from "@/components/ui/button";
 import { Form as FormProvider } from "@/components/ui/form";
 
+import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
+
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
-
-import { REGISTER_USER_MUTATION } from "@/apollo/mutations/auth";
 import apolloClient from "@/apollo-client";
-import GoogleAuthButton from "@/components/atoms/Buttons/GoogleAuthButton/GoogleAuthButton";
-import FacebookAuthButton from "@/components/atoms/Buttons/FacebookAuthButton/FacebookAuthButton";
-import { useRouter } from "next/navigation";
+import { LOGIN_USER_MUTATION } from "@/apollo/mutations/auth";
 
-const signUpFormSchema = z
-  .object({
-    email: z.string().min(1).email().max(320),
-    password: z.string().min(6).max(16),
-    confirmPassword: z.string().min(6).max(16),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+const signInFormSchema = z.object({
+  email: z.string().min(1).email().max(320),
+  password: z.string().min(6).max(16),
+});
 
-const SignupSection = () => {
-  const { push } = useRouter();
+const LoginSection = () => {
+  const { handleLogin } = useAuthContext();
   const [requestErrorMessage, setRequestErrorMessage] = React.useState<
     string | null
   >(null);
   const [requestErrors, setRequestErrors] = React.useState<{}>({});
-  const [isRequestLoading, setIsRequestLoading] =
-    React.useState<boolean>(false);
+  const [isRequestLoading, setIsRequestLoading] = useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof signUpFormSchema>>({
-    resolver: zodResolver(signUpFormSchema),
+  const form = useForm<z.infer<typeof signInFormSchema>>({
+    resolver: zodResolver(signInFormSchema),
     defaultValues: {
       email: "",
       password: "",
-      confirmPassword: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof signUpFormSchema>) => {
+  const onSubmit = (values: z.infer<typeof signInFormSchema>) => {
     setIsRequestLoading(true);
 
     const variables = {
-      registerInput: {
+      loginInput: {
         email: values.email,
         password: values.password,
-        confirmPassword: values.confirmPassword,
       },
     };
 
     apolloClient
       .mutate({
-        mutation: REGISTER_USER_MUTATION,
+        mutation: LOGIN_USER_MUTATION,
         variables,
       })
       .then(() => {
         setRequestErrorMessage(null);
         setRequestErrors([]);
-
+        handleLogin();
         form.reset();
       })
       .catch((error) => {
-        ErrorHandler.handle(error, {
-          componentName: "SignupSection__onSubmit",
-        });
+        ErrorHandler.handle(error, { componentName: "SignInModal__onSubmit" });
+        setRequestErrorMessage(
+          error.response?.data?.message ||
+            "Something went wrong. Please check your email or password.",
+        );
+        setRequestErrors(error.response?.data?.errors || []);
       })
       .finally(() => setIsRequestLoading(false));
   };
@@ -92,7 +86,7 @@ const SignupSection = () => {
                 form={form}
                 type="email"
                 name="email"
-                labelText="Е-пошта"
+                labelText="Email"
                 placeholder="Приклад: example@gmail.com"
                 requestError={requestErrors?.email}
                 iconName="mail"
@@ -105,41 +99,33 @@ const SignupSection = () => {
                 labelText="Пароль"
                 iconName="lock"
               />
-              <DefaultField
-                form={form}
-                type="password"
-                name="confirmPassword"
-                placeholder="Мінімум 6 символів"
-                labelText="Підтвердження пароля"
-                iconName="lock"
-              />
             </div>
             <Button
               type="submit"
               disabled={isSubmitting || (isSubmitted && !isValid)}
               className="mx-auto"
             >
-              {!isRequestLoading ? "Зареєструватись" : "Завантаження..."}
+              {!isRequestLoading ? "Вхід" : "Завантаження..."}
             </Button>
             {Object.keys(requestErrors).length > 0
               ? Object.keys(requestErrors).map((requestError) => (
-                  <p key={requestError} className="ml-unit-8 text-danger">
+                  <p key={requestError} className="text-danger">
                     {requestErrors[requestError]}
                   </p>
                 ))
               : requestErrorMessage && (
-                  <p className="ml-unit-8 text-danger">{requestErrorMessage}</p>
+                  <p className="text-danger">{requestErrorMessage}</p>
                 )}
           </form>
         </FormProvider>
-        <p className="text-center p4 uppercase">Або</p>
+        <p className="text-center p4 uppercase">Or</p>
         <div className="flex flex-col gap-y-[12px] mx-auto">
-          <GoogleAuthButton>Зареєструватись з Google</GoogleAuthButton>
-          <FacebookAuthButton>Зареєструватись з Facebook</FacebookAuthButton>
+          <GoogleAuthButton>Вхід з Google</GoogleAuthButton>
+          <FacebookAuthButton>Вхід з Facebook</FacebookAuthButton>
         </div>
       </div>
     </section>
   );
 };
 
-export default SignupSection;
+export default LoginSection;
