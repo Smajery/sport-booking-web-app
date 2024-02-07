@@ -44,26 +44,44 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
   const [user, setUser] = React.useState<AuthUser | null>(null);
 
-  const handleLogout = () => {
-    setIsLogoutLoading(true);
-    logout()
-      .then((data) => {
-        console.log(data.message);
-      })
-      .catch((error) => {
-        ErrorHandler.handle(error, {
-          componentName: "AuthProvider__handleLogout",
-        });
-      })
-      .finally(() => {
-        setUser(null);
-        setIsAuth(false);
-        deleteCookie("accessToken");
-        deleteCookie("cachedUserData");
+  // const handleLogout = () => {
+  //   setIsLogoutLoading(true);
+  //   logout()
+  //     .then((data) => {
+  //       console.log(data.message);
+  //     })
+  //     .catch((error) => {
+  //       ErrorHandler.handle(error, {
+  //         componentName: "AuthProvider__handleLogout",
+  //       });
+  //     })
+  //     .finally(() => {
+  //       setUser(null);
+  //       setIsAuth(false);
+  //       deleteCookie("accessToken");
+  //       deleteCookie("cachedUserData");
+  //
+  //       setIsLogoutLoading(false);
+  //     });
+  // };
 
-        setIsLogoutLoading(false);
+  const handleLogout = React.useCallback(async () => {
+    setIsLogoutLoading(true);
+    try {
+      const data = await logout();
+      console.log(data.message);
+      setUser(null);
+      setIsAuth(false);
+      deleteCookie("accessToken");
+      deleteCookie("cachedUserData");
+    } catch (error) {
+      ErrorHandler.handle(error, {
+        componentName: "AuthProvider__handleLogout",
       });
-  };
+    } finally {
+      setIsLogoutLoading(false);
+    }
+  }, []);
 
   const handleLogin = () => {
     setIsAuth(true);
@@ -96,25 +114,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   React.useEffect(() => {
-    const isAuthUser = getCookie("isAuth");
-    if (isAuthUser) {
-      const cachedUserData = getCookie("cachedUserData");
-      if (cachedUserData) {
-        setUser(JSON.parse(cachedUserData));
-      } else {
-        getUser()
-          .then((response) => {
+    const fetchData = async () => {
+      const isAuthUser = getCookie("isAuth");
+      if (isAuthUser) {
+        try {
+          const cachedUserData = getCookie("cachedUserData");
+          if (cachedUserData) {
+            setUser(JSON.parse(cachedUserData));
+          } else {
+            const response = await getUser();
             const userData = response.data;
             setUser(userData);
             setCookie("cachedUserData", JSON.stringify(userData));
-          })
-          .catch((error) =>
-            ErrorHandler.handle(error, { componentName: "AuthProvider" }),
-          );
+          }
+        } catch (error) {
+          ErrorHandler.handle(error, { componentName: "AuthProvider" });
+        }
+      } else {
+        // handleLogout();
       }
-    } else {
-      // handleLogout();
-    }
+    };
+
+    fetchData();
   }, [isAuth]);
 
   return (

@@ -1,7 +1,7 @@
 "use client";
 
-import PrivateHeader from "@/layouts/Private/Header";
-import PublicHeader from "@/layouts/Public/Header";
+import PrivateHeader from "@/layouts/private/Header";
+import PublicHeader from "@/layouts/public/Header";
 import RootLayoutTemplate from "@/layouts/RootLayout/templates/RootLayoutTemplate/RootLayoutTemplate";
 import React from "react";
 

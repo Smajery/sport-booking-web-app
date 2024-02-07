@@ -1,7 +1,7 @@
 export const siteConfig = {
-  publicNavItems: [{ href: "/", key: "Home", text: "Головна" }],
+  publicNavItems: [{ href: "/", key: "Home", text: "Home" }],
   privateNavItems: [
-    { href: "/", key: "Home", text: "Головна" },
-    { href: "/profile", key: "Profile", text: "Профіль" },
+    { href: "/", key: "Home", text: "Home" },
+    { href: "/profile", key: "Profile", text: "Profile" },
   ],
 };

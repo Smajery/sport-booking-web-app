@@ -1,6 +1,6 @@
-import "@/app/globals.css";
+import "@/app/[locale]/globals.css";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Roboto } from "next/font/google";
 import React from "react";
 
 import { AuthProvider } from "@/providers/AuthProvider/AuthProvider";
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   description: "SportBooking App",
 };
 
-const poppins = Poppins({
-  weight: ["300", "400", "500", "600", "700", "800"],
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
   subsets: ["latin"],
 });
 
@@ -26,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${poppins.className}`}>
+      <body className={`${roboto.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>

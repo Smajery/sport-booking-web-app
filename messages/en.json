@@ -1,0 +1,75 @@
+{
+  "Common": {
+    "titles": {
+    },
+
+    "words": {
+    },
+
+    "placeholders": {
+    },
+
+    "buttons": {
+    },
+
+    "filters": {
+    },
+
+    "badges": {
+    },
+
+    "statuses": {
+    },
+
+    "time": {
+      "periods": {
+        "am": "AM",
+        "pm": "PM"
+      },
+
+      "months": {
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+      },
+
+      "daysOfWeek": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      },
+
+      "shortenedDaysOfWeek": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      }
+    }
+  },
+
+  "Sections": {
+    "header": {
+    }
+  },
+
+  "Admin": {
+
+  }
+}

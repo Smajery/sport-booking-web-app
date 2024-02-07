@@ -7,12 +7,12 @@ interface IconProps extends LucideProps {
   name: keyof typeof dynamicIconImports;
 }
 
-const DynamicIcon = memo(({ name, ...props }: IconProps) => {
+const DynamicIcon = memo<IconProps>(({ name, ...props }) => {
   const LucideIcon = dynamic(dynamicIconImports[name]);
 
   return <LucideIcon {...props} />;
 });
 
-DynamicIcon.displayName = "Icon";
+DynamicIcon.displayName = "DynamicIcon";
 
 export default DynamicIcon;
