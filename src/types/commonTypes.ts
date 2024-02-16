@@ -1,1 +1,3 @@
-export type TImage = {};
+export type TImage = {
+  image: string;
+};

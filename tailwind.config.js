@@ -13,15 +13,23 @@ module.exports = {
         background: {
           DEFAULT: "hsl(var(--background))",
         },
+
         foreground: "hsl(var( --foreground))",
         "muted-foreground": "hsl(var( --muted-foreground))",
 
-        primary: "hsl(var(--primary))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
+
         accent: {
           DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
 
         border: "hsl(var(--border))",
@@ -38,7 +46,7 @@ module.exports = {
         md: "768px",
         lg: "1024px",
         xl: "1280px",
-        "2xl": "1920px",
+        "2xl": "1440px",
       },
       spacing: {
         "unit-1": "4px",
@@ -51,18 +59,6 @@ module.exports = {
         "unit-8": "32px",
         "unit-9": "36px",
         "unit-10": "40px",
-      },
-      fontSize: {
-        "10xl": "10rem",
-        "11xl": "12.5rem",
-      },
-      borderRadius: {
-        xs: "6px",
-        sm: "8px",
-        md: "12px",
-        lg: "14px",
-        xl: "16px",
-        full: "50%",
       },
       animation: {
         opacity: "animationOpacity .5s ease-in-out",
@@ -87,12 +83,16 @@ module.exports = {
           },
         },
       },
+      textOverflow: {
+        ellipsis: "ellipsis",
+      },
+      borderWidth: {
+        1: "1px",
+      },
       boxShadow: {
-        sm: "var(--box-shadow-sm)",
-        md: "var(--box-shadow-md)",
-        lg: "var(--box-shadow-lg)",
+        "bottom-sm": "0px 4px 4px rgba(0, 0, 0, 0.1)",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };

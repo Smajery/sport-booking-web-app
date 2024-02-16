@@ -1,5 +1,5 @@
 export const siteConfig = {
-  publicNavItems: [{ href: "/", key: "Home", text: "Home" }],
+  publicNavItems: [],
   privateNavItems: [
     { href: "/", key: "Home", text: "Home" },
     { href: "/profile", key: "Profile", text: "Profile" },

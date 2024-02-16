@@ -1,7 +1,9 @@
 import Home from "@/modules/public/Home/pages";
 
 export const metadata = {
-  title: "Home",
+  title: {
+    absolute: "SportBooking",
+  },
   description: "Home page",
 };
 

@@ -12,7 +12,7 @@ export const facebookAuth = async () => {
   return data;
 };
 
-export const logout = async () => {
-  const { data } = await $authHost.post("auth/logout");
-  return data;
-};
+// export const logout = async () => {
+//   const { data } = await $authHost.post("auth/logout");
+//   return data;
+// };

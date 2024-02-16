@@ -1,6 +1,6 @@
 "use client";
 
-import NavLinksList from "@/components/molecules/Lists/NavLinksList/NavLinksList";
+import NavLinksList from "@/components/molecules/common/Lists/NavLinksList/NavLinksList";
 import { siteConfig } from "@/config/site";
 import { NavigationMenu } from "@/components/ui/navigation-menu";
 

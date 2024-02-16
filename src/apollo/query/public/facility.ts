@@ -17,6 +17,7 @@ export const GET_ALL_FACILITIES_QUERY = gql`
         sportType
         coveringType
         facilityType
+        location
         description
         minBookingTime
         images {
@@ -28,6 +29,7 @@ export const GET_ALL_FACILITIES_QUERY = gql`
           ratings
         }
       }
+      totalCount
     }
   }
 `;

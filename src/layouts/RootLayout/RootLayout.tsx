@@ -2,7 +2,6 @@
 
 import PrivateHeader from "@/layouts/private/Header";
 import PublicHeader from "@/layouts/public/Header";
-import RootLayoutTemplate from "@/layouts/RootLayout/templates/RootLayoutTemplate/RootLayoutTemplate";
 import React from "react";
 
 import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
@@ -12,15 +11,15 @@ interface IRootLayout {
 }
 
 const RootLayout: React.FC<IRootLayout> = ({ children }) => {
-  const { isAuthLoading, isAuth } = useAuthContext();
+  const { user } = useAuthContext();
 
-  if (isAuthLoading) {
-    return <RootLayoutTemplate>{children}</RootLayoutTemplate>;
-  }
+  // if (isAuthLoading) {
+  //   return <RootLayoutTemplate>{children}</RootLayoutTemplate>;
+  // }
 
   return (
     <div className="flex flex-col min-h-screen">
-      {isAuth ? <PrivateHeader /> : <PublicHeader />}
+      {user ? <PrivateHeader /> : <PublicHeader />}
       {children}
     </div>
   );
