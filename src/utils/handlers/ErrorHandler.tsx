@@ -5,7 +5,7 @@ interface ErrorParams {
 }
 
 class ErrorHandler {
-  static handle(error: Error, params: ErrorParams) {
+  static handle(error: any, params: ErrorParams) {
     this.log(error, params);
     this.notify(error, params);
   }
@@ -13,9 +13,9 @@ class ErrorHandler {
   static log(error: Error, params: ErrorParams) {
     const { statusCode, errorType, componentName } = params;
 
-    console.error(`Error occurred in ${componentName}`);
-    console.error(`Status Code: ${statusCode}`);
-    console.error(`Error Type: ${errorType}`);
+    componentName && console.error(`Error occurred in ${componentName}`);
+    statusCode && console.error(`Status Code: ${statusCode}`);
+    errorType && console.error(`Error Type: ${errorType}`);
     console.error("Error Details:", error);
   }
 

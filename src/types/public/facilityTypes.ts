@@ -20,7 +20,7 @@ export enum EFacilityType {
   outdoor = "outdoor",
 }
 
-export type TFilterFacility = {
+export type TFacilityFilter = {
   sortBy: string;
   search: string;
   coveringType: string;

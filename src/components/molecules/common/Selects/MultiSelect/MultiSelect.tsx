@@ -8,7 +8,7 @@ type TSelectedItem = {
   name: string;
 };
 
-const SelectField = () => {
+const MultiSelect = () => {
   const selectableItems = [
     { key: "artificial_lawn", name: "Artificial lawn" },
     { key: "parquet", name: "Parquet" },
@@ -55,4 +55,4 @@ const SelectField = () => {
   );
 };
 
-export default SelectField;
+export default MultiSelect;

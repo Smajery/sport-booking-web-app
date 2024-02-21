@@ -104,7 +104,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({
               name="email"
               labelText="Email"
               placeholder="Ex: example@gmail.com"
-              iconName="mail"
+              iconName="Mail"
             />
             <FloatingField
               form={form}
@@ -112,7 +112,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({
               name="password"
               placeholder="Minimum 6 characters"
               labelText="Password"
-              iconName="lock"
+              iconName="Lock"
             />
             <FloatingField
               form={form}
@@ -120,7 +120,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({
               name="confirmPassword"
               placeholder="Minimum 6 characters"
               labelText="Confirm password"
-              iconName="lock"
+              iconName="Lock"
             />
           </div>
           {Object.keys(requestErrors).length > 0

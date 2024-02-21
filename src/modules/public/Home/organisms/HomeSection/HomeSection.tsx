@@ -9,7 +9,7 @@ import ClustererMap from "@/components/atoms/common/Maps/ClustererMap/ClustererM
 import { useQuery } from "@apollo/client";
 import { GET_ALL_FACILITIES_QUERY } from "@/apollo/query/public/facility";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
-import { TFilterFacility } from "@/types/public/facilityTypes";
+import { TFacilityFilter } from "@/types/public/facilityTypes";
 
 const limit = 10;
 
@@ -19,11 +19,12 @@ const HomeSection = () => {
     string | null
   >(null);
 
-  const [filter, setFilter] = React.useState<{} | null>(null);
+  const [filterValues, setFilterValues] =
+    React.useState<TFacilityFilter | null>(null);
   const [currentPage, setCurrentPage] = React.useState(1);
 
-  const handleFilterChange = (newFilter: TFilterFacility) => {
-    setFilter(newFilter);
+  const handleSetFilterValues = (newFilterValues: TFacilityFilter | null) => {
+    setFilterValues(newFilterValues);
   };
 
   const { data, loading, error, fetchMore } = useQuery(
@@ -34,7 +35,7 @@ const HomeSection = () => {
           limit: limit,
           page: 1,
         },
-        facilitiesFilterInput: filter,
+        facilitiesFilterInput: filterValues,
       },
     },
   );
@@ -76,7 +77,7 @@ const HomeSection = () => {
     <section className="relative w-full flex gap-x-unit-10 justify-between">
       <div className="w-[400px]">
         <FacilityFilter
-          setFilter={setFilter}
+          handleSetFilterValues={handleSetFilterValues}
           isFetchLoading={loading}
           className="fixed top-108 w-[400px]"
         />
@@ -97,7 +98,7 @@ const HomeSection = () => {
             <div className="h-[56px]"></div>
             {loading ? (
               <div>Loading...</div>
-            ) : data.findAll.facilities.length === 0 && filter ? (
+            ) : data.findAll.facilities.length === 0 && filterValues ? (
               <div>No facilities for this filter</div>
             ) : (
               <FacilitiesList

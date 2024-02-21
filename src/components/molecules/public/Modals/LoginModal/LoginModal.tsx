@@ -93,7 +93,7 @@ const LoginModal: React.FC<ILoginModal> = ({
               name="email"
               labelText="Email"
               placeholder="Ex: example@gmail.com"
-              iconName="mail"
+              iconName="Mail"
             />
             <FloatingField
               form={form}
@@ -101,7 +101,7 @@ const LoginModal: React.FC<ILoginModal> = ({
               name="password"
               placeholder="Minimum 6 characters"
               labelText="Password"
-              iconName="lock"
+              iconName="Lock"
             />
           </div>
           {Object.keys(requestErrors).length > 0

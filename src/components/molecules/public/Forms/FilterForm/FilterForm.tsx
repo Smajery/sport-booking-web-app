@@ -11,7 +11,7 @@ import {
   ESportType,
 } from "@/types/public/facilityTypes";
 import { Slider } from "@/components/ui/slider";
-import SelectField from "@/components/molecules/common/Fields/SelectField/SelectField";
+import SelectField from "@/components/molecules/common/Selects/SingleSelect/SingleSelect";
 
 interface ISearchForm {
   setFilter: (value: {} | null) => void;
@@ -70,11 +70,11 @@ const FilterForm: React.FC<ISearchForm> = ({ isFetchLoading, setFilter }) => {
       <form noValidate className="flex flex-col gap-y-unit-4">
         <FloatingField
           form={form}
-          name="search"
+          name="Search"
           placeholder="Search..."
           labelText="Filter facilities"
           type="text"
-          iconName="search"
+          iconName="Search"
           setInputValue={handleSearch}
         />
         <SelectField />

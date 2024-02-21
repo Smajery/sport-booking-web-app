@@ -9,12 +9,12 @@ import {
 
 import DynamicIcon from "@/components/atoms/common/Icons/DynamicIcon/DynamicIcon";
 import { Input } from "@/components/ui/input";
-import dynamicIconImports from "lucide-react/dynamicIconImports";
+
 import { clsx } from "clsx";
 
 interface IFloatingField {
   form: any;
-  iconName?: keyof typeof dynamicIconImports;
+  iconName?: string;
   name: string;
   type: string;
   labelText?: string;

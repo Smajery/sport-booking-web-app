@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import AvgRatingFrame from "@/components/molecules/common/Frames/AvgRatingFrame/AvgRatingFrame";
+import { getCapitalStr } from "@/utils/helpers/text.helpers";
 
 interface IFacilitiesItem {
   facility: TFacility;
@@ -64,7 +65,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
             </Button>
           </div>
           <div className="flex justify-start gap-x-unit-1">
-            <Badge variant="background">200 hr/hour</Badge>
+            <Badge variant="background">200 ₴/hour</Badge>
           </div>
         </div>
       </div>
@@ -91,7 +92,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
                 className="mt-[2px] w-unit-4 h-unit-4 shrink-0"
                 color="#FFFFFF"
               />
-              <p className="truncate">{sportType}</p>
+              <p className="truncate">{getCapitalStr(sportType)}</p>
             </Badge>
           </div>
         </div>

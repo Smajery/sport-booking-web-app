@@ -1,18 +1,25 @@
-import { LucideProps } from "lucide-react";
-import dynamicIconImports from "lucide-react/dynamicIconImports";
-import dynamic from "next/dynamic";
-import { memo } from "react";
+import React from "react";
+import { Loader2 } from "lucide-react";
 
-interface IconProps extends LucideProps {
-  name: keyof typeof dynamicIconImports;
-}
+const DynamicIcon = ({ name, ...props }) => {
+  const IconComponent = React.useMemo(() => {
+    return React.lazy(() =>
+      import("lucide-react").then((module) => {
+        const Icon = module[name];
+        if (Icon) {
+          return { default: Icon };
+        } else {
+          throw new Error(`Icon ${name} not found in lucide-react`);
+        }
+      }),
+    );
+  }, [name]); // Мемоизация зависит от имени иконы
 
-const DynamicIcon = memo<IconProps>(({ name, ...props }) => {
-  const LucideIcon = dynamic(dynamicIconImports[name]);
-
-  return <LucideIcon {...props} />;
-});
-
-DynamicIcon.displayName = "DynamicIcon";
+  return (
+    <React.Suspense fallback={<Loader2 {...props} />}>
+      <IconComponent {...props} />
+    </React.Suspense>
+  );
+};
 
 export default DynamicIcon;
