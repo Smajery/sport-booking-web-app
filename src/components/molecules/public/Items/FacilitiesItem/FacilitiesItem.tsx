@@ -102,7 +102,12 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
               View
               <View className="w-unit-6 h-unit-6" color="#040C11" />
             </Button>
-            <Button variant="none" size="none" className="gap-x-unit-1">
+            <Button
+              variant="none"
+              size="none"
+              className="gap-x-unit-1"
+              disabled
+            >
               Map
               <Map className="w-unit-6 h-unit-6" color="#040C11" />
             </Button>

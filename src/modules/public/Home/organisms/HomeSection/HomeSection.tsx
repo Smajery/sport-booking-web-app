@@ -79,7 +79,6 @@ const HomeSection = () => {
         <FacilityFilter
           handleSetFilterValues={handleSetFilterValues}
           isFetchLoading={loading}
-          className="fixed top-108 w-[400px]"
         />
       </div>
       <div className="w-[1000px] flex flex-col gap-y-unit-4">

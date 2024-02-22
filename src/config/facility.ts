@@ -17,8 +17,9 @@ export const facilityConfig = {
     { key: "outdoor", name: "Outdoor" },
   ],
   district: [
-    { key: "primorsky", name: "Primorsky" },
-    { key: "kyiv", name: "Kyiv" },
-    { key: "khadzhibeysky", name: "Khadzhibeysky" },
+    { key: "Приморський", name: "Primorsky" },
+    { key: "Малиновський", name: "Malinovsky" },
+    { key: "Київський", name: "Kyivskyi" },
+    { key: "Суворовський", name: "Suvorovsky" },
   ],
 };

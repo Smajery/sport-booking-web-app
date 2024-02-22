@@ -21,12 +21,11 @@ export enum EFacilityType {
 }
 
 export type TFacilityFilter = {
-  sortBy: string;
-  search: string;
-  coveringType: string;
-  facilityType: string;
-  sportType: string;
-  district: string;
+  search?: string | null;
+  coveringType?: string | null;
+  facilityType?: string | null;
+  sportType?: string | null;
+  district?: string | null;
 };
 
 export type TFacility = {

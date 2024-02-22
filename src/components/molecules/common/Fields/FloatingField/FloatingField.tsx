@@ -11,15 +11,17 @@ import DynamicIcon from "@/components/atoms/common/Icons/DynamicIcon/DynamicIcon
 import { Input } from "@/components/ui/input";
 
 import { clsx } from "clsx";
+import { UseFormReturn } from "react-hook-form";
 
 interface IFloatingField {
-  form: any;
+  form: UseFormReturn;
   iconName?: string;
   name: string;
   type: string;
   labelText?: string;
   placeholder?: string;
-  setInputValue?: (value: string) => void;
+  handleType?: () => void;
+  noValidate?: boolean;
 }
 
 const FloatingField: React.FC<IFloatingField> = ({
@@ -29,7 +31,8 @@ const FloatingField: React.FC<IFloatingField> = ({
   type,
   labelText,
   placeholder = "",
-  setInputValue,
+  handleType,
+  noValidate = false,
 }) => {
   const {
     formState: { isSubmitted },
@@ -56,7 +59,7 @@ const FloatingField: React.FC<IFloatingField> = ({
               <FormLabel
                 className={clsx("floating-label", {
                   floating: isFocused || field.value,
-                  "text-success": !invalid && isSubmitted,
+                  "text-success": !invalid && isSubmitted && !noValidate,
                 })}
               >
                 {labelText}
@@ -73,17 +76,17 @@ const FloatingField: React.FC<IFloatingField> = ({
                 value={field.value ? field.value : ""}
                 onChange={(e) => {
                   field.onChange(e.target.value);
-                  if (setInputValue) {
-                    setInputValue(e.target.value);
+                  if (handleType) {
+                    handleType();
                   }
                 }}
                 className={clsx(
                   "h-[56px] pl-unit-3 pr-unit-10 pb-unit-[6px] pt-[26px]",
                   {
                     "border-destructive focus-visible:ring-destructive":
-                      invalid && isSubmitted,
+                      invalid && isSubmitted && !noValidate,
                     "border-success focus-visible:ring-success":
-                      !invalid && isSubmitted,
+                      !invalid && isSubmitted && !noValidate,
                   },
                 )}
               />
