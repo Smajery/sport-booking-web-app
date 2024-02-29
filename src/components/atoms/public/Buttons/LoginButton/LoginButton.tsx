@@ -13,7 +13,9 @@ const LoginButton: React.FC<ILoginButton> = ({ children }) => {
 
   return (
     <>
-      <Button onClick={() => setIsLoginModal(true)}>{children}</Button>
+      <Button variant="outlinePrimary" onClick={() => setIsLoginModal(true)}>
+        {children}
+      </Button>
       <LoginModal
         isLoginModal={isLoginModal}
         setIsLoginModal={setIsLoginModal}

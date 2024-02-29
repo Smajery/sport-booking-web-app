@@ -1,5 +1,4 @@
 import "@/app/[locale]/globals.css";
-import Main from "@/layouts/public/Main";
 import RootLayout from "@/layouts/RootLayout/RootLayout";
 import type { Metadata } from "next";
 import { ReactNode } from "react";
@@ -17,9 +16,5 @@ export default function RootPublicLayout({
 }: {
   children: ReactNode;
 }) {
-  return (
-    <RootLayout>
-      <Main>{children}</Main>
-    </RootLayout>
-  );
+  return <RootLayout>{children}</RootLayout>;
 }

@@ -5,14 +5,16 @@ import { Badge } from "@/components/ui/badge";
 interface IAvgRatingFrame {
   avgRating: number;
   ratingCount: number;
+  className?: string;
 }
 
 const AvgRatingFrame: React.FC<IAvgRatingFrame> = ({
   avgRating,
   ratingCount,
+  className = "",
 }) => {
   return (
-    <div className="flex">
+    <div className={`flex ${className}`}>
       <p className="text-xl mr-unit-1">{avgRating}</p>
       <Image
         width="16"

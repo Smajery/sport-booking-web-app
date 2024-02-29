@@ -82,6 +82,9 @@
   .primary-gradient-225 {
     background: linear-gradient(225deg, #ffffff, #ff8749);
   }
+  .book-gradient {
+    background: linear-gradient(to right, #ff8749, #ff9398);
+  }
 
   /* CSS Tricks */
 

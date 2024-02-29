@@ -2,7 +2,7 @@
 
 import React from "react";
 import { TFacility } from "@/types/public/facilityTypes";
-import DefaultImageAvatar from "@/components/atoms/common/Avatars/DefaultImageAvatar/DefaultImageAvatar";
+import ImageAvatar from "@/components/atoms/common/Avatars/ImageAvatar/ImageAvatar";
 import { Hash, Heart, Home, Map, Text, View } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -29,7 +29,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
   return (
     <li className="relative flex justify-between gap-x-unit-4 p-unit-4 overflow-hidden h-[260px] w-[500px] primary-gradient-225 rounded-xl ">
       <div className="relative">
-        <DefaultImageAvatar
+        <ImageAvatar
           image={images.length > 0 ? images[0].image : null}
           imageName={name}
           className="w-[260px] h-full rounded-xl shrink-0"

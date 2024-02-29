@@ -7,6 +7,7 @@ export const getCapitalFirstLetter = (text: string) => {
   return `${firstLetter}.`;
 };
 
-export const getCapitalStr = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+export const getFormattedText = (text: string) => {
+  const formattedText = text.replace(/_/g, " ");
+  return getTitle(formattedText);
 };

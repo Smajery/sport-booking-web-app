@@ -45,4 +45,8 @@ export type TFacility = {
   _count: {
     ratings: number;
   };
+  currentUserRate: {
+    id: string;
+    value: string;
+  };
 };

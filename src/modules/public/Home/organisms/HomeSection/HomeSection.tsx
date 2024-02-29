@@ -10,6 +10,7 @@ import { useQuery } from "@apollo/client";
 import { GET_ALL_FACILITIES_QUERY } from "@/apollo/query/public/facility";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { TFacilityFilter } from "@/types/public/facilityTypes";
+import { getErrorMessage } from "@/utils/helpers/error.helpers";
 
 const limit = 10;
 
@@ -69,10 +70,6 @@ const HomeSection = () => {
     }
   };
 
-  if (error) {
-    return <div>Something went wrong</div>;
-  }
-
   return (
     <section className="relative w-full flex gap-x-unit-10 justify-between">
       <div className="w-[400px]">
@@ -88,7 +85,7 @@ const HomeSection = () => {
               variant="none"
               size="lg"
               onClick={() => setIsShowMap(true)}
-              className="fixed top-108 w-[1000px] h-[56px] border-2 border-primary bg-white/50 z-[1000] hover:bg-background"
+              className="fixed top-108 w-[1000px] h-[56px] border-2 border-border bg-white/50 z-[1000] hover:bg-background"
             >
               <div className="flex items-start gap-x-unit-1">
                 Show map <Map className="w-unit-5 h-unit-5" color="#040C11" />
@@ -97,6 +94,8 @@ const HomeSection = () => {
             <div className="h-[56px]"></div>
             {loading ? (
               <div>Loading...</div>
+            ) : error ? (
+              <div>{getErrorMessage(error)}</div>
             ) : data.findAll.facilities.length === 0 && filterValues ? (
               <div>No facilities for this filter</div>
             ) : (
@@ -113,7 +112,7 @@ const HomeSection = () => {
               variant="none"
               size="lg"
               onClick={() => setIsShowMap(false)}
-              className="h-[56px] bg-primary text-primary-foreground border-2 border-primary"
+              className="h-[56px] bg-primary text-primary-foreground border-2 border-primary shrink-0"
             >
               <div className="flex items-start gap-x-unit-1">
                 Show list{" "}
@@ -128,7 +127,6 @@ const HomeSection = () => {
               selectedLocationId={selectedLocationId}
               setSelectedLocationId={setSelectedLocationId}
               facilities={!loading ? data.findAll.facilities : []}
-              isFetchLoading={loading}
             />
           </>
         )}

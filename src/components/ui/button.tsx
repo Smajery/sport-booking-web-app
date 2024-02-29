@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center text-base ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -14,11 +14,14 @@ const buttonVariants = cva(
           "bg-primary border-transparent text-primary-foreground hover:bg-primary/90",
         secondary:
           "bg-secondary border-transparent text-secondary-foreground hover:bg-secondary/80",
+        primary:
+          "bg-primary border-transparent text-primary-foreground hover:bg-primary/80",
         outlineSecondary:
-          "bg-background border-secondary hover:text-secondary-foreground hover:bg-secondary",
+          "bg-background border-foreground hover:text-secondary-foreground hover:border-secondary hover:bg-secondary",
         outlinePrimary:
-          "bg-background border-primary hover:text-primary-foreground hover:bg-primary",
-        accent: "bg-accent text-accent-foreground hover:bg-accent/80",
+          "bg-background border-foreground hover:text-primary-foreground hover:border-primary hover:bg-primary",
+        accent:
+          "bg-accent border-transparent text-accent-foreground hover:bg-accent/80",
         destructive:
           "bg-destructive border-transparent text-destructive-foreground hover:bg-destructive/90",
         ghost: "border-transparent hover:bg-border/60",
@@ -26,8 +29,9 @@ const buttonVariants = cva(
       },
       size: {
         none: "",
-        default: "h-unit-8 rounded-full px-4 py-2",
+        default: "h-9 border-1 rounded-full px-6",
         sm: "h-9 border-1 rounded-md px-3",
+        md: "h-10 border-1 rounded-md px-12",
         lg: "h-[48px] border-2 rounded-md px-[23px] py-[13px]",
         icon: "h-10 w-10",
       },

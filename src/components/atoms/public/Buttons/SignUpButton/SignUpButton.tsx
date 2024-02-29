@@ -13,7 +13,9 @@ const SignUpButton: React.FC<ISignUpButton> = ({ children }) => {
 
   return (
     <>
-      <Button onClick={() => setIsSignUpModal(true)}>{children}</Button>
+      <Button variant="outlinePrimary" onClick={() => setIsSignUpModal(true)}>
+        {children}
+      </Button>
       <SignUpModal
         isSignUpModal={isSignUpModal}
         setIsSignUpModal={setIsSignUpModal}

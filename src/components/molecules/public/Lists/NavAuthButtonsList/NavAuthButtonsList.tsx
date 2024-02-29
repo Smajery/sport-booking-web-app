@@ -7,7 +7,7 @@ import SignUpButton from "@/components/atoms/public/Buttons/SignUpButton/SignUpB
 
 const NavAuthButtonsList = () => {
   return (
-    <NavigationMenuList className="gap-x-unit-3_5">
+    <NavigationMenuList className="gap-x-unit-4">
       <NavigationMenuItem>
         <LoginButton>Login</LoginButton>
       </NavigationMenuItem>

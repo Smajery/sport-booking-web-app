@@ -2,20 +2,24 @@
 
 import React from "react";
 import { TFacility } from "@/types/public/facilityTypes";
-import DefaultImageAvatar from "@/components/atoms/common/Avatars/DefaultImageAvatar/DefaultImageAvatar";
-import { Hash, Heart, Home, Map, Text, View } from "lucide-react";
+import ImageAvatar from "@/components/atoms/common/Avatars/ImageAvatar/ImageAvatar";
+import { Hash, Map, MapPin, Text, View } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import AvgRatingFrame from "@/components/molecules/common/Frames/AvgRatingFrame/AvgRatingFrame";
-import { getCapitalStr } from "@/utils/helpers/text.helpers";
+import { useRouter } from "next/navigation";
+import { ROUTE_FACILITY } from "@/utils/constants/routes.constants";
+import { getTitle } from "@/utils/helpers/text.helpers";
 
 interface IFacilitiesItem {
   facility: TFacility;
 }
 
 const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
+  const { push } = useRouter();
   const {
+    id,
     name,
     images,
     description,
@@ -30,9 +34,9 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
     React.useState<boolean>(false);
 
   return (
-    <li className="relative flex justify-between gap-x-unit-4 p-unit-4 overflow-hidden shadow-md h-[260px] w-[1000px] primary-gradient-225 rounded-xl ">
+    <li className="relative flex justify-between gap-x-unit-4 p-unit-4 overflow-hidden shadow-md h-[260px] w-[1000px] border-1 border-border rounded-xl">
       <div className="relative">
-        <DefaultImageAvatar
+        <ImageAvatar
           image={images.length > 0 ? images[0].image : null}
           imageName={name}
           className="w-[260px] h-full rounded-xl shrink-0"
@@ -71,14 +75,17 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
       </div>
       <div className="flex justify-between gap-x-unit-4 w-full">
         <div className="flex flex-col py-unit-2 gap-y-unit-1">
-          <Badge variant="background" className="gap-x-unit-6">
-            <p className="truncate text-xl font-semibold">{name}</p>
+          <div className="flex items-center gap-x-unit-6">
+            <p className="truncate text-xl">{name}</p>
             <AvgRatingFrame avgRating={avgRating} ratingCount={ratingCount} />
-          </Badge>
+          </div>
           <div className="mt-unit-1 flex flex-col gap-y-unit-1">
             <div className="flex items-start gap-x-unit-1">
               <Badge className="gap-x-unit-2">
-                <Home className="mt-unit-1 w-unit-4 h-unit-4" color="#FFFFFF" />
+                <MapPin
+                  className="mt-unit-1 w-unit-4 h-unit-4"
+                  color="#FFFFFF"
+                />
                 <p className="text-ellipsis line-clamp-2">{address}</p>
               </Badge>
               <Badge>{district}</Badge>
@@ -92,13 +99,18 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
                 className="mt-[2px] w-unit-4 h-unit-4 shrink-0"
                 color="#FFFFFF"
               />
-              <p className="truncate">{getCapitalStr(sportType)}</p>
+              <p className="truncate">{getTitle(sportType)}</p>
             </Badge>
           </div>
         </div>
         <div className="flex flex-col gap-y-unit-1">
           <div className="flex flex-col items-end gap-y-unit-1">
-            <Button variant="none" size="none" className="gap-x-unit-1">
+            <Button
+              variant="none"
+              size="none"
+              className="gap-x-unit-1"
+              onClick={() => push(`${ROUTE_FACILITY}/${id}`)}
+            >
               View
               <View className="w-unit-6 h-unit-6" color="#040C11" />
             </Button>
