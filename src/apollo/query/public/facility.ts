@@ -61,6 +61,13 @@ export const GET_ONE_FACILITY_QUERY = gql`
         id
         value
       }
+    }
+  }
+`;
+
+export const GET_FACILITY_SCHEDULE = gql`
+  query FindFacilitySchedule($id: Int!) {
+    facility(id: $id) {
       timeSlots {
         id
         dayOfWeek

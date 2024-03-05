@@ -7,7 +7,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import DynamicIcon from "@/components/atoms/common/Icons/DynamicIcon/DynamicIcon";
 import { Input } from "@/components/ui/input";
 
 import { clsx } from "clsx";
@@ -15,7 +14,7 @@ import { UseFormReturn } from "react-hook-form";
 
 interface IFloatingField {
   form: UseFormReturn;
-  iconName?: string;
+  IconComponent?: any;
   name: string;
   type: string;
   labelText?: string;
@@ -26,7 +25,7 @@ interface IFloatingField {
 
 const FloatingField: React.FC<IFloatingField> = ({
   form,
-  iconName,
+  IconComponent,
   name,
   type,
   labelText,
@@ -91,11 +90,12 @@ const FloatingField: React.FC<IFloatingField> = ({
                 )}
               />
             </FormControl>
-            <DynamicIcon
-              name={iconName}
-              className="w-unit-5 h-unit-5 absolute right-unit-4"
-              color="#040C11"
-            />
+            {IconComponent && (
+              <IconComponent
+                className="w-unit-5 h-unit-5 absolute right-unit-4"
+                color="#040C11"
+              />
+            )}
           </div>
           <FormMessage />
         </FormItem>

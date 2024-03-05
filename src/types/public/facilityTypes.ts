@@ -1,4 +1,4 @@
-import { TImage } from "@/types/commonTypes";
+import { TImage, TimeSlot } from "@/types/commonTypes";
 
 export enum ESportType {
   basketball = "basketball",
@@ -29,7 +29,7 @@ export type TFacilityFilter = {
 };
 
 export type TFacility = {
-  id: string;
+  id: number;
   name: string;
   district: string;
   address: string;
@@ -49,4 +49,5 @@ export type TFacility = {
     id: string;
     value: string;
   };
+  timeSlots: TimeSlot[];
 };

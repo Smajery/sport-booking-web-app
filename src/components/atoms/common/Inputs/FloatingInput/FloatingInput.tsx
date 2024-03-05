@@ -6,17 +6,17 @@ import { Label } from "@/components/ui/label";
 
 interface IFloatingInput {
   name: string;
-  iconName?: string;
   type: string;
   labelText?: string;
   placeholder?: string;
+  IconComponent?: any;
   handleType?: (name: string, value: string) => void;
 }
 
 const FloatingField: React.FC<IFloatingInput> = ({
   name,
-  iconName,
   type,
+  IconComponent,
   labelText,
   placeholder = "",
   handleType,
@@ -59,11 +59,12 @@ const FloatingField: React.FC<IFloatingInput> = ({
         onBlur={handleBlur}
         className="h-[56px] pl-unit-3 pr-unit-10 pb-unit-[6px] pt-[26px]"
       />
-      <DynamicIcon
-        name={iconName}
-        className="w-unit-5 h-unit-5 absolute right-unit-4"
-        color="#040C11"
-      />
+      {IconComponent && (
+        <IconComponent
+          className="w-unit-5 h-unit-5 absolute right-unit-4"
+          color="#040C11"
+        />
+      )}
     </div>
   );
 };

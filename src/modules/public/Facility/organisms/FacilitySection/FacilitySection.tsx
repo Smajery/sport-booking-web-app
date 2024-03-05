@@ -7,35 +7,32 @@ import { getErrorMessage } from "@/utils/helpers/error.helpers";
 import { TFacility } from "@/types/public/facilityTypes";
 import { Separator } from "@/components/ui/separator";
 import MultiImageAvatar from "@/components/atoms/common/Avatars/MultiImageAvatar/MultiImageAvatar";
-import { Button } from "@/components/ui/button";
 import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
-import { clsx } from "clsx";
-import { CheckCircle2 } from "lucide-react";
+import RatingFrame from "@/components/molecules/public/Frames/RatingFrame/RatingFrame";
+import BookButton from "@/components/atoms/public/Buttons/BookButton/BookButton";
 
 interface IFacilitySection {
-  facilityId: string;
+  facilityId: number;
 }
 
 const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
   const { data, loading, error } = useQuery(GET_ONE_FACILITY_QUERY, {
     variables: {
-      id: Number(facilityId),
+      id: facilityId,
     },
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{getErrorMessage(error)}</p>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{getErrorMessage(error)}</div>;
 
   const {
+    id,
     name,
     images,
     description,
     address,
     avgRating,
     ratingCount,
-    currentUserRate,
-    location,
-    minBookingTime,
     district,
     sportType,
     facilityType,
@@ -50,11 +47,16 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
       />
       <div className="flex justify-between">
         <div className="w-[700px] flex flex-col gap-y-unit-5">
-          <div className="flex flex-col gap-y-unit-2">
-            <p className="text-3xl">{name}</p>
-            <p className="text-lg font-light">
-              {address}, {district} district
-            </p>
+          <div className="flex justify-between">
+            <div className="flex flex-col gap-y-unit-2">
+              <div className="flex items-center justify-between">
+                <p className="text-3xl">{name}</p>
+              </div>
+              <p className="text-lg font-light">
+                {address}, {district} district
+              </p>
+            </div>
+            <RatingFrame avgRating={avgRating} ratingCount={ratingCount} />
           </div>
           <Separator />
           <div className="flex gap-x-unit-4">
@@ -78,9 +80,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
           <p className="text-xl font-light">
             200 UAH <span className="text-muted-foreground text-lg">/hour</span>
           </p>
-          <Button size="md" className="book-gradient">
-            Book
-          </Button>
+          <BookButton facilityId={id} />
         </div>
       </div>
       <Separator />

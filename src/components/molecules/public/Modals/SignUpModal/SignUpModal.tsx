@@ -9,14 +9,13 @@ import FloatingField from "@/components/molecules/common/Fields/FloatingField/Fl
 import { Button } from "@/components/ui/button";
 import { Form as FormProvider } from "@/components/ui/form";
 
-import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
-
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import GoogleAuthButton from "@/components/atoms/public/Buttons/GoogleAuthButton/GoogleAuthButton";
 import FacebookAuthButton from "@/components/atoms/public/Buttons/FacebookAuthButton/FacebookAuthButton";
 import { REGISTER_USER_MUTATION } from "@/apollo/mutations/auth";
 import ModalCard from "@/components/atoms/common/Cards/ModalCard/ModalCard";
 import { useMutation } from "@apollo/client";
+import { Mail, Lock } from "lucide-react";
 
 interface ISignUpModal {
   isSignUpModal: boolean;
@@ -80,8 +79,8 @@ const SignUpModal: React.FC<ISignUpModal> = ({
     }
   };
 
-  const handleSetModal = (value: boolean) => {
-    setIsSignUpModal(value);
+  const handleCloseModal = () => {
+    setIsSignUpModal(false);
     form.reset();
   };
 
@@ -90,7 +89,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({
   if (!isSignUpModal) return null;
 
   return (
-    <ModalCard setIsModal={handleSetModal} title="Welcome">
+    <ModalCard handleCloseModal={handleCloseModal} title="Welcome">
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -104,7 +103,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({
               name="email"
               labelText="Email"
               placeholder="Ex: example@gmail.com"
-              iconName="Mail"
+              IconComponent={Mail}
             />
             <FloatingField
               form={form}
@@ -112,7 +111,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({
               name="password"
               placeholder="Minimum 6 characters"
               labelText="Password"
-              iconName="Lock"
+              IconComponent={Lock}
             />
             <FloatingField
               form={form}
@@ -120,7 +119,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({
               name="confirmPassword"
               placeholder="Minimum 6 characters"
               labelText="Confirm password"
-              iconName="Lock"
+              IconComponent={Lock}
             />
           </div>
           {Object.keys(requestErrors).length > 0

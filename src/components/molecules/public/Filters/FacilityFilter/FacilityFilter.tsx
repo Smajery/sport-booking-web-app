@@ -10,6 +10,7 @@ import { TFacilityFilter } from "@/types/public/facilityTypes";
 import SingleSelectField from "@/components/molecules/common/Fields/SingleSelectField/SingleSelectField";
 import { facilityConfig } from "@/config/facility";
 import { Button } from "@/components/ui/button";
+import { Search } from "lucide-react";
 
 interface ISearchForm {
   handleSetFilterValues: (value: TFacilityFilter | null) => void;
@@ -114,7 +115,7 @@ const FilterForm: React.FC<ISearchForm> = ({
           placeholder="Search..."
           labelText="Facilities search"
           type="text"
-          iconName="Search"
+          IconComponent={Search}
           handleType={handleTypeDelay}
           noValidate
         />

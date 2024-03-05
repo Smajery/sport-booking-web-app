@@ -7,16 +7,20 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 interface IModalCard {
-  setIsModal: (value: boolean) => void;
+  handleCloseModal: () => void;
   children: React.ReactNode;
   title: string;
 }
 
-const ModalCard: React.FC<IModalCard> = ({ setIsModal, children, title }) => {
+const ModalCard: React.FC<IModalCard> = ({
+  handleCloseModal,
+  children,
+  title,
+}) => {
   return (
     <div
       className="fixed left-0 top-0 w-screen h-screen bg-black/30 flex items-center justify-center z-[2000]"
-      onClick={() => setIsModal(false)}
+      onClick={handleCloseModal}
     >
       <Card
         className="bg-background w-[568px]"
@@ -29,7 +33,7 @@ const ModalCard: React.FC<IModalCard> = ({ setIsModal, children, title }) => {
             variant="none"
             asChild
             className="absolute right-unit-6 cursor-pointer"
-            onClick={() => setIsModal(false)}
+            onClick={handleCloseModal}
           >
             <X className="w-unit-6 h-unit-6" color="#222222" />
           </Button>

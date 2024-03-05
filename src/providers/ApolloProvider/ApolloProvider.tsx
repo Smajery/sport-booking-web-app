@@ -15,7 +15,19 @@ function makeClient() {
   });
 
   return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
+    cache: new NextSSRInMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            facility: {
+              merge(existing, incoming, { mergeObjects }) {
+                return mergeObjects(existing, incoming);
+              },
+            },
+          },
+        },
+      },
+    }),
     link:
       typeof window === "undefined"
         ? ApolloLink.from([

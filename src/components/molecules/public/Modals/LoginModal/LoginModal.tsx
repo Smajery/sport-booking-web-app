@@ -15,6 +15,7 @@ import FacebookAuthButton from "@/components/atoms/public/Buttons/FacebookAuthBu
 import { LOGIN_USER_MUTATION } from "@/apollo/mutations/auth";
 import ModalCard from "@/components/atoms/common/Cards/ModalCard/ModalCard";
 import { useMutation } from "@apollo/client";
+import { Mail, Lock } from "lucide-react";
 
 interface ILoginModal {
   isLoginModal: boolean;
@@ -69,8 +70,8 @@ const LoginModal: React.FC<ILoginModal> = ({
     }
   };
 
-  const handleSetModal = (value: boolean) => {
-    setIsLoginModal(value);
+  const handleCloseModal = () => {
+    setIsLoginModal(false);
     form.reset();
   };
 
@@ -79,7 +80,7 @@ const LoginModal: React.FC<ILoginModal> = ({
   if (!isLoginModal) return null;
 
   return (
-    <ModalCard setIsModal={handleSetModal} title="Welcome">
+    <ModalCard handleCloseModal={handleCloseModal} title="Welcome">
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -93,7 +94,7 @@ const LoginModal: React.FC<ILoginModal> = ({
               name="email"
               labelText="Email"
               placeholder="Ex: example@gmail.com"
-              iconName="Mail"
+              IconComponent={Mail}
             />
             <FloatingField
               form={form}
@@ -101,7 +102,7 @@ const LoginModal: React.FC<ILoginModal> = ({
               name="password"
               placeholder="Minimum 6 characters"
               labelText="Password"
-              iconName="Lock"
+              IconComponent={Lock}
             />
           </div>
           {Object.keys(requestErrors).length > 0

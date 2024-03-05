@@ -8,6 +8,7 @@
 
     --foreground: 203 62% 4%; /* #040C11 */
     --muted-foreground: 0 0% 44%; /* #717171 */
+    --muted-foreground-100: 0 0% 84%; /* D6D6D6 */
 
     --primary: 20 100% 64%; /* #ff8749 */
     --primary-foreground: 0 0% 100%; /* #ffffff */
@@ -117,4 +118,32 @@
     @apply top-[18px] text-xs
   }
 
+  /* Hover tricks */
+
+  .font-hover-high {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .font-hover-high:hover {
+    @apply text-2xl leading-7;
+  }
+
+  .font-hover-high::before {
+    content: attr(data-content);
+    height: 0;
+    visibility: hidden;
+    overflow: hidden;
+    user-select: none;
+    pointer-events: none;
+    @apply text-2xl leading-7;
+  }
+
+  @media speech {
+    .font-hover-high::before {
+      display: none;
+    }
+  }
 }

@@ -4,7 +4,7 @@ import FacilitySection from "@/modules/public/Facility/organisms/FacilitySection
 const Facility = ({ params }) => {
   return (
     <div className="container mx-auto flex justify-center">
-      <FacilitySection facilityId={params.facilityId} />
+      <FacilitySection facilityId={Number(params.facilityId)} />
     </div>
   );
 };
