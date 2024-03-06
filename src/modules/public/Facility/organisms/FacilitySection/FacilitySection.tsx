@@ -3,7 +3,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { GET_ONE_FACILITY_QUERY } from "@/apollo/query/public/facility";
-import { getErrorMessage } from "@/utils/helpers/error.helpers";
+import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import { TFacility } from "@/types/public/facilityTypes";
 import { Separator } from "@/components/ui/separator";
 import MultiImageAvatar from "@/components/atoms/common/Avatars/MultiImageAvatar/MultiImageAvatar";
@@ -23,7 +23,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
   });
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>{getErrorMessage(error)}</div>;
+  if (error) return <div>{getApolloErrorMessage(error)}</div>;
 
   const {
     id,

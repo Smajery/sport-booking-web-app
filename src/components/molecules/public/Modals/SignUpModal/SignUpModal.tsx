@@ -16,6 +16,7 @@ import { REGISTER_USER_MUTATION } from "@/apollo/mutations/auth";
 import ModalCard from "@/components/atoms/common/Cards/ModalCard/ModalCard";
 import { useMutation } from "@apollo/client";
 import { Mail, Lock } from "lucide-react";
+import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 
 interface ISignUpModal {
   isSignUpModal: boolean;
@@ -37,11 +38,9 @@ const SignUpModal: React.FC<ISignUpModal> = ({
   isSignUpModal,
   setIsSignUpModal,
 }) => {
-  const [requestErrorMessage, setRequestErrorMessage] = React.useState<
-    string | null
-  >(null);
-  const [requestErrors, setRequestErrors] = React.useState<{}>({});
-  const [isRequestLoading, setIsRequestLoading] = useState<boolean>(false);
+  const [registerUserMutation, { loading, error }] = useMutation(
+    REGISTER_USER_MUTATION,
+  );
 
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
@@ -53,10 +52,8 @@ const SignUpModal: React.FC<ISignUpModal> = ({
   });
 
   const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
-    setIsRequestLoading(true);
-
     try {
-      useMutation(REGISTER_USER_MUTATION, {
+      await registerUserMutation({
         variables: {
           registerInput: {
             email: values.email,
@@ -66,16 +63,9 @@ const SignUpModal: React.FC<ISignUpModal> = ({
         },
       });
 
-      setRequestErrorMessage(null);
-      setRequestErrors([]);
-
       form.reset();
-    } catch (error) {
-      ErrorHandler.handle(error, { componentName: "SignUpModal__onSubmit" });
-      setRequestErrorMessage(error.response?.data?.message);
-      setRequestErrors(error.response?.data?.errors || []);
-    } finally {
-      setIsRequestLoading(false);
+    } catch (e) {
+      ErrorHandler.handle(e, { componentName: "SignUpModal__onSubmit" });
     }
   };
 
@@ -122,15 +112,9 @@ const SignUpModal: React.FC<ISignUpModal> = ({
               IconComponent={Lock}
             />
           </div>
-          {Object.keys(requestErrors).length > 0
-            ? Object.keys(requestErrors).map((requestError) => (
-                <p key={requestError} className="text-danger">
-                  {requestErrors[requestError]}
-                </p>
-              ))
-            : requestErrorMessage && (
-                <p className="text-danger">{requestErrorMessage}</p>
-              )}
+          {error && (
+            <p className="text-danger">{getApolloErrorMessage(error)}</p>
+          )}
           <Button
             variant="none"
             size="lg"
@@ -138,7 +122,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({
             disabled={isSubmitting || (isSubmitted && !isValid)}
             className="auth-btn-gradient text-white"
           >
-            {!isRequestLoading ? "Sign up" : "Loading..."}
+            {!loading ? "Sign up" : "Loading..."}
           </Button>
         </form>
       </FormProvider>

@@ -10,7 +10,7 @@ import { useQuery } from "@apollo/client";
 import { GET_ALL_FACILITIES_QUERY } from "@/apollo/query/public/facility";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { TFacilityFilter } from "@/types/public/facilityTypes";
-import { getErrorMessage } from "@/utils/helpers/error.helpers";
+import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 
 const limit = 10;
 
@@ -95,7 +95,7 @@ const HomeSection = () => {
             {loading ? (
               <div>Loading...</div>
             ) : error ? (
-              <div>{getErrorMessage(error)}</div>
+              <div>{getApolloErrorMessage(error)}</div>
             ) : data.findAll.facilities.length === 0 && filterValues ? (
               <div>No facilities for this filter</div>
             ) : (

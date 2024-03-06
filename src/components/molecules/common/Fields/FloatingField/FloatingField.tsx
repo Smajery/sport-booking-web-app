@@ -70,6 +70,7 @@ const FloatingField: React.FC<IFloatingField> = ({
                 {...register(name)}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
+                autoComplete="off"
                 type={type}
                 placeholder={isFocused || field.value ? placeholder : ""}
                 value={field.value ? field.value : ""}

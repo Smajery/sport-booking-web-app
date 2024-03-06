@@ -4,7 +4,7 @@ import React from "react";
 import BookModalCard from "@/components/atoms/public/Cards/BookModalCard/BookModalCard";
 import { useQuery } from "@apollo/client";
 import { GET_FACILITY_SCHEDULE } from "@/apollo/query/public/facility";
-import { getErrorMessage } from "@/utils/helpers/error.helpers";
+import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import BookSchedule from "@/components/atoms/public/Schedules/BookSchedule/BookSchedule";
 
 interface IBookModal {
@@ -35,9 +35,10 @@ const BookModal: React.FC<IBookModal> = ({
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
-        <div>{getErrorMessage(error)}</div>
+        <div>{getApolloErrorMessage(error)}</div>
       ) : (
         <BookSchedule
+          facilityId={facilityId}
           handleCloseModal={handleCloseModal}
           timeSlots={data.facility.timeSlots}
         />
