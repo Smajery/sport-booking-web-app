@@ -21,7 +21,15 @@ export const LOGIN_USER_MUTATION = gql`
           value
         }
       }
+      accessToken
+      refreshToken
     }
+  }
+`;
+
+export const REFRESH_TOKEN_MUTATION = gql`
+  mutation RefreshToken($refresh: String) {
+    accessToken(refresh: $refresh)
   }
 `;
 

@@ -35,7 +35,7 @@ const DaysOfWeekList: React.FC<IDaysOfWeekList> = ({
     },
   );
   return (
-    <ul className="flex items-end px-unit-10 gap-x-unit-10">
+    <ul className="flex items-center px-unit-10 py-unit-3 gap-x-unit-10">
       {daysOfWeek.map((day) => (
         <li
           key={day.id}

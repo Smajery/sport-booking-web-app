@@ -17,6 +17,8 @@ import ModalCard from "@/components/atoms/common/Cards/ModalCard/ModalCard";
 import { useMutation } from "@apollo/client";
 import { Mail, Lock } from "lucide-react";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
+import { jwtDecode } from "jwt-decode";
+import { setCookie } from "@/utils/helpers/cookie.helpers";
 
 interface ILoginModal {
   isLoginModal: boolean;
@@ -45,7 +47,7 @@ const LoginModal: React.FC<ILoginModal> = ({
 
   const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     try {
-      await loginUserMutation({
+      const { data } = await loginUserMutation({
         variables: {
           loginInput: {
             email: values.email,
@@ -53,6 +55,14 @@ const LoginModal: React.FC<ILoginModal> = ({
           },
         },
       });
+      const accessToken = data.login.accessToken;
+      const refreshToken = data.login.refreshToken;
+
+      const decodedAccessToken: { exp: number } = jwtDecode(accessToken);
+      const decodedRefreshToken: { exp: number } = jwtDecode(refreshToken);
+
+      setCookie("accentToken", accessToken, decodedAccessToken.exp);
+      setCookie("refreshToken", refreshToken, decodedRefreshToken.exp);
 
       handleCloseModal();
       form.reset();

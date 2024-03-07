@@ -7,10 +7,14 @@ import {
   NextSSRApolloClient,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
+import { getCookie } from "@/utils/helpers/cookie.helpers";
 
 function makeClient() {
   const httpLink = new HttpLink({
     uri: "http://localhost:3000/graphql",
+    headers: {
+      authorization: `Bearer ${getCookie("accessToken")}`,
+    },
     fetchOptions: { cache: "no-store" },
   });
 

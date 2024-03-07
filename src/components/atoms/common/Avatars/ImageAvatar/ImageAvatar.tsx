@@ -1,6 +1,4 @@
 import React from "react";
-import Image from "next/image";
-import process from "process";
 import { ImageIcon } from "lucide-react";
 import ImageCart from "@/components/atoms/common/Cards/ImageCard/ImageCart";
 

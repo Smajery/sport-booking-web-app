@@ -1,5 +1,13 @@
-export const setCookie = (name: string, value: string) => {
-  document.cookie = name + "=" + value + "; " + "; path=/";
+export const setCookie = (name: string, value: string, expiresTime: number) => {
+  if (name === "undefined" || value === "undefined") return null;
+  const date = new Date();
+  if (expiresTime) {
+    date.setTime(date.getTime() + expiresTime * 1000);
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + "; " + expires + "; path=/";
+  } else {
+    document.cookie = name + "=" + value + "; " + "; path=/";
+  }
 };
 
 export const getCookie = (name: string) => {

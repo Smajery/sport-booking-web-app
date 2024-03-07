@@ -3,7 +3,7 @@
 import React from "react";
 import BookModalCard from "@/components/atoms/public/Cards/BookModalCard/BookModalCard";
 import { useQuery } from "@apollo/client";
-import { GET_FACILITY_SCHEDULE } from "@/apollo/query/public/facility";
+import { GET_FACILITY_SCHEDULE_QUERY } from "@/apollo/query/public/facility";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import BookSchedule from "@/components/atoms/public/Schedules/BookSchedule/BookSchedule";
 
@@ -20,7 +20,7 @@ const BookModal: React.FC<IBookModal> = ({
 }) => {
   if (!isModal) return null;
 
-  const { data, loading, error } = useQuery(GET_FACILITY_SCHEDULE, {
+  const { data, loading, error } = useQuery(GET_FACILITY_SCHEDULE_QUERY, {
     variables: {
       id: facilityId,
     },
@@ -41,6 +41,7 @@ const BookModal: React.FC<IBookModal> = ({
           facilityId={facilityId}
           handleCloseModal={handleCloseModal}
           timeSlots={data.facility.timeSlots}
+          minBookingTime={data.facility.minBookingTime}
         />
       )}
     </BookModalCard>

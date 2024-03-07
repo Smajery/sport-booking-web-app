@@ -4,7 +4,6 @@ import React from "react";
 import { TimeSlot } from "@/types/commonTypes";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Clock } from "lucide-react";
-import ApplyButton from "@/components/atoms/public/Buttons/ApplyButton/ApplyButton";
 import { Button } from "@/components/ui/button";
 import TimeSlotsList from "@/components/molecules/public/Lists/TimeSlotsList/TimeSlotsList";
 import PriceSlotsList from "@/components/molecules/public/Lists/PriceSlotsList/PriceSlotsList";
@@ -15,7 +14,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@apollo/client";
 import { CREATE_BOOKING } from "@/apollo/mutations/booking";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
-import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
+import { getMinutesFromIsoTime } from "@/utils/helpers/time.helpers";
+import ErrorsFrame from "@/components/molecules/common/Frames/ErrorsFrame/ErrorsFrame";
+import ApolloErrorFrame from "@/components/molecules/common/Frames/ApolloErrorFrame/ApolloErrorFrame";
+import PayButton from "@/components/atoms/public/Buttons/PayButton/PayButton";
+import { getDuration } from "@/utils/helpers/text.helpers";
 
 const formCreateBookingSchema = z.object({
   timeSlotIds: z.array(z.number()).min(1, "At least one booking"),
@@ -23,12 +26,14 @@ const formCreateBookingSchema = z.object({
 
 interface IBookSchedule {
   facilityId: number;
+  minBookingTime: number;
   timeSlots: TimeSlot[];
   handleCloseModal: () => void;
 }
 
 const BookSchedule: React.FC<IBookSchedule> = ({
   facilityId,
+  minBookingTime,
   timeSlots,
   handleCloseModal,
 }) => {
@@ -37,6 +42,7 @@ const BookSchedule: React.FC<IBookSchedule> = ({
 
   const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<number>(1);
   const [selectedSlotIds, setSelectedSlotIds] = React.useState<number[]>([]);
+  const [isMinBookingTime, setIsBookingTime] = React.useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formCreateBookingSchema>>({
     resolver: zodResolver(formCreateBookingSchema),
@@ -94,13 +100,30 @@ const BookSchedule: React.FC<IBookSchedule> = ({
     form.setValue("timeSlotIds", selectedSlotIds);
   }, [selectedSlotIds]);
 
+  React.useEffect(() => {
+    const totalDuration = selectedSlotIds.reduce((total, id) => {
+      const slot = timeSlots.find((slot) => slot.id === id);
+      if (slot) {
+        const startTime = getMinutesFromIsoTime(slot.startTime);
+        const endTime = getMinutesFromIsoTime(slot.endTime);
+        const duration = endTime - startTime;
+        return total + duration;
+      }
+      return total;
+    }, 0);
+    setIsBookingTime(totalDuration < minBookingTime);
+  }, [selectedSlotIds]);
+
   return (
     <FormProvider {...form}>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col">
-          <div className="flex bg-secondary py-unit-3">
-            <div className="flex justify-center items-center px-unit-5 w-[88px] border-r-1 border-white">
+          <div className="flex bg-secondary">
+            <div className="p-unit-1 flex flex-col justify-center items-center gap-y-unit-1 px-unit-5 w-[88px] border-r-1 border-white">
               <Clock className="w-unit-6 h-unit-6" color="#FFFFFF" />
+              <p className="w-full truncate text-xs text-center text-secondary-foreground">
+                Min: {getDuration(minBookingTime)}
+              </p>
             </div>
             <DaysOfWeekList
               selectedDayOfWeek={selectedDayOfWeek}
@@ -123,22 +146,8 @@ const BookSchedule: React.FC<IBookSchedule> = ({
               <div className="px-unit-5 w-[88px] flex items-center">Total:</div>
               <div className="font-light text-primary">{getTotal()} UAH</div>
             </div>
-            {Object.keys(errors).length !== 0 && (
-              <div className="px-unit-5">
-                {Object.keys(errors).map((key) => (
-                  <p key={key} className="text-sm text-destructive">
-                    {errors[key].message}
-                  </p>
-                ))}
-              </div>
-            )}
-            {error && (
-              <div className="px-unit-5">
-                <p className="text-sm text-destructive">
-                  {getApolloErrorMessage(error)}
-                </p>
-              </div>
-            )}
+            <ErrorsFrame errors={errors} />
+            <ApolloErrorFrame error={error} />
             <div className="flex justify-end gap-x-unit-4 px-unit-5">
               <Button
                 variant="ghost"
@@ -148,7 +157,10 @@ const BookSchedule: React.FC<IBookSchedule> = ({
               >
                 Cancel
               </Button>
-              <ApplyButton />
+              <PayButton
+                disabled={isMinBookingTime || isBookLoading}
+                description="Facility booking"
+              />
             </div>
           </div>
         </div>

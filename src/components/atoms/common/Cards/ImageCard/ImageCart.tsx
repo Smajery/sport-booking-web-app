@@ -3,7 +3,6 @@
 import { ImageOff, Loader2 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import process from "process";
 
 interface IImageCart {
   image: string;

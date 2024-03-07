@@ -47,7 +47,6 @@ export const GET_ONE_FACILITY_QUERY = gql`
       facilityType
       description
       location
-      minBookingTime
       images {
         image
         isMain
@@ -65,9 +64,10 @@ export const GET_ONE_FACILITY_QUERY = gql`
   }
 `;
 
-export const GET_FACILITY_SCHEDULE = gql`
+export const GET_FACILITY_SCHEDULE_QUERY = gql`
   query FindFacilitySchedule($id: Int!) {
     facility(id: $id) {
+      minBookingTime
       timeSlots {
         id
         dayOfWeek

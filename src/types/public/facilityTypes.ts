@@ -38,7 +38,6 @@ export type TFacility = {
   coveringType: ECoveringType;
   facilityType: EFacilityType;
   description: string;
-  minBookingTime: number;
   images: TImage[];
   ratingCount: number;
   avgRating: number;
@@ -49,5 +48,9 @@ export type TFacility = {
     id: string;
     value: string;
   };
+};
+
+export type TFacilitySchedule = {
+  minBookingTime: number;
   timeSlots: TimeSlot[];
 };
