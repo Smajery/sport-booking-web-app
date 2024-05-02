@@ -1,12 +1,24 @@
-FROM node:16.13-alpine as builder
-
+FROM node:18-alpine AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-COPY ./package.json ./
-RUN npm i --production
-COPY . .
-RUN npm run build
 
-FROM nginx
-EXPOSE 3000
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY package.json yarn.lock ./
+
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY . .
+
+FROM node:18-alpine AS runner
+WORKDIR /app
+
+ENV NEXT_TELEMETRY_DISABLED 1
+
+COPY . .
+
+RUN yarn install
+
+EXPOSE 9000
+
+ENV PORT 9000
+
+CMD ["yarn", "dev"]

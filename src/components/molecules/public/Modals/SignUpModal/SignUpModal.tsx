@@ -19,7 +19,6 @@ import { Mail, Lock } from "lucide-react";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 
 interface ISignUpModal {
-  isSignUpModal: boolean;
   setIsSignUpModal: (value: boolean) => void;
 }
 
@@ -34,10 +33,7 @@ const signUpFormSchema = z
     path: ["confirmPassword"],
   });
 
-const SignUpModal: React.FC<ISignUpModal> = ({
-  isSignUpModal,
-  setIsSignUpModal,
-}) => {
+const SignUpModal: React.FC<ISignUpModal> = ({ setIsSignUpModal }) => {
   const [registerUserMutation, { loading, error }] = useMutation(
     REGISTER_USER_MUTATION,
   );
@@ -75,8 +71,6 @@ const SignUpModal: React.FC<ISignUpModal> = ({
   };
 
   const { isSubmitted, isValid, isSubmitting } = form.formState;
-
-  if (!isSignUpModal) return null;
 
   return (
     <ModalCard handleCloseModal={handleCloseModal} title="Welcome">

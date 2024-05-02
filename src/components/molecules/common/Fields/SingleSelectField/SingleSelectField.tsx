@@ -9,7 +9,7 @@ type TSelectedItem = {
 };
 
 interface ISingleSelectField {
-  form: UseFormReturn;
+  form: any;
   name: string;
   labelText?: string;
   handleSelect: () => void;
@@ -23,7 +23,7 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
   handleSelect,
   selectableItems,
 }) => {
-  const { control, setValue } = form;
+  const { control, setValue } = form as UseFormReturn;
   const handleSelectItem = (
     newSelectedItem: TSelectedItem,
     isSameItem: boolean,

@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -21,7 +21,6 @@ import { jwtDecode } from "jwt-decode";
 import { setCookie } from "@/utils/helpers/cookie.helpers";
 
 interface ILoginModal {
-  isLoginModal: boolean;
   setIsLoginModal: (value: boolean) => void;
 }
 
@@ -30,10 +29,7 @@ const loginFormSchema = z.object({
   password: z.string().min(6).max(16),
 });
 
-const LoginModal: React.FC<ILoginModal> = ({
-  isLoginModal,
-  setIsLoginModal,
-}) => {
+const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
   const [loginUserMutation, { loading, error }] =
     useMutation(LOGIN_USER_MUTATION);
 
@@ -61,7 +57,7 @@ const LoginModal: React.FC<ILoginModal> = ({
       const decodedAccessToken: { exp: number } = jwtDecode(accessToken);
       const decodedRefreshToken: { exp: number } = jwtDecode(refreshToken);
 
-      setCookie("accentToken", accessToken, decodedAccessToken.exp);
+      setCookie("accessToken", accessToken, decodedAccessToken.exp);
       setCookie("refreshToken", refreshToken, decodedRefreshToken.exp);
 
       handleCloseModal();
@@ -77,8 +73,6 @@ const LoginModal: React.FC<ILoginModal> = ({
   };
 
   const { isSubmitted, isValid, isSubmitting } = form.formState;
-
-  if (!isLoginModal) return null;
 
   return (
     <ModalCard handleCloseModal={handleCloseModal} title="Welcome">

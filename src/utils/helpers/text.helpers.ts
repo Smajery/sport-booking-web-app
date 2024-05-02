@@ -2,9 +2,12 @@ export const getTitle = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
-export const getCapitalFirstLetter = (text: string) => {
-  const firstLetter = text.charAt(0).toUpperCase();
-  return `${firstLetter}.`;
+export const getAbbreviation = (fullName: string) => {
+  const firstName = fullName.split(" ")[0];
+  const lastName = fullName.split(" ")[1];
+  const firstLetter = firstName.charAt(0).toUpperCase();
+  const lastLetter = lastName.charAt(0).toUpperCase();
+  return `${firstLetter}${lastLetter}`;
 };
 
 export const getFormattedText = (text: string) => {

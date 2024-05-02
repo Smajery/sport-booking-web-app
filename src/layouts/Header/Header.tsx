@@ -8,19 +8,30 @@ import { siteConfig } from "@/config/site";
 import SportBookingLogo from "@/components/atoms/common/Logos/SportBookingLogo/SportBookingLogo";
 import NavAuthButtonsList from "@/components/molecules/public/Lists/NavAuthButtonsList/NavAuthButtonsList";
 import { clsx } from "clsx";
+import HeaderContent from "@/components/molecules/common/Contents/HeaderContent/HeaderContent";
+import { locales, TLocale } from "@/navigation";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
-  const { user } = useAuthContext();
+  const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = React.useState(false);
 
-  const headerRef = React.useRef(null);
-  const [isFixed, setIsFixed] = React.useState(false);
+  const pathParts = pathname
+    .split("/")
+    .filter(Boolean)
+    .filter((part) => !locales.includes(part as TLocale));
+
+  const currentSubNavItems = pathParts.map((part, index) => ({
+    text: part,
+    href: `/${pathParts.slice(0, index + 1).join("/")}`,
+  }));
 
   React.useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      const shouldFixHeader = scrollTop > 12;
+      const shouldFixHeader = scrollTop > 10;
 
-      setIsFixed(shouldFixHeader);
+      setIsScrolled(shouldFixHeader);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -29,50 +40,15 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const renderHeaderContent = () => {
-    // if (user) {
-    //   return <HeaderTemplate />;
-    // }
-    if (user) {
-      return (
-        <div className="container mx-auto">
-          <NavigationMenu className="max-w-full justify-between hidden md:flex">
-            <NavLinksList navItems={siteConfig.privateNavItems} />
-          </NavigationMenu>
-        </div>
-      );
-    } else {
-      return (
-        <div className="container mx-auto">
-          <NavigationMenu className="py-unit-5 max-w-full justify-between hidden md:flex">
-            <div className="flex items-center">
-              <SportBookingLogo isFixedHeader={isFixed} className="mr-unit-5" />
-              <NavLinksList navItems={siteConfig.publicNavItems} />
-            </div>
-            <NavAuthButtonsList />
-          </NavigationMenu>
-        </div>
-      );
-    }
-  };
 
   return (
     <header
-      style={{
-        height: isFixed ? `${headerRef.current?.offsetHeight}px` : "auto",
-      }}
-      className="mb-unit-5"
+      className={clsx("sticky top-0 mb-unit-5 z-50", {
+        "pt-unit-3 border-b-1 border-border": !isScrolled,
+        "bg-background shadow-bottom-sm": isScrolled,
+      })}
     >
-      <div
-        ref={headerRef}
-        id="headerId"
-        className={clsx("", {
-          "w-full fixed bg-primary shadow-bottom-sm z-[1000]": isFixed,
-          "pt-unit-3 border-b-1 border-border": !isFixed,
-        })}
-      >
-        {renderHeaderContent()}
-      </div>
+      <HeaderContent isScrolled={isScrolled} />
     </header>
   );
 };

@@ -17,6 +17,14 @@ const ModalCard: React.FC<IModalCard> = ({
   children,
   title,
 }) => {
+  React.useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
     <div
       className="fixed left-0 top-0 w-screen h-screen bg-black/30 flex items-center justify-center z-[2000]"

@@ -2,25 +2,19 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import LoginModal from "@/components/molecules/public/Modals/LoginModal/LoginModal";
+import { useModalContext } from "@/providers/ModalProvider/ModalProvider";
 
 interface ILoginButton {
   children: string;
 }
 
 const LoginButton: React.FC<ILoginButton> = ({ children }) => {
-  const [isLoginModal, setIsLoginModal] = React.useState<boolean>(false);
+  const { setIsLoginModal } = useModalContext();
 
   return (
-    <>
-      <Button variant="outlinePrimary" onClick={() => setIsLoginModal(true)}>
-        {children}
-      </Button>
-      <LoginModal
-        isLoginModal={isLoginModal}
-        setIsLoginModal={setIsLoginModal}
-      />
-    </>
+    <Button variant="outlinePrimary" onClick={() => setIsLoginModal(true)}>
+      {children}
+    </Button>
   );
 };
 

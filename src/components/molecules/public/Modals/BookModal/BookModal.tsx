@@ -10,16 +10,9 @@ import BookSchedule from "@/components/atoms/public/Schedules/BookSchedule/BookS
 interface IBookModal {
   facilityId: number;
   setIsModal: (value: boolean) => void;
-  isModal: boolean;
 }
 
-const BookModal: React.FC<IBookModal> = ({
-  setIsModal,
-  isModal,
-  facilityId,
-}) => {
-  if (!isModal) return null;
-
+const BookModal: React.FC<IBookModal> = ({ setIsModal, facilityId }) => {
   const { data, loading, error } = useQuery(GET_FACILITY_SCHEDULE_QUERY, {
     variables: {
       id: facilityId,

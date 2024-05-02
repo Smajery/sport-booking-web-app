@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import TimeSlotsList from "@/components/molecules/public/Lists/TimeSlotsList/TimeSlotsList";
 import PriceSlotsList from "@/components/molecules/public/Lists/PriceSlotsList/PriceSlotsList";
 import DaysOfWeekList from "@/components/molecules/public/Lists/DaysOfWeekList/DaysOfWeekList";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@apollo/client";
@@ -70,7 +70,7 @@ const BookSchedule: React.FC<IBookSchedule> = ({
 
   const {
     formState: { errors },
-  } = form;
+  } = form as UseFormReturn;
 
   const filteredTimeSlots = timeSlots.filter(
     (timeSlot) =>

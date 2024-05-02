@@ -2,25 +2,19 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import SignUpModal from "@/components/molecules/public/Modals/SignUpModal/SignUpModal";
+import { useModalContext } from "@/providers/ModalProvider/ModalProvider";
 
 interface ISignUpButton {
   children: string;
 }
 
 const SignUpButton: React.FC<ISignUpButton> = ({ children }) => {
-  const [isSignUpModal, setIsSignUpModal] = React.useState<boolean>(false);
+  const { setIsSignUpModal } = useModalContext();
 
   return (
-    <>
-      <Button variant="outlinePrimary" onClick={() => setIsSignUpModal(true)}>
-        {children}
-      </Button>
-      <SignUpModal
-        isSignUpModal={isSignUpModal}
-        setIsSignUpModal={setIsSignUpModal}
-      />
-    </>
+    <Button variant="outlinePrimary" onClick={() => setIsSignUpModal(true)}>
+      {children}
+    </Button>
   );
 };
 

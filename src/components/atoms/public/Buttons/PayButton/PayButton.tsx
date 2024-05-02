@@ -1,20 +1,15 @@
 "use client";
 
 import React from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { VariantProps } from "class-variance-authority";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { v4 as uuidv4 } from "uuid";
 
-interface IApplyBookButton
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  amount: number;
+interface IApplyBookButton extends ButtonProps {
   description: string;
   asChild?: boolean;
 }
 
-const ApplyButton: React.FC<IApplyBookButton> = ({
-  amount,
+const PayButton: React.FC<IApplyBookButton> = ({
   description,
   asChild,
   ...props
@@ -23,7 +18,6 @@ const ApplyButton: React.FC<IApplyBookButton> = ({
     version: 3,
     public_key: process.env.NEXT_PUBLIC_LIQPAY_PUBLIC_KEY as string,
     action: "pay",
-    amount: amount,
     currency: "UAH",
     description: description,
     order_id: uuidv4(),
@@ -35,7 +29,9 @@ const ApplyButton: React.FC<IApplyBookButton> = ({
   const dataBase64 = Buffer.from(JSON.stringify(data)).toString("base64");
 
   const handlePayment = async () => {
-    const liqPayCheckoutUrl = `https://www.liqpay.ua/api/3/checkout?data=${encodeURIComponent(dataBase64)}`;
+    // const liqPayCheckoutUrl = `https://www.liqpay.ua/api/3/checkout?data=${encodeURIComponent(dataBase64)}`;
+    const liqPayCheckoutUrl =
+      "https://www.liqpay.ua/en/checkout/sandbox_i69297607762";
     window.location.href = liqPayCheckoutUrl;
   };
 
@@ -52,4 +48,4 @@ const ApplyButton: React.FC<IApplyBookButton> = ({
   );
 };
 
-export default ApplyButton;
+export default PayButton;

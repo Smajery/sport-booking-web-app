@@ -11,12 +11,12 @@ const anton = Anton({
 
 interface ISportBookingLogo {
   className?: string;
-  isFixedHeader: boolean;
+  isScrolledHeader: boolean;
 }
 
 const SportBookingLogo: React.FC<ISportBookingLogo> = ({
   className = "",
-  isFixedHeader,
+  isScrolledHeader,
 }) => {
   return (
     <div className={`flex flex-col ${className} ${anton.className}`}>
@@ -25,8 +25,8 @@ const SportBookingLogo: React.FC<ISportBookingLogo> = ({
         className={clsx(
           "uppercase font-extrabold text-2xl leading-6 text-center",
           {
-            "text-background": isFixedHeader,
-            "text-primary": !isFixedHeader,
+            "text-background": isScrolledHeader,
+            "text-primary": !isScrolledHeader,
           },
         )}
       >

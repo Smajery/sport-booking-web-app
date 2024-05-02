@@ -38,6 +38,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
     facilityType,
     coveringType,
   } = data.facility as TFacility;
+
   return (
     <section className="w-full flex flex-col pt-unit-10 gap-y-unit-10">
       <MultiImageAvatar

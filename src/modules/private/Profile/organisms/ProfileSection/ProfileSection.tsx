@@ -1,17 +1,13 @@
-import { GET_USER_QUERY } from "@/apollo/query/admin/user";
-import { useQuery } from "@apollo/client";
+"use client";
+import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 
 const ProfileSection = () => {
-  const { data, loading, error } = useQuery(GET_USER_QUERY);
+  const { user } = useAuthContext();
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (!user) return null;
 
-  if (error) {
-    return <div>Something went wrong</div>;
-  }
-  const { fullname } = data.data;
+  const { fullname } = user;
+
   return <section>{fullname}</section>;
 };
 

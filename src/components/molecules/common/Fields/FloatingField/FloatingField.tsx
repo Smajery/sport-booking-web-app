@@ -13,7 +13,7 @@ import { clsx } from "clsx";
 import { UseFormReturn } from "react-hook-form";
 
 interface IFloatingField {
-  form: UseFormReturn;
+  form: any;
   IconComponent?: any;
   name: string;
   type: string;
@@ -36,7 +36,7 @@ const FloatingField: React.FC<IFloatingField> = ({
   const {
     formState: { isSubmitted },
     register,
-  } = form;
+  } = form as UseFormReturn;
 
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => setIsFocused(true);

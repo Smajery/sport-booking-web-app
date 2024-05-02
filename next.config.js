@@ -5,7 +5,7 @@ const nextConfig = {
   swcMinify: true,
   reactStrictMode: true,
   env: {
-    SERVER_URL: process.env.NEXT_PUBLIC_API_URL,
+    SERVER_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
   output: "standalone",
 };

@@ -85,7 +85,7 @@ const HomeSection = () => {
               variant="none"
               size="lg"
               onClick={() => setIsShowMap(true)}
-              className="fixed top-108 w-[1000px] h-[56px] border-2 border-border bg-white/50 z-[1000] hover:bg-background"
+              className="fixed top-108 w-[1000px] h-[56px] border-2 border-border bg-white/50 z-10 hover:bg-background"
             >
               <div className="flex items-start gap-x-unit-1">
                 Show map <Map className="w-unit-5 h-unit-5" color="#040C11" />
@@ -126,7 +126,7 @@ const HomeSection = () => {
             <ClustererMap
               selectedLocationId={selectedLocationId}
               setSelectedLocationId={setSelectedLocationId}
-              facilities={!loading ? data.findAll.facilities : []}
+              facilities={!loading && !error ? data.findAll.facilities : []}
             />
           </>
         )}
