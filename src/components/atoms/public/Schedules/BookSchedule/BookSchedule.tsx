@@ -1,33 +1,33 @@
 "use client";
 
 import React from "react";
-import { TimeSlot } from "@/types/commonTypes";
+import { TTimeSlot } from "@/types/commonTypes";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TimeSlotsList from "@/components/molecules/public/Lists/TimeSlotsList/TimeSlotsList";
 import PriceSlotsList from "@/components/molecules/public/Lists/PriceSlotsList/PriceSlotsList";
 import DaysOfWeekList from "@/components/molecules/public/Lists/DaysOfWeekList/DaysOfWeekList";
-import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@apollo/client";
-import { CREATE_BOOKING } from "@/apollo/mutations/booking";
+import { CREATE_BOOKING_MUTATION } from "@/apollo/mutations/booking";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { getMinutesFromIsoTime } from "@/utils/helpers/time.helpers";
-import ErrorsFrame from "@/components/molecules/common/Frames/ErrorsFrame/ErrorsFrame";
+import FormErrorsFrame from "@/components/molecules/common/Frames/FormErrorsFrame/FormErrorsFrame";
 import ApolloErrorFrame from "@/components/molecules/common/Frames/ApolloErrorFrame/ApolloErrorFrame";
 import PayButton from "@/components/atoms/public/Buttons/PayButton/PayButton";
 import { getDuration } from "@/utils/helpers/text.helpers";
 
-const formCreateBookingSchema = z.object({
+const createBookingFormSchema = z.object({
   timeSlotIds: z.array(z.number()).min(1, "At least one booking"),
 });
 
 interface IBookSchedule {
   facilityId: number;
   minBookingTime: number;
-  timeSlots: TimeSlot[];
+  timeSlots: TTimeSlot[];
   handleCloseModal: () => void;
 }
 
@@ -37,21 +37,22 @@ const BookSchedule: React.FC<IBookSchedule> = ({
   timeSlots,
   handleCloseModal,
 }) => {
-  const [createBooking, { loading: isBookLoading, error }] =
-    useMutation(CREATE_BOOKING);
+  const [createBooking, { loading: isBookLoading, error }] = useMutation(
+    CREATE_BOOKING_MUTATION,
+  );
 
   const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<number>(1);
   const [selectedSlotIds, setSelectedSlotIds] = React.useState<number[]>([]);
   const [isMinBookingTime, setIsBookingTime] = React.useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof formCreateBookingSchema>>({
-    resolver: zodResolver(formCreateBookingSchema),
+  const form = useForm<z.infer<typeof createBookingFormSchema>>({
+    resolver: zodResolver(createBookingFormSchema),
     defaultValues: {
       timeSlotIds: selectedSlotIds,
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formCreateBookingSchema>) => {
+  const onSubmit = async (values: z.infer<typeof createBookingFormSchema>) => {
     try {
       const { timeSlotIds } = values;
       await createBooking({
@@ -70,7 +71,7 @@ const BookSchedule: React.FC<IBookSchedule> = ({
 
   const {
     formState: { errors },
-  } = form as UseFormReturn;
+  } = form;
 
   const filteredTimeSlots = timeSlots.filter(
     (timeSlot) =>
@@ -146,7 +147,7 @@ const BookSchedule: React.FC<IBookSchedule> = ({
               <div className="px-unit-5 w-[88px] flex items-center">Total:</div>
               <div className="font-light text-primary">{getTotal()} UAH</div>
             </div>
-            <ErrorsFrame errors={errors} />
+            <FormErrorsFrame errors={errors} />
             <ApolloErrorFrame error={error} />
             <div className="flex justify-end gap-x-unit-4 px-unit-5">
               <Button

@@ -39,8 +39,12 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
     coveringType,
   } = data.facility as TFacility;
 
+  const isComma = (index: number, arrayLength: number) => {
+    return index < arrayLength - 1;
+  };
+
   return (
-    <section className="w-full flex flex-col pt-unit-10 gap-y-unit-10">
+    <section className="w-full flex flex-col pt-[60px] gap-y-unit-10">
       <MultiImageAvatar
         images={images}
         imagesName={name}
@@ -54,7 +58,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
                 <p className="text-3xl">{name}</p>
               </div>
               <p className="text-lg font-light">
-                {address}, {district} district
+                {address}, {district.name} district
               </p>
             </div>
             <RatingFrame avgRating={avgRating} ratingCount={ratingCount} />
@@ -67,7 +71,16 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
               <p>Covering:</p>
             </div>
             <div className="flex flex-col text-lg">
-              <p>{getTitle(sportType)}</p>
+              <ul className="flex gap-x-unit-1">
+                {sportType.map((sport, index) => (
+                  <li key={sport}>
+                    <p>
+                      {getTitle(sport)}
+                      {isComma(index, sportType.length) && ","}
+                    </p>
+                  </li>
+                ))}
+              </ul>
               <p>{getTitle(facilityType)}</p>
               <p>{getFormattedText(coveringType)}</p>
             </div>

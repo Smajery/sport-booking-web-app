@@ -43,9 +43,9 @@ const Header = () => {
 
   return (
     <header
-      className={clsx("sticky top-0 mb-unit-5 z-50", {
-        "pt-unit-3 border-b-1 border-border": !isScrolled,
-        "bg-background shadow-bottom-sm": isScrolled,
+      className={clsx("sticky top-0 z-50", {
+        "border-b-1 border-border": !isScrolled,
+        "bg-primary shadow-bottom-sm": isScrolled,
       })}
     >
       <HeaderContent isScrolled={isScrolled} />

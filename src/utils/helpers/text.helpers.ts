@@ -3,13 +3,10 @@ export const getTitle = (text: string) => {
 };
 
 export const getAbbreviation = (fullName: string) => {
-  const firstName = fullName.split(" ")[0];
-  const lastName = fullName.split(" ")[1];
-  const firstLetter = firstName.charAt(0).toUpperCase();
-  const lastLetter = lastName.charAt(0).toUpperCase();
-  return `${firstLetter}${lastLetter}`;
-};
+  const [firstName = "", lastName = ""] = fullName.split(" ");
 
+  return (firstName[0] || "").toUpperCase() + (lastName[0] || "").toUpperCase();
+};
 export const getFormattedText = (text: string) => {
   const formattedText = text.replace(/_/g, " ");
   return getTitle(formattedText);

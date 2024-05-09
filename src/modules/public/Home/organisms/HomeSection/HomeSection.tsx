@@ -71,7 +71,7 @@ const HomeSection = () => {
   };
 
   return (
-    <section className="relative w-full flex gap-x-unit-10 justify-between">
+    <section className="relative w-full flex gap-x-unit-10 justify-between pt-unit-5">
       <div className="w-[400px]">
         <FacilityFilter
           handleSetFilterValues={handleSetFilterValues}

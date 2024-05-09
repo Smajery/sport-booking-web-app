@@ -1,4 +1,11 @@
-import { TImage, TimeSlot } from "@/types/commonTypes";
+import {
+  TBooking,
+  TCity,
+  TDistrict,
+  TImage,
+  TTimeSlot,
+} from "@/types/commonTypes";
+import { TUser } from "@/types/private/profileTypes";
 
 export enum ESportType {
   basketball = "basketball",
@@ -28,29 +35,35 @@ export type TFacilityFilter = {
   district?: string | null;
 };
 
+type TUserRate = {
+  id: string;
+  value: string;
+};
+
 export type TFacility = {
-  id: number;
-  name: string;
-  district: string;
   address: string;
-  location: string;
-  sportType: ESportType;
-  coveringType: ECoveringType;
-  facilityType: EFacilityType;
-  description: string;
-  images: TImage[];
-  ratingCount: number;
   avgRating: number;
-  _count: {
-    ratings: number;
-  };
-  currentUserRate: {
-    id: string;
-    value: string;
-  };
+  avgPrice: number;
+  bookings: TBooking[];
+  city: TCity;
+  coveringType: ECoveringType;
+  currentUserIsFavorite: boolean;
+  currentUserRate: TUserRate;
+  description: string;
+  district: TDistrict;
+  facilityType: EFacilityType;
+  id: number;
+  images: TImage[];
+  location: string;
+  name: string;
+  owner: TUser;
+  ownerId: number;
+  ratingCount: number;
+  sportType: ESportType[];
+  minBookingTime: number;
 };
 
 export type TFacilitySchedule = {
   minBookingTime: number;
-  timeSlots: TimeSlot[];
+  timeSlots: TTimeSlot[];
 };

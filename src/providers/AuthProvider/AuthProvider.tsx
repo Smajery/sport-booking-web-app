@@ -5,17 +5,16 @@ import React from "react";
 
 import { ROUTE_HOME } from "@/utils/constants/routes.constants";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
-import { TUser } from "@/types/private/profileTypes";
+import { TUserAvatar } from "@/types/private/profileTypes";
 import { deleteCookie, getCookie } from "@/utils/helpers/cookie.helpers";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { GET_USER_QUERY } from "@/apollo/query/admin/user";
+import { GET_USER_AVATAR } from "@/apollo/query/admin/user";
 import { LOGOUT_USER_MUTATION } from "@/apollo/mutations/auth";
 
 type AuthContextData = {
   isLogoutLoading: boolean;
   isAuthLoading: boolean;
   isAuth: boolean;
-  user: TUser | null;
 };
 
 type AuthActions = {
@@ -34,29 +33,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthLoading, setIsAuthLoading] = React.useState<boolean>(true);
   const [isLogoutLoading, setIsLogoutLoading] = React.useState<boolean>(false);
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
-  const [user, setUser] = React.useState<TUser | null>(null);
-
-  const [getUser] = useLazyQuery(GET_USER_QUERY, {
-    onCompleted: (data) => setUser(data.data),
-    onError: (e) =>
-      ErrorHandler.handle(e, { componentName: "AuthProvider__getUser" }),
-  });
 
   const [logoutUserMutation] = useMutation(LOGOUT_USER_MUTATION);
-
-  React.useEffect(() => {
-    if (!isAuthLoading && isAuth) {
-      getUser();
-    }
-  }, [isAuth, isAuthLoading]);
 
   const handleLogout = async () => {
     setIsLogoutLoading(true);
     try {
       await logoutUserMutation();
-      setUser(null);
       setIsAuth(false);
       deleteCookie("accessToken");
+      deleteCookie("refreshToken");
       push(ROUTE_HOME);
     } catch (e) {
       ErrorHandler.handle(e, {
@@ -77,7 +63,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     isAuthLoading,
     isLogoutLoading,
     isAuth,
-    user,
   };
 
   const authActions: AuthActions = {

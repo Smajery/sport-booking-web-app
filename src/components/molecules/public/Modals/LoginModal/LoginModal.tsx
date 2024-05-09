@@ -19,6 +19,7 @@ import { Mail, Lock } from "lucide-react";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import { jwtDecode } from "jwt-decode";
 import { setCookie } from "@/utils/helpers/cookie.helpers";
+import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 
 interface ILoginModal {
   setIsLoginModal: (value: boolean) => void;
@@ -30,6 +31,8 @@ const loginFormSchema = z.object({
 });
 
 const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
+  const { setIsAuth } = useAuthContext();
+
   const [loginUserMutation, { loading, error }] =
     useMutation(LOGIN_USER_MUTATION);
 
@@ -60,8 +63,9 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
       setCookie("accessToken", accessToken, decodedAccessToken.exp);
       setCookie("refreshToken", refreshToken, decodedRefreshToken.exp);
 
+      setIsAuth(true);
+
       handleCloseModal();
-      form.reset();
     } catch (e) {
       ErrorHandler.handle(e, { componentName: "LoginModal__onSubmit" });
     }

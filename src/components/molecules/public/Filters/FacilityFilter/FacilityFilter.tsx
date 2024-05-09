@@ -8,7 +8,7 @@ import FloatingField from "@/components/molecules/common/Fields/FloatingField/Fl
 import { Slider } from "@/components/ui/slider";
 import { TFacilityFilter } from "@/types/public/facilityTypes";
 import SingleSelectField from "@/components/molecules/common/Fields/SingleSelectField/SingleSelectField";
-import { facilityConfig } from "@/config/facility";
+import { facilityConfig } from "@/config/public/facility";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 
@@ -17,7 +17,7 @@ interface ISearchForm {
   isFetchLoading: boolean;
 }
 
-const formFilterSchema = z.object({
+const filterFormSchema = z.object({
   search: z.string().nullable(),
   coveringType: z
     .object({
@@ -51,8 +51,8 @@ const FilterForm: React.FC<ISearchForm> = ({
 }) => {
   const facilityFilterTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
-  const form = useForm<z.infer<typeof formFilterSchema>>({
-    resolver: zodResolver(formFilterSchema),
+  const form = useForm<z.infer<typeof filterFormSchema>>({
+    resolver: zodResolver(filterFormSchema),
     defaultValues: {
       search: null,
       coveringType: null,
@@ -62,7 +62,7 @@ const FilterForm: React.FC<ISearchForm> = ({
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formFilterSchema>) => {
+  const onSubmit = async (values: z.infer<typeof filterFormSchema>) => {
     const { search, sportType, coveringType, district, facilityType } = values;
     const modifiedValues = {
       search: search && search.length !== 0 ? search : null,

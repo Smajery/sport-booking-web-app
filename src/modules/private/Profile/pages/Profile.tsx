@@ -2,7 +2,7 @@ import ProfileSection from "@/modules/private/Profile/organisms/ProfileSection/P
 
 const Profile = () => {
   return (
-    <div className="container mx-auto flex justify-center">
+    <div className="w-full flex flex-col">
       <ProfileSection />
     </div>
   );

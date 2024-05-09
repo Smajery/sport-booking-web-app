@@ -12,13 +12,26 @@ export const GET_ALL_FACILITIES_QUERY = gql`
       facilities {
         id
         name
-        district
+        district {
+          city {
+            districts {
+              id
+              name
+            }
+            id
+            name
+          }
+          id
+          name
+        }
         address
         sportType
         coveringType
         facilityType
         location
         description
+        avgPrice
+        currentUserIsFavorite
         minBookingTime
         images {
           image
@@ -26,9 +39,6 @@ export const GET_ALL_FACILITIES_QUERY = gql`
         }
         ratingCount
         avgRating
-        _count {
-          ratings
-        }
       }
       totalCount
     }
@@ -40,7 +50,18 @@ export const GET_ONE_FACILITY_QUERY = gql`
     facility(id: $id) {
       id
       name
-      district
+      district {
+        city {
+          districts {
+            id
+            name
+          }
+          id
+          name
+        }
+        id
+        name
+      }
       address
       sportType
       coveringType
@@ -53,9 +74,6 @@ export const GET_ONE_FACILITY_QUERY = gql`
       }
       ratingCount
       avgRating
-      _count {
-        ratings
-      }
       currentUserRate {
         id
         value

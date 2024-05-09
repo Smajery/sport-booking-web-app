@@ -1,6 +1,6 @@
 "use client";
 
-import { ApolloLink, HttpLink } from "@apollo/client";
+import { ApolloLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
@@ -8,16 +8,37 @@ import {
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { getCookie } from "@/utils/helpers/cookie.helpers";
-import * as process from "process";
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
+import { setContext } from "@apollo/client/link/context";
 
-function makeClient() {
-  const httpLink = new HttpLink({
-    uri: "http://localhost:8000/graphql",
-    headers: {
-      authorization: `Bearer ${getCookie("accessToken")}`,
-    },
-    fetchOptions: { cache: "no-store" },
+const makeClient = () => {
+  const httpLink = createUploadLink({
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
   });
+
+  const authLink = setContext((_, { headers, ...rest }) => {
+    const token = getCookie("accessToken");
+
+    if (rest.authRequired) {
+      return {
+        headers: {
+          ...headers,
+          authorization: token ? `Bearer ${token}` : "",
+        },
+      };
+    }
+
+    return { headers };
+  });
+
+  const link =
+    typeof window === "undefined"
+      ? ApolloLink.from([
+          new SSRMultipartLink({ stripDefer: true }),
+          authLink,
+          httpLink,
+        ])
+      : ApolloLink.from([authLink, httpLink]);
 
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache({
@@ -29,21 +50,18 @@ function makeClient() {
                 return mergeObjects(existing, incoming);
               },
             },
+            getProfile: {
+              merge(existing, incoming, { mergeObjects }) {
+                return mergeObjects(existing, incoming);
+              },
+            },
           },
         },
       },
     }),
-    link:
-      typeof window === "undefined"
-        ? ApolloLink.from([
-            new SSRMultipartLink({
-              stripDefer: true,
-            }),
-            httpLink,
-          ])
-        : httpLink,
+    link: link,
   });
-}
+};
 
 export function ApolloProvider({ children }: React.PropsWithChildren) {
   return (

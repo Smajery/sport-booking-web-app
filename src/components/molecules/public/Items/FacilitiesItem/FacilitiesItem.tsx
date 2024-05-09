@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import CompactRatingFrame from "@/components/molecules/public/Frames/CompactRatingFrame/CompactRatingFrame";
 import { useRouter } from "next/navigation";
 import { ROUTE_FACILITY } from "@/utils/constants/routes.constants";
-import { getTitle } from "@/utils/helpers/text.helpers";
+import { getDuration, getTitle } from "@/utils/helpers/text.helpers";
 
 interface IFacilitiesItem {
   facility: TFacility;
@@ -28,6 +28,9 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
     ratingCount,
     sportType,
     district,
+    currentUserIsFavorite,
+    avgPrice,
+    minBookingTime,
   } = facility;
 
   const [isFavoriteHovered, setIsFavoriteHovered] =
@@ -54,7 +57,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
               onMouseEnter={() => setIsFavoriteHovered(true)}
               onMouseLeave={() => setIsFavoriteHovered(false)}
             >
-              {isFavoriteHovered ? (
+              {currentUserIsFavorite || isFavoriteHovered ? (
                 <Image
                   width="24"
                   height="24"
@@ -72,7 +75,9 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
             </Button>
           </div>
           <div className="flex justify-start gap-x-unit-1">
-            <Badge variant="background">200 ₴/hour</Badge>
+            <Badge variant="background">
+              ~{avgPrice} ₴/{getDuration(minBookingTime)}
+            </Badge>
           </div>
         </div>
       </div>
@@ -81,25 +86,31 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           <p className="truncate text-xl">{name}</p>
           <CompactRatingFrame avgRating={avgRating} ratingCount={ratingCount} />
         </div>
-        <div className="mt-unit-1 flex flex-col gap-y-unit-1">
+        <div className="mt-unit-1 flex flex-col gap-y-unit-2">
           <div className="flex items-start gap-x-unit-1">
             <Badge className="gap-x-unit-2">
               <MapPin className="mt-unit-1 w-unit-4 h-unit-4" color="#FFFFFF" />
               <p className="text-ellipsis line-clamp-2">{address}</p>
             </Badge>
-            <Badge>{district}</Badge>
+            <Badge>{district.name}</Badge>
           </div>
           <Badge variant="accent" className="gap-x-unit-2">
             <Text className="mt-unit-1 w-unit-4 h-unit-4" color="#FFFFFF" />
             <p className="text-ellipsis line-clamp-2">{description}</p>
           </Badge>
-          <Badge variant="secondary" className="gap-x-unit-2">
-            <Hash
-              className="mt-[2px] w-unit-4 h-unit-4 shrink-0"
-              color="#FFFFFF"
-            />
-            <p className="truncate">{getTitle(sportType)}</p>
-          </Badge>
+          <ul className="flex gap-x-unit-1">
+            {sportType.map((sport) => (
+              <li key={sport}>
+                <Badge variant="secondary" className="gap-x-unit-2">
+                  <Hash
+                    className="mt-[2px] w-unit-4 h-unit-4 shrink-0"
+                    color="#FFFFFF"
+                  />
+                  <p className="truncate">{getTitle(sport)}</p>
+                </Badge>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </li>

@@ -8,15 +8,19 @@ import { siteConfig } from "@/config/site";
 import SportBookingLogo from "@/components/atoms/common/Logos/SportBookingLogo/SportBookingLogo";
 import NavAuthButtonsList from "@/components/molecules/public/Lists/NavAuthButtonsList/NavAuthButtonsList";
 import HeaderTemplate from "@/layouts/Header/templates/HeaderTemplate/HeaderTemplate";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getAbbreviation } from "@/utils/helpers/text.helpers";
+import { LogOut } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { ROUTE_PROFILE } from "@/utils/constants/routes.constants";
+import UserHeaderAvatar from "@/components/atoms/private/Avatars/UserHeaderAvatar/UserHeaderAvatar";
 
 interface IHeaderContent {
   isScrolled: boolean;
 }
 
 const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
-  const { isAuth, isAuthLoading, user } = useAuthContext();
+  const { push } = useRouter();
+  const { isAuth, isAuthLoading, handleLogout } = useAuthContext();
 
   const renderLeftNavContent = () => {
     if (isAuth) {
@@ -25,14 +29,27 @@ const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
   };
 
   const renderRightNavContent = () => {
-    if (isAuth && user) {
+    if (isAuth) {
       return (
-        <Avatar>
-          {user.avatar && <AvatarImage src={user.avatar} />}
-          <AvatarFallback>
-            {user.fullname ? getAbbreviation(user.fullname) : ""}
-          </AvatarFallback>
-        </Avatar>
+        <div className="flex items-center gap-x-unit-4">
+          <Button
+            variant="none"
+            size="none"
+            onClick={() => push(ROUTE_PROFILE)}
+          >
+            Profile
+          </Button>
+          <UserHeaderAvatar />
+          <Button
+            variant="none"
+            size="none"
+            className=""
+            asChild
+            onClick={handleLogout}
+          >
+            <LogOut className="w-unit-5 h-unit-5" />
+          </Button>
+        </div>
       );
     } else {
       return <NavAuthButtonsList />;
@@ -42,8 +59,8 @@ const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
   return isAuthLoading ? (
     <HeaderTemplate />
   ) : (
-    <div className="container mx-auto">
-      <NavigationMenu className="py-unit-5 max-w-full justify-between hidden md:flex">
+    <div className="py-unit-5 container mx-auto">
+      <NavigationMenu className="max-w-full justify-between hidden md:flex">
         <div className="flex items-center">
           <SportBookingLogo
             isScrolledHeader={isScrolled}

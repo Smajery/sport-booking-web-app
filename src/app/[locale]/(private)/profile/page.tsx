@@ -1,4 +1,5 @@
-import Profile from "@/modules/private/Profile/pages";
+import { redirect } from "@/navigation";
+import { ROUTE_PROFILE } from "@/utils/constants/routes.constants";
 
 export const metadata = {
   title: "Profile",
@@ -6,7 +7,7 @@ export const metadata = {
 };
 
 const ProfilePage = () => {
-  return <Profile />;
+  return redirect(ROUTE_PROFILE);
 };
 
 export default ProfilePage;

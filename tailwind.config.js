@@ -15,11 +15,16 @@ module.exports = {
         },
 
         foreground: "hsl(var( --foreground))",
-        "muted-foreground": "hsl(var( --muted-foreground))",
-        "muted-foreground-100": "hsl(var( --muted-foreground-100))",
+
+        muted: {
+          DEFAULT: "hsl(var( --muted))",
+          foreground: "hsl(var( --muted-foreground))",
+          "foreground-100": "hsl(var( --muted-foreground-100))",
+        },
 
         primary: {
           DEFAULT: "hsl(var(--primary))",
+          300: "hsl(var(--primary-300))",
           foreground: "hsl(var(--primary-foreground))",
         },
 
@@ -33,12 +38,29 @@ module.exports = {
           foreground: "hsl(var(--accent-foreground))",
         },
 
-        border: "hsl(var(--border))",
-        destructive: "hsl(var(--destructive))",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
 
         success: "hsl(var(--success))",
         warning: "hsl(var(--warning))",
         danger: "hsl(var(--danger))",
+
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        radius: "hsl(var(--radius))",
       },
 
       screens: {
