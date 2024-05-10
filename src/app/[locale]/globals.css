@@ -117,8 +117,10 @@
   .primary-gradient-225 {
     background: linear-gradient(225deg, #ffffff, #ff8749);
   }
-  .book-gradient {
+
+  .variant-gradient {
     background: linear-gradient(to right, #ff8749, #ff9398);
+    color: #ffffff;
   }
 
   /* CSS Tricks */
@@ -144,7 +146,7 @@
 
   /* Floating labels */
   .floating-label {
-    @apply absolute font-normal left-unit-3 top-1/2 transform -translate-y-1/2 transition-all duration-200 ease-in pointer-events-none
+    @apply absolute font-normal left-3 top-1/2 transform -translate-y-1/2 transition-all duration-200 ease-in pointer-events-none
   }
 
   .focused .floating-label,

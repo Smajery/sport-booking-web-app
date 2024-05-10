@@ -5,7 +5,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import FloatingField from "@/components/molecules/common/Fields/FloatingField/FloatingField";
+import FloatingField from "@/components/molecules/public/Fields/FloatingField/FloatingField";
 import { Button } from "@/components/ui/button";
 import { Form as FormProvider } from "@/components/ui/form";
 
@@ -13,7 +13,7 @@ import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import GoogleAuthButton from "@/components/atoms/public/Buttons/GoogleAuthButton/GoogleAuthButton";
 import FacebookAuthButton from "@/components/atoms/public/Buttons/FacebookAuthButton/FacebookAuthButton";
 import { LOGIN_USER_MUTATION } from "@/apollo/mutations/auth";
-import ModalCard from "@/components/atoms/common/Cards/ModalCard/ModalCard";
+import ModalCard from "@/components/atoms/public/Cards/ModalCard/ModalCard";
 import { useMutation } from "@apollo/client";
 import { Mail, Lock } from "lucide-react";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
@@ -94,6 +94,7 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
               labelText="Email"
               placeholder="Ex: example@gmail.com"
               IconComponent={Mail}
+              isRequestError={!!error}
             />
             <FloatingField
               form={form}
@@ -102,6 +103,7 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
               placeholder="Minimum 6 characters"
               labelText="Password"
               IconComponent={Lock}
+              isRequestError={!!error}
             />
           </div>
 

@@ -5,7 +5,7 @@ import FacilitiesList from "@/components/molecules/public/Lists/FacilitiesList/F
 import FacilityFilter from "@/components/molecules/public/Filters/FacilityFilter/FacilityFilter";
 import { List, Map } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import ClustererMap from "@/components/atoms/common/Maps/ClustererMap/ClustererMap";
+import ClustererMap from "@/components/atoms/public/Maps/ClustererMap/ClustererMap";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_FACILITIES_QUERY } from "@/apollo/query/public/facility";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
@@ -71,14 +71,14 @@ const HomeSection = () => {
   };
 
   return (
-    <section className="relative w-full flex gap-x-unit-10 justify-between pt-unit-5">
+    <section className="relative w-full flex gap-x-10 justify-between pt-5">
       <div className="w-[400px]">
         <FacilityFilter
           handleSetFilterValues={handleSetFilterValues}
           isFetchLoading={loading}
         />
       </div>
-      <div className="w-[1000px] flex flex-col gap-y-unit-4">
+      <div className="w-[1000px] flex flex-col gap-y-4">
         {!isShowMap ? (
           <>
             <Button
@@ -87,8 +87,8 @@ const HomeSection = () => {
               onClick={() => setIsShowMap(true)}
               className="fixed top-108 w-[1000px] h-[56px] border-2 border-border bg-white/50 z-10 hover:bg-background"
             >
-              <div className="flex items-start gap-x-unit-1">
-                Show map <Map className="w-unit-5 h-unit-5" color="#040C11" />
+              <div className="flex items-start gap-x-1">
+                Show map <Map className="w-5 h-5" color="#040C11" />
               </div>
             </Button>
             <div className="h-[56px]"></div>
@@ -98,6 +98,11 @@ const HomeSection = () => {
               <div>{getApolloErrorMessage(error)}</div>
             ) : data.findAll.facilities.length === 0 && filterValues ? (
               <div>No facilities for this filter</div>
+            ) : data.findAll.facilities.length === 0 && !filterValues ? (
+              <div className="flex justify-center p-5 ">
+                We don't have any facility yet, try to come back after a few
+                minutes!
+              </div>
             ) : (
               <FacilitiesList
                 facilities={data.findAll.facilities}
@@ -114,19 +119,16 @@ const HomeSection = () => {
               onClick={() => setIsShowMap(false)}
               className="h-[56px] bg-primary text-primary-foreground border-2 border-primary shrink-0"
             >
-              <div className="flex items-start gap-x-unit-1">
+              <div className="flex items-start gap-x-1">
                 Show list{" "}
-                <List
-                  className="w-unit-5 h-unit-5"
-                  color="#FFFFFF"
-                  strokeWidth={2.5}
-                />
+                <List className="w-5 h-5" color="#FFFFFF" strokeWidth={2.5} />
               </div>
             </Button>
             <ClustererMap
               selectedLocationId={selectedLocationId}
               setSelectedLocationId={setSelectedLocationId}
               facilities={!loading && !error ? data.findAll.facilities : []}
+              className="max-h-[900px]"
             />
           </>
         )}

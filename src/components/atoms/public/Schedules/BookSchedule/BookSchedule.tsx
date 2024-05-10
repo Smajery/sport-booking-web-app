@@ -15,8 +15,8 @@ import { useMutation } from "@apollo/client";
 import { CREATE_BOOKING_MUTATION } from "@/apollo/mutations/booking";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { getMinutesFromIsoTime } from "@/utils/helpers/time.helpers";
-import FormErrorsFrame from "@/components/molecules/common/Frames/FormErrorsFrame/FormErrorsFrame";
-import ApolloErrorFrame from "@/components/molecules/common/Frames/ApolloErrorFrame/ApolloErrorFrame";
+import FormErrorsFrame from "@/components/molecules/public/Frames/FormErrorsFrame/FormErrorsFrame";
+import ApolloErrorFrame from "@/components/molecules/public/Frames/ApolloErrorFrame/ApolloErrorFrame";
 import PayButton from "@/components/atoms/public/Buttons/PayButton/PayButton";
 import { getDuration } from "@/utils/helpers/text.helpers";
 
@@ -120,8 +120,8 @@ const BookSchedule: React.FC<IBookSchedule> = ({
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col">
           <div className="flex bg-secondary">
-            <div className="p-unit-1 flex flex-col justify-center items-center gap-y-unit-1 px-unit-5 w-[88px] border-r-1 border-white">
-              <Clock className="w-unit-6 h-unit-6" color="#FFFFFF" />
+            <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-5 w-[88px] border-r-1 border-white">
+              <Clock className="w-6 h-6" color="#FFFFFF" />
               <p className="w-full truncate text-xs text-center text-secondary-foreground">
                 Min: {getDuration(minBookingTime)}
               </p>
@@ -142,14 +142,14 @@ const BookSchedule: React.FC<IBookSchedule> = ({
               />
             </div>
           </ScrollArea>
-          <div className="flex flex-col py-unit-5 border-t-1 border-border gap-y-unit-5">
+          <div className="flex flex-col py-5 border-t-1 border-border gap-y-5">
             <div className="flex text-xl">
-              <div className="px-unit-5 w-[88px] flex items-center">Total:</div>
+              <div className="px-5 w-[88px] flex items-center">Total:</div>
               <div className="font-light text-primary">{getTotal()} UAH</div>
             </div>
-            <FormErrorsFrame errors={errors} />
+            <FormErrorsFrame fieldErrors={errors} />
             <ApolloErrorFrame error={error} />
-            <div className="flex justify-end gap-x-unit-4 px-unit-5">
+            <div className="flex justify-end gap-x-4 px-5">
               <Button
                 variant="ghost"
                 size="md"

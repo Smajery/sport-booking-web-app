@@ -3,18 +3,21 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 
-import { ROUTE_HOME } from "@/utils/constants/routes.constants";
+import { routes } from "@/utils/constants/routes.constants";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
-import { TUserAvatar } from "@/types/private/profileTypes";
 import { deleteCookie, getCookie } from "@/utils/helpers/cookie.helpers";
-import { useLazyQuery, useMutation } from "@apollo/client";
-import { GET_USER_AVATAR } from "@/apollo/query/admin/user";
+import { ApolloError, useLazyQuery, useMutation } from "@apollo/client";
 import { LOGOUT_USER_MUTATION } from "@/apollo/mutations/auth";
+import { TUser } from "@/types/private/profileTypes";
+import { GET_USER_QUERY } from "@/apollo/query/admin/user";
 
 type AuthContextData = {
   isLogoutLoading: boolean;
   isAuthLoading: boolean;
   isAuth: boolean;
+  user: TUser | null;
+  userLoading: boolean;
+  userError: ApolloError | undefined;
 };
 
 type AuthActions = {
@@ -33,8 +36,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthLoading, setIsAuthLoading] = React.useState<boolean>(true);
   const [isLogoutLoading, setIsLogoutLoading] = React.useState<boolean>(false);
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
-
+  const [user, setUser] = React.useState<TUser | null>(null);
   const [logoutUserMutation] = useMutation(LOGOUT_USER_MUTATION);
+
+  const [getUser, { loading, error }] = useLazyQuery(GET_USER_QUERY, {
+    context: { authRequired: true },
+  });
 
   const handleLogout = async () => {
     setIsLogoutLoading(true);
@@ -43,7 +50,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsAuth(false);
       deleteCookie("accessToken");
       deleteCookie("refreshToken");
-      push(ROUTE_HOME);
+      push(routes.HOME);
     } catch (e) {
       ErrorHandler.handle(e, {
         componentName: "AuthProvider__handleLogout",
@@ -52,6 +59,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLogoutLoading(false);
     }
   };
+
+  const handleGetUser = async () => {
+    try {
+      const data = await getUser();
+      setUser(data.data.getProfile);
+    } catch (e) {
+      ErrorHandler.handle(e, { componentName: "AuthProvider__getUser" });
+    }
+  };
+
+  React.useEffect(() => {
+    if (isAuth) {
+      handleGetUser();
+    }
+  }, [isAuth]);
 
   React.useEffect(() => {
     const token = getCookie("accessToken");
@@ -63,6 +85,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     isAuthLoading,
     isLogoutLoading,
     isAuth,
+    user: user,
+    userLoading: loading,
+    userError: error,
   };
 
   const authActions: AuthActions = {

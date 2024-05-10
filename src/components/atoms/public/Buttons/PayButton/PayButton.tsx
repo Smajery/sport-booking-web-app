@@ -39,7 +39,7 @@ const PayButton: React.FC<IApplyBookButton> = ({
     <Button
       variant="none"
       size="md"
-      className="book-gradient text-white"
+      className="variant-gradient"
       {...props}
       onClick={handlePayment}
     >

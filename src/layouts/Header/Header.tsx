@@ -3,12 +3,12 @@
 import React from "react";
 import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 import { NavigationMenu } from "@/components/ui/navigation-menu";
-import NavLinksList from "@/components/molecules/common/Lists/NavLinksList/NavLinksList";
+import NavLinksList from "@/components/molecules/public/Lists/NavLinksList/NavLinksList";
 import { siteConfig } from "@/config/site";
-import SportBookingLogo from "@/components/atoms/common/Logos/SportBookingLogo/SportBookingLogo";
+import SportBookingLogo from "@/components/atoms/public/Logos/SportBookingLogo/SportBookingLogo";
 import NavAuthButtonsList from "@/components/molecules/public/Lists/NavAuthButtonsList/NavAuthButtonsList";
 import { clsx } from "clsx";
-import HeaderContent from "@/components/molecules/common/Contents/HeaderContent/HeaderContent";
+import HeaderContent from "@/components/molecules/public/Contents/HeaderContent/HeaderContent";
 import { locales, TLocale } from "@/navigation";
 import { usePathname } from "next/navigation";
 

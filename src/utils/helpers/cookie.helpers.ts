@@ -1,12 +1,11 @@
 export const setCookie = (
   name: string,
   value: string,
-  expiresTime?: number,
+  expiresTimestamp?: number,
 ) => {
   if (name === "undefined" || value === "undefined") return null;
-  if (expiresTime) {
-    const date = new Date();
-    date.setTime(date.getTime() + expiresTime * 1000);
+  if (expiresTimestamp) {
+    const date = new Date(expiresTimestamp * 1000);
     const expires = "expires=" + date.toUTCString();
     document.cookie = name + "=" + value + "; " + expires + "; path=/";
   } else {

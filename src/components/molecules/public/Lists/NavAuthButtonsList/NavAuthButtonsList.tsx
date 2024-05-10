@@ -4,15 +4,20 @@ import {
 } from "@/components/ui/navigation-menu";
 import LoginButton from "@/components/atoms/public/Buttons/LoginButton/LoginButton";
 import SignUpButton from "@/components/atoms/public/Buttons/SignUpButton/SignUpButton";
+import React from "react";
 
-const NavAuthButtonsList = () => {
+interface INavAuthButtonsList {
+  isScrolled: boolean;
+}
+
+const NavAuthButtonsList: React.FC<INavAuthButtonsList> = ({ isScrolled }) => {
   return (
-    <NavigationMenuList className="gap-x-unit-4">
+    <NavigationMenuList className="gap-x-4">
       <NavigationMenuItem>
-        <LoginButton>Login</LoginButton>
+        <LoginButton isScrolled={isScrolled}>Login</LoginButton>
       </NavigationMenuItem>
       <NavigationMenuItem>
-        <SignUpButton>Sign up</SignUpButton>
+        <SignUpButton isScrolled={isScrolled}>Sign up</SignUpButton>
       </NavigationMenuItem>
     </NavigationMenuList>
   );

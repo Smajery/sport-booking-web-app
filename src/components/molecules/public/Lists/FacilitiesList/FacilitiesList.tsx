@@ -21,9 +21,8 @@ const FacilitiesList: React.FC<IFacilitiesList> = ({
       dataLength={facilities.length || 0}
       next={fetchMoreData}
       hasMore={facilities.length < totalCount}
-      className="flex flex-col gap-y-unit-6"
+      className="flex flex-col gap-y-6"
       loader={<div>Loading...</div>}
-      endMessage={<div>No more facilities</div>}
     >
       {facilities.map((facility: TFacility) => (
         <FacilitiesItem facility={facility} key={facility.id} />

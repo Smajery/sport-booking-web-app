@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import FloatingField from "@/components/molecules/common/Fields/FloatingField/FloatingField";
+import FloatingField from "@/components/molecules/public/Fields/FloatingField/FloatingField";
 import { Button } from "@/components/ui/button";
 import { Form as FormProvider } from "@/components/ui/form";
 
@@ -13,7 +13,7 @@ import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import GoogleAuthButton from "@/components/atoms/public/Buttons/GoogleAuthButton/GoogleAuthButton";
 import FacebookAuthButton from "@/components/atoms/public/Buttons/FacebookAuthButton/FacebookAuthButton";
 import { REGISTER_USER_MUTATION } from "@/apollo/mutations/auth";
-import ModalCard from "@/components/atoms/common/Cards/ModalCard/ModalCard";
+import ModalCard from "@/components/atoms/public/Cards/ModalCard/ModalCard";
 import { useMutation } from "@apollo/client";
 import { Mail, Lock } from "lucide-react";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
@@ -73,7 +73,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({ setIsSignUpModal }) => {
   const { isSubmitted, isValid, isSubmitting } = form.formState;
 
   return (
-    <ModalCard handleCloseModal={handleCloseModal} title="Welcome">
+    <ModalCard handleCloseModal={handleCloseModal} title="Sign up">
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

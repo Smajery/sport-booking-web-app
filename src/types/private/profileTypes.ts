@@ -14,11 +14,6 @@ type Role = {
   values: string;
 };
 
-export type TUserAvatar = {
-  avatar: string | null;
-  fullname: string | null;
-};
-
 export type TUser = {
   activationLink: string;
   avatar: string | null;

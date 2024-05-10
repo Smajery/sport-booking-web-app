@@ -15,7 +15,7 @@ const CompactRatingFrame: React.FC<IAvgRatingFrame> = ({
 }) => {
   return (
     <div className={`flex h-[30px] ${className}`}>
-      <p className="text-xl mr-unit-1">{avgRating}</p>
+      <p className="text-xl mr-1">{avgRating}</p>
       <Image
         width={12}
         height={12}

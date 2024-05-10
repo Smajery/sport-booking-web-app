@@ -6,13 +6,18 @@ import { useModalContext } from "@/providers/ModalProvider/ModalProvider";
 
 interface ILoginButton {
   children: string;
+  isScrolled: boolean;
 }
 
-const LoginButton: React.FC<ILoginButton> = ({ children }) => {
+const LoginButton: React.FC<ILoginButton> = ({ children, isScrolled }) => {
   const { setIsLoginModal } = useModalContext();
 
   return (
-    <Button variant="outlinePrimary" onClick={() => setIsLoginModal(true)}>
+    <Button
+      variant={isScrolled ? "primary" : "outlinePrimary"}
+      className={isScrolled ? "border-primary-foreground" : ""}
+      onClick={() => setIsLoginModal(true)}
+    >
       {children}
     </Button>
   );

@@ -4,10 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
-import FloatingField from "@/components/molecules/common/Fields/FloatingField/FloatingField";
+import FloatingField from "@/components/molecules/public/Fields/FloatingField/FloatingField";
 import { Slider } from "@/components/ui/slider";
 import { TFacilityFilter } from "@/types/public/facilityTypes";
-import SingleSelectField from "@/components/molecules/common/Fields/SingleSelectField/SingleSelectField";
+import SingleSelectField from "@/components/molecules/public/Fields/SingleSelectField/SingleSelectField";
 import { facilityConfig } from "@/config/public/facility";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
@@ -108,7 +108,7 @@ const FilterForm: React.FC<ISearchForm> = ({
 
   return (
     <FormProvider {...form}>
-      <form noValidate className="flex flex-col gap-y-unit-4">
+      <form noValidate className="flex flex-col gap-y-4">
         <FloatingField
           form={form}
           name="search"
@@ -147,7 +147,7 @@ const FilterForm: React.FC<ISearchForm> = ({
           handleSelect={handleSelect}
           selectableItems={facilityConfig.district}
         />
-        <div className="flex flex-col gap-y-unit-4 opacity-50 pointer-events-none">
+        <div className="flex flex-col gap-y-4 opacity-50 pointer-events-none">
           <p className="text-primary font-semibold">Price</p>
           <Slider defaultValue={[0, 100]} min={0} max={100} step={1} />
         </div>
@@ -155,7 +155,7 @@ const FilterForm: React.FC<ISearchForm> = ({
           variant="secondary"
           size="sm"
           type="button"
-          className="mt-unit-4 mr-auto"
+          className="mt-4 mr-auto"
           onClick={handleReset}
           disabled={isFetchLoading}
         >

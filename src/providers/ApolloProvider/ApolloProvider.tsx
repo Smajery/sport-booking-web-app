@@ -14,6 +14,7 @@ import { setContext } from "@apollo/client/link/context";
 const makeClient = () => {
   const httpLink = createUploadLink({
     uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
+    fetchOptions: { cache: "no-store" },
   });
 
   const authLink = setContext((_, { headers, ...rest }) => {
@@ -46,11 +47,6 @@ const makeClient = () => {
         Query: {
           fields: {
             facility: {
-              merge(existing, incoming, { mergeObjects }) {
-                return mergeObjects(existing, incoming);
-              },
-            },
-            getProfile: {
               merge(existing, incoming, { mergeObjects }) {
                 return mergeObjects(existing, incoming);
               },

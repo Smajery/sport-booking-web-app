@@ -71,18 +71,6 @@ module.exports = {
         xl: "1280px",
         "2xl": "1440px",
       },
-      spacing: {
-        "unit-1": "4px",
-        "unit-2": "8px",
-        "unit-3": "12px",
-        "unit-4": "16px",
-        "unit-5": "20px",
-        "unit-6": "24px",
-        "unit-7": "28px",
-        "unit-8": "32px",
-        "unit-9": "36px",
-        "unit-10": "40px",
-      },
       animation: {
         opacity: "animationOpacity .5s ease-in-out",
         scaleIn: "scaleIn .35s ease-in-out",

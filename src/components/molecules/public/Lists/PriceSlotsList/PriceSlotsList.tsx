@@ -28,7 +28,7 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
         <li
           key={slot.id}
           className={clsx(
-            "px-unit-5 h-[40px] flex items-center justify-end text-lg font-light border-t-1 border-border last:border-b-1 cursor-pointer",
+            "px-5 h-[40px] flex items-center justify-end text-lg font-light border-t-1 border-border last:border-b-1 cursor-pointer",
             {
               "text-primary": selectedSlotIds.find(
                 (selectedSlotId) => selectedSlotId === slot.id,
@@ -42,7 +42,7 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
         >
           {selectedSlotIds.find(
             (selectedSlotId) => selectedSlotId === slot.id,
-          ) && <Dot className="w-unit-6 h-unit-6 mr-auto" color="#ff8749" />}
+          ) && <Dot className="w-6 h-6 mr-auto" color="#ff8749" />}
           {slot.price} UAH
         </li>
       ))}

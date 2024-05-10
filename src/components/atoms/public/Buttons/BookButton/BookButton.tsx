@@ -11,12 +11,12 @@ interface IBookButton {
 }
 
 const BookButton: React.FC<IBookButton> = ({ facilityId }) => {
-  const { user } = useAuthContext();
+  const { isAuth } = useAuthContext();
   const { setIsLoginModal } = useModalContext();
   const [isBookModal, setIsBookModal] = React.useState(false);
 
   const handleBook = () => {
-    if (user) {
+    if (isAuth) {
       setIsBookModal(true);
     } else {
       setIsLoginModal(true);
@@ -24,7 +24,7 @@ const BookButton: React.FC<IBookButton> = ({ facilityId }) => {
   };
   return (
     <>
-      <Button size="md" className="book-gradient" onClick={handleBook}>
+      <Button size="md" className="variant-gradient" onClick={handleBook}>
         Book
       </Button>
       {isBookModal && (
