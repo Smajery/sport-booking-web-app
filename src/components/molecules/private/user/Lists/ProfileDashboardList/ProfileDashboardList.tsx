@@ -8,11 +8,8 @@ import {
 import ProfileDashboardItem from "@/components/molecules/private/user/Items/ProfileDashboardItem";
 import { profileConfig } from "@/config/private/user/profile";
 import { usePathname } from "next/navigation";
-import BecameOwnerButton from "@/components/atoms/private/user/Buttons/BecameOwnerButton/BecameOwnerButton";
-import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 
 const ProfileDashboardList = () => {
-  const { user } = useAuthContext();
   const pathname = usePathname();
   return (
     <NavigationMenu className="hidden items-start justify-start md:flex">
@@ -24,11 +21,6 @@ const ProfileDashboardList = () => {
             key={item.name}
           />
         ))}
-        {user && !user.userOwner && (
-          <li className="flex">
-            <BecameOwnerButton />
-          </li>
-        )}
       </NavigationMenuList>
     </NavigationMenu>
   );

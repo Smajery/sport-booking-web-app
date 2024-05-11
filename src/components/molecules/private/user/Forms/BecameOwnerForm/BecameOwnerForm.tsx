@@ -5,7 +5,7 @@ import { ApolloError, useMutation } from "@apollo/client";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import UserInputField from "@/components/molecules/private/user/Fields/UserInputField/UserInputField";
-import { GET_USER_QUERY } from "@/apollo/query/admin/user";
+import { GET_USER_QUERY } from "@/apollo/query/admin/user/profile";
 import { BECAME_OWNER_MUTATION } from "@/apollo/mutations/private/user/user";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,11 @@ const becameOwnerSchema = z.object({
   organizationName: z.string().min(1).max(50),
 });
 
-const BecameOwnerForm = () => {
+interface IBecameOwnerForm {
+  setIsBecameOwner: (value: boolean) => void;
+}
+
+const BecameOwnerForm: React.FC<IBecameOwnerForm> = ({ setIsBecameOwner }) => {
   const [requestError, setRequestError] = React.useState<
     ApolloError | undefined
   >(undefined);
@@ -48,7 +52,7 @@ const BecameOwnerForm = () => {
   };
 
   const handleCancel = () => {
-    sessionStorage.removeItem("isBecameOwner");
+    setIsBecameOwner(false);
     form.reset();
   };
 
@@ -80,14 +84,14 @@ const BecameOwnerForm = () => {
           <div className="pl-[80px] flex justify-start gap-x-3">
             <Button
               variant="outlineSecondary"
-              size="lg"
+              size="sm"
               type="button"
               disabled={loading}
               onClick={handleCancel}
             >
               Cancel
             </Button>{" "}
-            <Button variant="primary" size="lg" disabled={loading}>
+            <Button variant="primary" size="sm" disabled={loading}>
               {!loading ? "Save" : "Loading..."}
             </Button>
           </div>

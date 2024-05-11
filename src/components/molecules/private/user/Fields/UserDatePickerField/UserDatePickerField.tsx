@@ -68,7 +68,7 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
       control={form.control}
       name={name}
       render={({ field, fieldState: { invalid } }) => (
-        <FormItem>
+        <FormItem className="space-y-1">
           {labelText && (
             <FormLabel
               className={clsx("text-primary text-base font-normal", {

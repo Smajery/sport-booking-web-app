@@ -19,3 +19,22 @@ export const GET_USER_QUERY = gql`
     }
   }
 `;
+
+export const GET_USER_AVATAR_QUERY = gql`
+  query GetProfile {
+    getProfile {
+      fullname
+      avatar
+    }
+  }
+`;
+
+export const GET_USER_ID_QUERY = gql`
+  query GetProfile {
+    getProfile {
+      userOwner {
+        id
+      }
+    }
+  }
+`;

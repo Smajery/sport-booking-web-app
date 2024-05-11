@@ -7,7 +7,6 @@ import NavLinksList from "@/components/molecules/public/Lists/NavLinksList/NavLi
 import { siteConfig } from "@/config/site";
 import SportBookingLogo from "@/components/atoms/public/Logos/SportBookingLogo/SportBookingLogo";
 import NavAuthButtonsList from "@/components/molecules/public/Lists/NavAuthButtonsList/NavAuthButtonsList";
-import HeaderTemplate from "@/layouts/Header/templates/HeaderTemplate/HeaderTemplate";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -44,6 +43,13 @@ const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
           <Button
             variant="none"
             size="none"
+            onClick={() => push(routes.FAVORITES)}
+          >
+            Favorites
+          </Button>
+          <Button
+            variant="none"
+            size="none"
             onClick={() => push(routes.DASHBOARD)}
           >
             Dashboard
@@ -59,7 +65,7 @@ const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
           <Button
             variant="none"
             size="none"
-            className=""
+            className="cursor-pointer"
             asChild
             onClick={handleLogout}
           >

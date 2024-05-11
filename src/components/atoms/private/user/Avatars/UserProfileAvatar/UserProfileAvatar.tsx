@@ -10,7 +10,7 @@ import {
   MAX_ALLOWED_AVATAR_SIZE_KB,
 } from "@/utils/constants/files.constants";
 import { Button } from "@/components/ui/button";
-import { TUser } from "@/types/private/profileTypes";
+import { TUser } from "@/types/private/user/profileTypes";
 import SingleMessageField from "@/components/molecules/public/Fields/SingleMessageField/SingleMessageField";
 
 interface IUserProfileAvatar {

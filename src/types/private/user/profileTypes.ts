@@ -30,3 +30,8 @@ export type TUser = {
   roles: Role[];
   userOwner: TUserOwner;
 };
+
+export type TUserAvatar = {
+  avatar: string | null;
+  fullname: string | null;
+};

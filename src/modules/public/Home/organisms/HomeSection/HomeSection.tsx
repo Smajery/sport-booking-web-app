@@ -100,7 +100,7 @@ const HomeSection = () => {
               <div>No facilities for this filter</div>
             ) : data.findAll.facilities.length === 0 && !filterValues ? (
               <div className="flex justify-center p-5 ">
-                We don't have any facility yet, try to come back after a few
+                We don't have any facility yet, try to come back after few
                 minutes!
               </div>
             ) : (

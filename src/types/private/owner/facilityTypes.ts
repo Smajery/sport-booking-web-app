@@ -33,6 +33,7 @@ export type TFacilityFilter = {
   facilityType?: string | null;
   sportType?: string | null;
   district?: string | null;
+  ownerId?: number | null;
 };
 
 type TUserRate = {

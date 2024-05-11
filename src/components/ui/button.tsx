@@ -27,10 +27,12 @@ const buttonVariants = cva(
         ghost: "border-border hover:bg-border/60",
         link: "border-transparent text-primary underline-offset-4 hover:underline",
         outline: "bg-transparent border-border hover:bg-border/60",
+        noLine: "bg-transparent border-transparent hover:bg-border/60",
       },
       size: {
         none: "",
         default: "h-9 border-1 rounded-full px-6",
+        xs: "h-8 border-1 rounded-md px-2 text-sm",
         sm: "h-9 border-1 rounded-md px-3",
         md: "h-10 border-1 rounded-md px-12",
         lg: "h-[48px] border-2 rounded-md px-[23px] py-[13px]",

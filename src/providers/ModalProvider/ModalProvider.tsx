@@ -34,7 +34,12 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ModalContext.Provider value={{ ...modalActions, ...modalContextData }}>
       {children}
-      {isSignUpModal && <SignUpModal setIsSignUpModal={setIsSignUpModal} />}
+      {isSignUpModal && (
+        <SignUpModal
+          setIsSignUpModal={setIsSignUpModal}
+          setIsLoginModal={setIsLoginModal}
+        />
+      )}
       {isLoginModal && <LoginModal setIsLoginModal={setIsLoginModal} />}
     </ModalContext.Provider>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { TUser } from "@/types/private/profileTypes";
+import { TUser } from "@/types/private/user/profileTypes";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,11 +21,12 @@ import {
 import ApolloErrorFrame from "@/components/molecules/public/Frames/ApolloErrorFrame/ApolloErrorFrame";
 import _ from "lodash";
 import UserProfileAvatar from "@/components/atoms/private/user/Avatars/UserProfileAvatar/UserProfileAvatar";
-import { GET_USER_QUERY } from "@/apollo/query/admin/user";
+import { GET_USER_QUERY } from "@/apollo/query/admin/user/profile";
 import BecameOwnerButton from "@/components/atoms/private/user/Buttons/BecameOwnerButton/BecameOwnerButton";
 import BecameOwnerForm from "@/components/molecules/private/user/Forms/BecameOwnerForm/BecameOwnerForm";
 import UserInfoFrame from "@/components/molecules/private/user/Frames/UserInfoFrame/UserInfoFrame";
 import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/ShowErrorModal";
+import Link from "next/link";
 
 interface IUpdateUserForm {
   user: TUser;
@@ -47,7 +48,7 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
     ApolloError | undefined
   >(undefined);
 
-  const { fullname, dateOfBirth, avatar, userOwner } = user;
+  const { fullname, dateOfBirth, avatar, userOwner, isActivated } = user;
 
   const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION, {
     refetchQueries: [
@@ -146,28 +147,40 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
               />
             </div>
           )}
-          <Separator className="mt-5" />
+          {isActivated ? (
+            <Separator className="mt-5" />
+          ) : (
+            <>
+              <div className="flex gap-x-1 pl-[80px] italic text-sm text-muted-foreground">
+                <p>
+                  Your email is not activated, we sent the confirmation to your
+                  email
+                </p>
+              </div>
+              <Separator />
+            </>
+          )}
           {!isBecameOwner && (
             <div className="pl-[80px] flex justify-between gap-x-3">
               {isEdit ? (
                 <div className="flex gap-x-5">
                   <Button
                     variant="outlineSecondary"
-                    size="lg"
+                    size="sm"
                     type="button"
                     disabled={loading}
                     onClick={handleCancel}
                   >
                     Cancel
                   </Button>{" "}
-                  <Button variant="primary" size="lg" disabled={loading}>
+                  <Button variant="primary" size="sm" disabled={loading}>
                     {!loading ? "Save" : "Loading..."}
                   </Button>
                 </div>
               ) : (
                 <Button
-                  variant="secondary"
-                  size="lg"
+                  variant="outlineSecondary"
+                  size="sm"
                   type="button"
                   onClick={() => setIsEdit(true)}
                 >
@@ -176,7 +189,7 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
               )}
               <Button
                 variant="outlineSecondary"
-                size="lg"
+                size="sm"
                 type="button"
                 disabled
               >

@@ -7,28 +7,27 @@ import { routes } from "@/utils/constants/routes.constants";
 
 interface IBecameOwnerButton extends ButtonProps {
   className?: string;
+  isBecameOwner: boolean;
+  setIsBecameOwner: (value: boolean) => void;
 }
 
 const BecameOwnerButton: React.FC<IBecameOwnerButton> = ({
   className = "",
+  isBecameOwner,
+  setIsBecameOwner,
   ...props
 }) => {
   const { push } = useRouter();
-  const [isBecameOwner, setIsBecameOwner] = React.useState<boolean>(false);
 
-  React.useEffect(() => {
-    setIsBecameOwner(sessionStorage.getItem("isBecameOwner") === "true");
-  }, []);
   const handleBecameOwner = () => {
-    sessionStorage.setItem("isBecameOwner", "true");
     setIsBecameOwner(true);
-    push(routes.ME);
+    push(routes.PROFILE);
   };
   return (
     <Button
       variant="none"
       size="sm"
-      className={`variant-gradient transition-opacity opacity-50 hover:opacity-100 ${className}`}
+      className={`variant-gradient ${className}`}
       onClick={handleBecameOwner}
       disabled={isBecameOwner}
       {...props}

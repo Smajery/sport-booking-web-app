@@ -1,6 +1,6 @@
 import React from "react";
 import UserInfoFrame from "@/components/molecules/private/user/Frames/UserInfoFrame/UserInfoFrame";
-import { TUser } from "@/types/private/profileTypes";
+import { TUser } from "@/types/private/user/profileTypes";
 import UserInputField from "@/components/molecules/private/user/Fields/UserInputField/UserInputField";
 import UserDatePickerField from "@/components/molecules/private/user/Fields/UserDatePickerField/UserDatePickerField";
 

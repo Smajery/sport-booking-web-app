@@ -3,7 +3,7 @@ import UserInfoFrame from "@/components/molecules/private/user/Frames/UserInfoFr
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getAbbreviation } from "@/utils/helpers/text.helpers";
 import { User2 } from "lucide-react";
-import { TUser } from "@/types/private/profileTypes";
+import { TUser } from "@/types/private/user/profileTypes";
 import format from "@/lib/format";
 import { useLocale } from "use-intl";
 import { TLocale } from "@/navigation";

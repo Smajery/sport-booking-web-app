@@ -20,6 +20,7 @@ import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 
 interface ISignUpModal {
   setIsSignUpModal: (value: boolean) => void;
+  setIsLoginModal: (value: boolean) => void;
 }
 
 const signUpFormSchema = z
@@ -33,7 +34,10 @@ const signUpFormSchema = z
     path: ["confirmPassword"],
   });
 
-const SignUpModal: React.FC<ISignUpModal> = ({ setIsSignUpModal }) => {
+const SignUpModal: React.FC<ISignUpModal> = ({
+  setIsSignUpModal,
+  setIsLoginModal,
+}) => {
   const [registerUserMutation, { loading, error }] = useMutation(
     REGISTER_USER_MUTATION,
   );
@@ -58,6 +62,8 @@ const SignUpModal: React.FC<ISignUpModal> = ({ setIsSignUpModal }) => {
           },
         },
       });
+      setIsSignUpModal(false);
+      setIsLoginModal(true);
 
       form.reset();
     } catch (e) {

@@ -9,11 +9,11 @@ import CompactRatingFrame from "@/components/molecules/public/Frames/CompactRati
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
 import {
-  getDuration,
+  getFullNameDuration,
   getFormattedText,
   getTitle,
 } from "@/utils/helpers/text.helpers";
-import SelectFavoriteButton from "@/components/atoms/private/user/Buttons/SelectFavoriteButton/SelectFavoriteButton";
+import SelectFavoriteOnItemButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnItemButton/SelectFavoriteOnItemButton";
 import { clsx } from "clsx";
 
 interface IFacilitiesItem {
@@ -36,12 +36,16 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
     avgPrice,
     minBookingTime,
     coveringType,
+    isWorking,
   } = facility;
 
   return (
     <li
       className={clsx(
-        "relative flex justify-between gap-x-4 p-4 overflow-hidden shadow-md h-[280px] w-[1000px] border-1 border-border rounded-xl cursor-pointer",
+        "flex justify-between gap-x-4 p-4 overflow-hidden shadow-md h-[280px] w-[1000px] border-1 border-border rounded-xl cursor-pointer",
+        {
+          "bg-border": !isWorking,
+        },
       )}
       onClick={() => push(`${routes.FACILITY}/${id}`)}
     >
@@ -53,17 +57,21 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
         />
         <div className="absolute top-0 left-0 p-2 flex flex-col justify-between w-full h-full">
           <div className="flex justify-end gap-x-1">
-            <SelectFavoriteButton
+            <SelectFavoriteOnItemButton
               facilityId={id}
               currentUserIsFavorite={currentUserIsFavorite}
             />
           </div>
           <div className="flex justify-start gap-x-1">
-            <Badge variant="background">
-              {avgPrice
-                ? `~${avgPrice} ₴/${getDuration(minBookingTime)}`
-                : "No schedule"}
-            </Badge>
+            {isWorking ? (
+              <Badge variant="background">
+                {avgPrice
+                  ? `${avgPrice} ₴/${getFullNameDuration(minBookingTime)}`
+                  : "No schedule"}
+              </Badge>
+            ) : (
+              <Badge variant="background">Not working now</Badge>
+            )}
           </div>
         </div>
       </div>
@@ -74,31 +82,29 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
         </div>
         <div className="mt-1 flex flex-col gap-y-2">
           <div className="flex items-start gap-x-1">
-            <Badge variant="outline" className="gap-x-2">
-              <MapPin className="mt-1 w-4 h-4" />
-              <p className="text-ellipsis line-clamp-2">{address}</p>
+            <Badge variant="outline" Icon={MapPin}>
+              {address}
             </Badge>
             <Badge variant="outline">{district.name}</Badge>
           </div>
-          <Badge variant="outline" className="gap-x-2">
-            <Text className="mt-1 w-4 h-4" />
-            <p className="text-ellipsis line-clamp-2">{description}</p>
+          <Badge
+            variant="outline"
+            textClassname="text-ellipsis line-clamp-2"
+            Icon={Text}
+          >
+            {description}
           </Badge>
           <ul className="flex gap-x-1">
             {sportType.map((sport) => (
               <li key={sport}>
-                <Badge variant="primary" className="gap-x-2">
-                  <Hash className="mt-[2px] w-4 h-4 shrink-0" color="#FFFFFF" />
-                  <p className="truncate">{getTitle(sport)}</p>
+                <Badge variant="primary" Icon={Hash}>
+                  {getTitle(sport)}
                 </Badge>
               </li>
             ))}
           </ul>
-          <Badge variant="accent" className="gap-x-2">
-            <Text className="mt-1 w-4 h-4" />
-            <p className="text-ellipsis line-clamp-2">
-              {getFormattedText(coveringType)}
-            </p>
+          <Badge variant="accent" Icon={Text}>
+            {getFormattedText(coveringType)}
           </Badge>
         </div>
       </div>

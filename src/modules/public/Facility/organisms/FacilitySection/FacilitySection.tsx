@@ -10,6 +10,8 @@ import MultiImageAvatar from "@/components/atoms/public/Avatars/MultiImageAvatar
 import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
 import RatingFrame from "@/components/molecules/public/Frames/RatingFrame/RatingFrame";
 import BookButton from "@/components/atoms/public/Buttons/BookButton/BookButton";
+import SelectFavoriteOnPageButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnPageButton/SelectFavoriteOnPageButton";
+import ShareOnPageButton from "@/components/atoms/private/user/Buttons/ShareOnPageButton/ShareOnPageButton";
 
 interface IFacilitySection {
   facilityId: number;
@@ -37,6 +39,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
     sportType,
     facilityType,
     coveringType,
+    currentUserIsFavorite,
   } = data.facility as TFacility;
 
   const isComma = (index: number, arrayLength: number) => {
@@ -44,12 +47,21 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
   };
 
   return (
-    <section className="w-full flex flex-col pt-[60px] gap-y-10">
-      <MultiImageAvatar
-        images={images}
-        imagesName={name}
-        className="h-[460px] rounded-2xl"
-      />
+    <section className="w-full flex flex-col pt-[40px] gap-y-10">
+      <div className="flex flex-col gap-y-2">
+        <div className="flex justify-end gap-x-2">
+          <ShareOnPageButton />
+          <SelectFavoriteOnPageButton
+            currentUserIsFavorite={currentUserIsFavorite}
+            facilityId={id}
+          />
+        </div>
+        <MultiImageAvatar
+          images={images}
+          imagesName={name}
+          className="h-[460px] rounded-2xl"
+        />
+      </div>
       <div className="flex justify-between">
         <div className="w-[700px] flex flex-col gap-y-5">
           <div className="flex justify-between">

@@ -26,3 +26,18 @@ export const getDuration = (minutes: number) => {
       : `${hours} h ${remainingMinutes} m`;
   }
 };
+
+export const getFullNameDuration = (minutes: number) => {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (hours === 0) {
+    return `${remainingMinutes} min`;
+  } else if (hours === 1) {
+    return remainingMinutes === 0 ? "1 hour" : `1 hour ${remainingMinutes} min`;
+  } else {
+    return remainingMinutes === 0
+      ? `${hours} hour`
+      : `${hours} hour ${remainingMinutes} min`;
+  }
+};

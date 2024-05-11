@@ -140,13 +140,15 @@ const FilterForm: React.FC<ISearchForm> = ({
           handleSelect={handleSelect}
           selectableItems={facilityConfig.facilityType}
         />
-        <SingleSelectField
-          form={form}
-          name="district"
-          labelText="District"
-          handleSelect={handleSelect}
-          selectableItems={facilityConfig.district}
-        />
+        <div className="opacity-50 pointer-events-none">
+          <SingleSelectField
+            form={form}
+            name="district"
+            labelText="District"
+            handleSelect={handleSelect}
+            selectableItems={facilityConfig.district}
+          />
+        </div>
         <div className="flex flex-col gap-y-4 opacity-50 pointer-events-none">
           <p className="text-primary font-semibold">Price</p>
           <Slider defaultValue={[0, 100]} min={0} max={100} step={1} />

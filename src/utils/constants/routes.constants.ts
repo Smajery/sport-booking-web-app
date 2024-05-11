@@ -2,13 +2,14 @@ export const routes = {
   HOME: "/",
   FACILITY: "/facility",
   PROFILE: "/profile/me",
-  ME: "/me",
+  ME: "/profile/me",
   NOTIFICATION: "/notification",
   PRIVACY: "/privacy",
   ABOUT: "/about",
   HELP: "/help",
-  DASHBOARD: "/dashboard",
+  DASHBOARD: "/dashboard/facilities",
   USER_FACILITIES: "/dashboard/facilities",
+  FAVORITES: "/favorites",
 };
 
 export const names = {
@@ -21,6 +22,7 @@ export const names = {
   ABOUT: "About",
   HELP: "Help",
   USER_FACILITIES: "Facilities",
+  FAVORITES: "Favorites",
 };
 
 export default { routes, names };

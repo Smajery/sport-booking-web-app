@@ -16,7 +16,7 @@ const UserInfoFrame: React.FC<IUserInfoFrame> = ({
   className = "",
 }) => {
   return (
-    <div className={`flex flex-col space-y-2 ${className}`}>
+    <div className={`flex flex-col space-y-1 ${className}`}>
       <p className="text-primary">{title}</p>
       <div className="flex justify-between items-center h-10 gap-x-5">
         {info ? (

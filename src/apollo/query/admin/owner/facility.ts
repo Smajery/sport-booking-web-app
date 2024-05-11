@@ -39,7 +39,6 @@ export const GET_ALL_FACILITIES_QUERY = gql`
         }
         ratingCount
         avgRating
-        currentUserIsFavorite
         isWorking
       }
       totalCount
@@ -80,7 +79,6 @@ export const GET_ONE_FACILITY_QUERY = gql`
         id
         value
       }
-      currentUserIsFavorite
     }
   }
 `;
