@@ -1,7 +1,13 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { UseFormReturn } from "react-hook-form";
-import { FormField, FormItem, FormLabel } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import { cn } from "@/lib/utils";
 
 type TSelectedItem = {
   key: string;
@@ -12,16 +18,16 @@ interface ISingleSelectField {
   form: any;
   name: string;
   labelText?: string;
-  handleSelect: () => void;
   selectableItems: TSelectedItem[];
+  className?: string;
 }
 
 const SingleSelectField: React.FC<ISingleSelectField> = ({
   form,
   labelText,
   name,
-  handleSelect,
   selectableItems,
+  className = "",
 }) => {
   const { control, setValue } = form as UseFormReturn;
   const handleSelectItem = (
@@ -30,10 +36,8 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
   ) => {
     if (isSameItem) {
       setValue(name, null);
-      handleSelect();
     } else {
       setValue(name, newSelectedItem);
-      handleSelect();
     }
   };
 
@@ -42,36 +46,43 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col gap-y-1">
+        <FormItem className="flex flex-col space-y-1">
           {labelText && (
             <FormLabel className="text-base text-primary font-semibold">
               {labelText}
             </FormLabel>
           )}
-          <ul className="bg-background rounded-lg border-1 border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4">
-            {selectableItems.map((selectableItem) => (
-              <li
-                key={selectableItem.key}
-                className="cursor-pointer"
-                onClick={() =>
-                  handleSelectItem(
-                    selectableItem,
-                    field.value && field.value.key === selectableItem.key,
-                  )
-                }
-              >
-                <Badge
-                  variant={
-                    field.value && field.value.key === selectableItem.key
-                      ? "primary"
-                      : "outline"
+          <FormControl>
+            <ul
+              className={cn(
+                "bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4",
+                className,
+              )}
+            >
+              {selectableItems.map((selectableItem) => (
+                <li
+                  key={selectableItem.key}
+                  className="cursor-pointer"
+                  onClick={() =>
+                    handleSelectItem(
+                      selectableItem,
+                      field.value && field.value.key === selectableItem.key,
+                    )
                   }
                 >
-                  {selectableItem.name}
-                </Badge>
-              </li>
-            ))}
-          </ul>
+                  <Badge
+                    variant={
+                      field.value && field.value.key === selectableItem.key
+                        ? "primary"
+                        : "outline"
+                    }
+                  >
+                    {selectableItem.name}
+                  </Badge>
+                </li>
+              ))}
+            </ul>
+          </FormControl>
         </FormItem>
       )}
     />

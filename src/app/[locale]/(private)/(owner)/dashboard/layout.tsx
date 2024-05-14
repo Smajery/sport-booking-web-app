@@ -1,5 +1,5 @@
 import "@/app/[locale]/globals.css";
-import DashboardSection from "@/modules/private/owner/organisms/DashboardSection/DashboardSection";
+import DashboardSection from "@/modules/private/owner/Dashboard/organisms/DashboardSection/DashboardSection";
 import React, { ReactNode } from "react";
 
 export const metadata = {

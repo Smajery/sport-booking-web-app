@@ -3,7 +3,7 @@ import DashboardList from "@/components/molecules/private/owner/Lists/DashboardL
 
 const DashboardSection = () => {
   return (
-    <section className="pt-[60px] flex flex-col w-[300px] border-r-1 border-border">
+    <section className="pt-[60px] flex flex-col w-[300px] border-r border-border">
       <DashboardList />
     </section>
   );

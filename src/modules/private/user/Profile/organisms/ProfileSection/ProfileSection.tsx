@@ -7,7 +7,7 @@ import BecameOwnerForm from "@/components/molecules/private/user/Forms/BecameOwn
 import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 import BecameOwnerButton from "@/components/atoms/private/user/Buttons/BecameOwnerButton/BecameOwnerButton";
 import { useQuery } from "@apollo/client";
-import { GET_USER_QUERY } from "@/apollo/query/admin/user/profile";
+import { GET_USER_QUERY } from "@/apollo/query/private/user/profile";
 import { TUser } from "@/types/private/user/profileTypes";
 
 const ProfileSection = () => {

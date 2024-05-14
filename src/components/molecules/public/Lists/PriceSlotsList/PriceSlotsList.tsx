@@ -1,10 +1,10 @@
 import React from "react";
 import { clsx } from "clsx";
 import { Dot } from "lucide-react";
-import { TimeSlot } from "@/types/commonTypes";
+import { TTimeSlot } from "@/types/commonTypes";
 
 interface IPriceSlotsList {
-  filteredTimeSlots: TimeSlot[];
+  filteredTimeSlots: TTimeSlot[];
   selectedSlotIds: number[];
   setSelectedSlotIds: (value: number[]) => void;
 }
@@ -28,7 +28,7 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
         <li
           key={slot.id}
           className={clsx(
-            "px-5 h-[40px] flex items-center justify-end text-lg font-light border-t-1 border-border last:border-b-1 cursor-pointer",
+            "px-5 h-[40px] flex items-center justify-end text-lg font-light border-t border-border last:border-b-1 cursor-pointer",
             {
               "text-primary": selectedSlotIds.find(
                 (selectedSlotId) => selectedSlotId === slot.id,

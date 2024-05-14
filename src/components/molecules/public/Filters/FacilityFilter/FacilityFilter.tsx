@@ -11,6 +11,7 @@ import SingleSelectField from "@/components/molecules/public/Fields/SingleSelect
 import { facilityConfig } from "@/config/public/facility";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import _ from "lodash";
 
 interface ISearchForm {
   handleSetFilterValues: (value: TFacilityFilter | null) => void;
@@ -79,27 +80,30 @@ const FilterForm: React.FC<ISearchForm> = ({
     handleSetFilterValues(hasValues ? filteredValues : null);
   };
 
-  const handleSelect = () => {
-    form.handleSubmit(onSubmit)();
-  };
-
-  const handleTypeDelay = React.useCallback(() => {
-    if (facilityFilterTimeoutRef.current) {
-      clearTimeout(facilityFilterTimeoutRef.current);
-    }
-
-    facilityFilterTimeoutRef.current = setTimeout(() => {
-      form.handleSubmit(onSubmit)();
-    }, 1000);
-  }, [form]);
+  const searchWatch = form.watch("search");
+  const coveringTypeWatch = form.watch("coveringType");
+  const facilityTypeWatch = form.watch("facilityType");
+  const sportTypeWatch = form.watch("sportType");
+  const districtWatch = form.watch("district");
 
   React.useEffect(() => {
+    const debouncedSubmit = _.debounce(() => {
+      form.handleSubmit(onSubmit)();
+    }, 1000);
+
+    debouncedSubmit();
     return () => {
-      if (facilityFilterTimeoutRef.current) {
-        clearTimeout(facilityFilterTimeoutRef.current);
-      }
+      debouncedSubmit.cancel();
     };
-  }, []);
+  }, [
+    searchWatch,
+    coveringTypeWatch,
+    facilityTypeWatch,
+    sportTypeWatch,
+    districtWatch,
+    onSubmit,
+    form,
+  ]);
 
   const handleReset = () => {
     form.reset();
@@ -116,28 +120,24 @@ const FilterForm: React.FC<ISearchForm> = ({
           labelText="Facilities search"
           type="text"
           IconComponent={Search}
-          handleType={handleTypeDelay}
           noValidate
         />
         <SingleSelectField
           form={form}
           name="sportType"
           labelText="Sport"
-          handleSelect={handleSelect}
           selectableItems={facilityConfig.sportType}
         />
         <SingleSelectField
           form={form}
           name="coveringType"
           labelText="Covering"
-          handleSelect={handleSelect}
           selectableItems={facilityConfig.coveringType}
         />
         <SingleSelectField
           form={form}
           name="facilityType"
           labelText="Facility"
-          handleSelect={handleSelect}
           selectableItems={facilityConfig.facilityType}
         />
         <div className="opacity-50 pointer-events-none">
@@ -145,7 +145,6 @@ const FilterForm: React.FC<ISearchForm> = ({
             form={form}
             name="district"
             labelText="District"
-            handleSelect={handleSelect}
             selectableItems={facilityConfig.district}
           />
         </div>

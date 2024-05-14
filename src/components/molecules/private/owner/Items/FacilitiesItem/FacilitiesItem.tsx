@@ -13,7 +13,7 @@ import {
   getTitle,
 } from "@/utils/helpers/text.helpers";
 import { clsx } from "clsx";
-import CompactRatingFrame from "@/components/molecules/private/owner/Frames/CompactRatingFrame/CompactRatingFrame";
+import CompactRatingFrame from "@/components/molecules/public/Frames/CompactRatingFrame/CompactRatingFrame";
 
 interface IFacilitiesItem {
   facility: TFacility;
@@ -33,11 +33,17 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
     isWorking,
     avgRating,
     ratingCount,
+    district,
   } = facility;
 
   return (
     <li
-      className={clsx("w-[340px] flex flex-col gap-y-4 cursor-pointer")}
+      className={clsx(
+        "p-2 rounded-xl w-[340px] flex flex-col gap-y-4 cursor-pointer",
+        {
+          "bg-border": !isWorking,
+        },
+      )}
       onClick={() => push(`${routes.USER_FACILITIES}/${id}`)}
     >
       <div className="relative">
@@ -47,32 +53,32 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           className="w-full h-[280px] rounded-xl"
         />
         <div className="absolute top-0 left-0 p-2 flex flex-col justify-between w-full h-full">
-          <CompactRatingFrame
-            avgRating={avgRating}
-            ratingCount={ratingCount}
-            className="ml-auto"
-          />
+          <div className="flex items-center justify-between">
+            <Badge variant="background" className="truncate text-xl">
+              {name}
+            </Badge>
+            <Badge variant="background">
+              <CompactRatingFrame
+                avgRating={avgRating}
+                ratingCount={ratingCount}
+              />
+            </Badge>
+          </div>
           <div className="flex justify-start gap-x-1">
-            {isWorking ? (
-              <Badge variant="background">
-                {avgPrice
-                  ? `${avgPrice} ₴/${getFullNameDuration(minBookingTime)}`
-                  : "No schedule"}
-              </Badge>
-            ) : (
-              <Badge variant="background">Not working now</Badge>
-            )}
+            <Badge variant="background">
+              {avgPrice
+                ? `${avgPrice} ₴/${getFullNameDuration(minBookingTime)}`
+                : "No schedule"}
+            </Badge>
           </div>
         </div>
       </div>
       <div className="flex flex-col gap-y-2">
-        <div className="flex gap-x-1">
-          <Badge variant="outline" textClassname="font-medium">
-            {name}
-          </Badge>
+        <div className="flex items-start gap-x-1">
           <Badge variant="outline" Icon={MapPin}>
             {address}
           </Badge>
+          <Badge variant="outline">{district.name}</Badge>
         </div>
         <ul className="flex gap-x-1">
           {sportType.map((sport) => (

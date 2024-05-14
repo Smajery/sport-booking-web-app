@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import FacilitiesSection from "@/modules/private/owner/organisms/FacilitiesSection/FacilitiesSection";
+import FacilitiesSection from "@/modules/private/owner/Facilities/organisms/FacilitiesSection/FacilitiesSection";
 import { useQuery } from "@apollo/client";
-import { GET_USER_ID_QUERY } from "@/apollo/query/admin/user/profile";
+import { GET_USER_ID_QUERY } from "@/apollo/query/private/user/profile";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 
 const Facilities = () => {

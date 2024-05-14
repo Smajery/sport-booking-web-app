@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
 
 const badgeVariants = cva(
-  "max-w-max inline-flex gap-x-2 rounded-lg px-2 py-1 border-1",
+  "min-w-0 max-w-max inline-flex gap-x-2 rounded-lg px-2 py-1 border",
   {
     variants: {
       variant: {
@@ -16,6 +16,7 @@ const badgeVariants = cva(
         background: "border-transparent bg-background text-foreground",
         destructive:
           "border-transparent bg-destructive text-destructive-foreground",
+        danger: "border-transparent bg-danger text-destructive-foreground",
         outline: "border-border bg-background text-foreground",
       },
     },

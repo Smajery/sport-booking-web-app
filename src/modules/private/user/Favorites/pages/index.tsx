@@ -3,7 +3,7 @@ import FavoritesSection from "@/modules/private/user/Favorites/organisms/Favorit
 
 const Favorites = () => {
   return (
-    <div className="container mx-auto flex justify-center">
+    <div className="container mx-auto flex">
       <FavoritesSection />
     </div>
   );

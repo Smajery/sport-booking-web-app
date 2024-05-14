@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 
 interface IClustererMap {
   facilities: TFacility[];
-  selectedLocationId: string | null;
-  setSelectedLocationId: (value: string) => void;
+  selectedLocationId: number | null;
+  setSelectedLocationId: (value: number) => void;
   className?: string;
 }
 

@@ -5,15 +5,15 @@ import FacilitiesList from "@/components/molecules/private/owner/Lists/Facilitie
 import { useQuery } from "@apollo/client";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import { TFacilityFilter } from "@/types/private/owner/facilityTypes";
-import { GET_ALL_FACILITIES_QUERY } from "@/apollo/query/admin/owner/facility";
+import { GET_ALL_FACILITIES_QUERY } from "@/apollo/query/private/owner/facility";
 
 const limit = 10;
 
-interface I {
+interface IFacilitiesSection {
   ownerId: number;
 }
 
-const FacilitiesSection: React.FC<I> = ({ ownerId }) => {
+const FacilitiesSection: React.FC<IFacilitiesSection> = ({ ownerId }) => {
   const [filterValues, setFilterValues] =
     React.useState<TFacilityFilter | null>({ ownerId });
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -21,6 +21,7 @@ const FacilitiesSection: React.FC<I> = ({ ownerId }) => {
   const { data, loading, error, fetchMore } = useQuery(
     GET_ALL_FACILITIES_QUERY,
     {
+      fetchPolicy: "network-only",
       context: {
         authRequired: true,
       },
@@ -44,7 +45,7 @@ const FacilitiesSection: React.FC<I> = ({ ownerId }) => {
         <div>No facilities for this filter</div>
       ) : data.findAll.facilities.length === 0 && !filterValues ? (
         <div className="flex justify-center p-5 ">
-          You haven't added any facilities yet
+          You haven't added any facility yet
         </div>
       ) : (
         <FacilitiesList facilities={data.findAll.facilities} />

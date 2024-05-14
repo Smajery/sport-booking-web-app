@@ -4,7 +4,7 @@ import BecameOwnerButton from "@/components/atoms/private/user/Buttons/BecameOwn
 
 const DashboardSection = () => {
   return (
-    <section className="shrink-0 pt-[60px] pr-5 flex flex-col gap-y-5 w-[300px] border-r-1 border-border">
+    <section className="shrink-0 pt-[60px] pr-5 flex flex-col gap-y-5 w-[300px] border-r border-border">
       <ProfileDashboardList />
     </section>
   );

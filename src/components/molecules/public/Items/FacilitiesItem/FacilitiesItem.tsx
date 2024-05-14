@@ -42,7 +42,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
   return (
     <li
       className={clsx(
-        "flex justify-between gap-x-4 p-4 overflow-hidden shadow-md h-[280px] w-[1000px] border-1 border-border rounded-xl cursor-pointer",
+        "flex justify-between gap-x-4 p-4 overflow-hidden shadow-md h-[280px] w-[1000px] border border-border rounded-xl cursor-pointer",
         {
           "bg-border": !isWorking,
         },
@@ -56,28 +56,31 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           className="w-[260px] h-full rounded-xl"
         />
         <div className="absolute top-0 left-0 p-2 flex flex-col justify-between w-full h-full">
-          <div className="flex justify-end gap-x-1">
+          <div className="flex items-start justify-end gap-x-1">
             <SelectFavoriteOnItemButton
               facilityId={id}
               currentUserIsFavorite={currentUserIsFavorite}
             />
           </div>
           <div className="flex justify-start gap-x-1">
-            {isWorking ? (
-              <Badge variant="background">
-                {avgPrice
-                  ? `${avgPrice} ₴/${getFullNameDuration(minBookingTime)}`
-                  : "No schedule"}
-              </Badge>
-            ) : (
-              <Badge variant="background">Not working now</Badge>
-            )}
+            <Badge variant="background">
+              {avgPrice
+                ? `${avgPrice} ₴/${getFullNameDuration(minBookingTime)}`
+                : "No schedule"}
+            </Badge>
           </div>
         </div>
       </div>
       <div className="grow flex flex-col py-2 gap-y-1">
         <div className="flex items-center justify-between gap-x-6">
-          <p className="truncate text-xl">{name}</p>
+          <div className="flex gap-x-1">
+            <p className="truncate text-xl">{name} </p>
+            {!isWorking && (
+              <p className="text-xl italic text-muted-foreground">
+                (Temporarily not working)
+              </p>
+            )}
+          </div>
           <CompactRatingFrame avgRating={avgRating} ratingCount={ratingCount} />
         </div>
         <div className="mt-1 flex flex-col gap-y-2">

@@ -5,7 +5,7 @@ import {
   NavigationMenu,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import ProfileDashboardItem from "@/components/molecules/private/user/Items/ProfileDashboardItem";
+import ProfileDashboardItem from "@/components/molecules/private/user/Items/ProfileDashboardItem/ProfileDashboardItem";
 import { profileConfig } from "@/config/private/user/profile";
 import { usePathname } from "next/navigation";
 

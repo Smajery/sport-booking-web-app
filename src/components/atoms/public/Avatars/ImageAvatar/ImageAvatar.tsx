@@ -17,7 +17,7 @@ const ImageAvatar: React.FC<IImageAvatar> = ({
     case null:
       return (
         <div
-          className={`flex items-center justify-center border-1 border-primary border-dashed ${className}`}
+          className={`flex items-center justify-center border border-primary border-dashed ${className}`}
         >
           <ImageIcon className="w-8 h-8" color="#ff8749" strokeWidth={1} />
         </div>

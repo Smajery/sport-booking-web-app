@@ -100,7 +100,7 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
                   <div>
-                    <div className="px-3 flex items-center border-b-1 border-border">
+                    <div className="px-3 flex items-center border-b border-border">
                       <div className="shrink-0 w-[36px] flex items-center justify-center">
                         <p className="text-[0.8rem] text-muted-foreground">
                           Year:

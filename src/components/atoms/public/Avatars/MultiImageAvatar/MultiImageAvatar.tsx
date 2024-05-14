@@ -17,7 +17,7 @@ const MultiImageAvatar: React.FC<IMultiImageAvatar> = ({
   if (!images || images.length === 0) {
     return (
       <div
-        className={`flex items-center justify-center border-1 border-primary border-dashed ${className}`}
+        className={`flex items-center justify-center border border-primary border-dashed ${className}`}
       >
         <ImageIcon
           className="w-[60px] h-[60px]"

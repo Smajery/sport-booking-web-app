@@ -5,7 +5,7 @@ import { ApolloError, useMutation } from "@apollo/client";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import UserInputField from "@/components/molecules/private/user/Fields/UserInputField/UserInputField";
-import { GET_USER_QUERY } from "@/apollo/query/admin/user/profile";
+import { GET_USER_QUERY } from "@/apollo/query/private/user/profile";
 import { BECAME_OWNER_MUTATION } from "@/apollo/mutations/private/user/user";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -70,14 +70,14 @@ const BecameOwnerForm: React.FC<IBecameOwnerForm> = ({ setIsBecameOwner }) => {
               name="phone"
               type="text"
               labelText="Phone"
-              placeholder="Ex: 0971234567"
+              placeholder="Organization phone number..."
             />
             <UserInputField
               form={form}
               name="organizationName"
               type="text"
               labelText="Organization name"
-              placeholder="Ex: Robbie Sportacus Organization"
+              placeholder="Organization name.."
             />
           </div>
           <Separator />

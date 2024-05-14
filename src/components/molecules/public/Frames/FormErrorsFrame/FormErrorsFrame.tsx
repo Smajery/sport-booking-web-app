@@ -11,7 +11,7 @@ const FormErrorsFrame: React.FC<IFormErrorsFrame> = ({
   className,
 }) => {
   return Object.keys(fieldErrors).length !== 0 ? (
-    <div className={cn("flex flex-col text-destructive", className)}>
+    <div className={cn("flex flex-col text-sm text-destructive", className)}>
       {Object.keys(fieldErrors).map((fieldError) => (
         <p key={fieldError}>{fieldErrors[fieldError]}</p>
       ))}

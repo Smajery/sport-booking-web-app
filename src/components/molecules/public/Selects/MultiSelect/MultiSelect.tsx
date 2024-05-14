@@ -37,7 +37,7 @@ const MultiSelect = () => {
     selectedItems.some((item) => item.key === itemKey);
 
   return (
-    <ul className="bg-background rounded-lg border-1 border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4">
+    <ul className="bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4">
       {selectableItems.map((selectableItem) => (
         <li
           key={selectableItem.key}

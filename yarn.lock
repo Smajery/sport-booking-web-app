@@ -2720,6 +2720,11 @@
   resolved "https://registry.yarnpkg.com/@types/extract-files/-/extract-files-13.0.1.tgz#3ec057a3fa25f778245a76a17271d23b71ee31d7"
   integrity sha512-/fRbzc2lAd7jDJSSnxWiUyXWjdUZZ4HbISLJzVgt1AvrdOa7U49YRPcvuCUywkmURZ7uwJOheDjx19itbQ5KvA==
 
+"@types/google.maps@^3.55.8":
+  version "3.55.8"
+  resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.55.8.tgz#5149d6fc388f89643da3ed909c1933e5f8945076"
+  integrity sha512-aSyvlCRXzF9Jtjqq4zmA24sczKZ0QWJnn4zRrkufCoohHulS6LCf4KsF22eAlnHBuVYwEhQoMXIufUS7kXF5uA==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
@@ -5033,7 +5038,7 @@ prettier@^3.2.4:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.2.5.tgz#e52bc3090586e824964a8813b09aba6233b28368"
   integrity sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==
 
-prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -5081,6 +5086,13 @@ react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-paginate@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-8.2.0.tgz#947c3dcb444a6c16c1bcf8361871aa135baa3dcd"
+  integrity sha512-sJCz1PW+9PNIjUSn919nlcRVuleN2YPoFBOvL+6TPgrH/3lwphqiSOgdrLafLdyLDxsgK+oSgviqacF4hxsDIw==
+  dependencies:
+    prop-types "^15"
 
 react-remove-scroll-bar@^2.3.3, react-remove-scroll-bar@^2.3.6:
   version "2.3.6"

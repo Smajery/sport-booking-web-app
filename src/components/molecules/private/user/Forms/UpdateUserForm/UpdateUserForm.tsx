@@ -21,7 +21,7 @@ import {
 import ApolloErrorFrame from "@/components/molecules/public/Frames/ApolloErrorFrame/ApolloErrorFrame";
 import _ from "lodash";
 import UserProfileAvatar from "@/components/atoms/private/user/Avatars/UserProfileAvatar/UserProfileAvatar";
-import { GET_USER_QUERY } from "@/apollo/query/admin/user/profile";
+import { GET_USER_QUERY } from "@/apollo/query/private/user/profile";
 import BecameOwnerButton from "@/components/atoms/private/user/Buttons/BecameOwnerButton/BecameOwnerButton";
 import BecameOwnerForm from "@/components/molecules/private/user/Forms/BecameOwnerForm/BecameOwnerForm";
 import UserInfoFrame from "@/components/molecules/private/user/Frames/UserInfoFrame/UserInfoFrame";

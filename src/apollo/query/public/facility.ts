@@ -81,6 +81,8 @@ export const GET_ONE_FACILITY_QUERY = gql`
         value
       }
       currentUserIsFavorite
+      avgPrice
+      minBookingTime
     }
   }
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   FormControl,
   FormField,
@@ -19,7 +19,6 @@ interface IFloatingField {
   type: string;
   labelText?: string;
   placeholder?: string;
-  handleType?: () => void;
   noValidate?: boolean;
   isRequestError?: boolean;
 }
@@ -31,7 +30,6 @@ const FloatingField: React.FC<IFloatingField> = ({
   type,
   labelText,
   placeholder = "",
-  handleType,
   noValidate = false,
   isRequestError = false,
 }) => {
@@ -40,7 +38,7 @@ const FloatingField: React.FC<IFloatingField> = ({
     register,
   } = form as UseFormReturn;
 
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = React.useState(false);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) =>
     setIsFocused(e.target.value !== "");
@@ -81,9 +79,6 @@ const FloatingField: React.FC<IFloatingField> = ({
                 value={field.value ? field.value : ""}
                 onChange={(e) => {
                   field.onChange(e.target.value);
-                  if (handleType) {
-                    handleType();
-                  }
                 }}
                 className={clsx("h-[56px] pl-3 pr-10 pb-[6px] pt-[26px]", {
                   "border-destructive focus-visible:ring-destructive":

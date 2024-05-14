@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Input } from "@/components/ui/input";
 import { clsx } from "clsx";
 import { Label } from "@/components/ui/label";
@@ -29,7 +29,7 @@ const FloatingField: React.FC<IFloatingInput> = ({
       handleType(name, value);
     }
   };
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = React.useState(false);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) =>
     setIsFocused(e.target.value !== "");

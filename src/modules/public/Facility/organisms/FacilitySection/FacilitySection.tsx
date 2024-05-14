@@ -7,7 +7,11 @@ import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import { TFacility } from "@/types/public/facilityTypes";
 import { Separator } from "@/components/ui/separator";
 import MultiImageAvatar from "@/components/atoms/public/Avatars/MultiImageAvatar/MultiImageAvatar";
-import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
+import {
+  getFormattedText,
+  getFullNameDuration,
+  getTitle,
+} from "@/utils/helpers/text.helpers";
 import RatingFrame from "@/components/molecules/public/Frames/RatingFrame/RatingFrame";
 import BookButton from "@/components/atoms/public/Buttons/BookButton/BookButton";
 import SelectFavoriteOnPageButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnPageButton/SelectFavoriteOnPageButton";
@@ -40,6 +44,8 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
     facilityType,
     coveringType,
     currentUserIsFavorite,
+    avgPrice,
+    minBookingTime,
   } = data.facility as TFacility;
 
   const isComma = (index: number, arrayLength: number) => {
@@ -104,7 +110,10 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
         </div>
         <div className="flex items-end flex-col gap-y-2 shrink-0">
           <p className="text-xl font-light">
-            200 UAH <span className="text-muted-foreground text-lg">/hour</span>
+            {avgPrice} UAH{" "}
+            <span className="text-muted-foreground text-lg">
+              /{getFullNameDuration(minBookingTime)}
+            </span>
           </p>
           <BookButton facilityId={id} />
         </div>

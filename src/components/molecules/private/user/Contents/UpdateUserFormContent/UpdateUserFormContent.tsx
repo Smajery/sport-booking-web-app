@@ -22,13 +22,13 @@ const UpdateUserFormContent: React.FC<IUpdateUserFormContent> = ({
         name="fullname"
         type="text"
         labelText="Full Name"
-        placeholder="Ex: Robbie Sportacus"
+        placeholder="Your name..."
       />
       <UserInfoFrame title={"Email"} info={email} />
       <UserDatePickerField
         form={form}
         name="dateOfBirth"
-        labelText="Date of birth"
+        labelText="Your date of birth"
       />
     </div>
   );

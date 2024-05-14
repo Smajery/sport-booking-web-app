@@ -120,7 +120,7 @@ const BookSchedule: React.FC<IBookSchedule> = ({
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col">
           <div className="flex bg-secondary">
-            <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-5 w-[88px] border-r-1 border-white">
+            <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-5 w-[88px] border-r border-white">
               <Clock className="w-6 h-6" color="#FFFFFF" />
               <p className="w-full truncate text-xs text-center text-secondary-foreground">
                 Min: {getDuration(minBookingTime)}
@@ -142,7 +142,7 @@ const BookSchedule: React.FC<IBookSchedule> = ({
               />
             </div>
           </ScrollArea>
-          <div className="flex flex-col py-5 border-t-1 border-border gap-y-5">
+          <div className="flex flex-col py-5 border-t border-border gap-y-5">
             <div className="flex text-xl">
               <div className="px-5 w-[88px] flex items-center">Total:</div>
               <div className="font-light text-primary">{getTotal()} UAH</div>

@@ -17,7 +17,7 @@ const limit = 10;
 const HomeSection = () => {
   const [isShowMap, setIsShowMap] = React.useState<boolean>(false);
   const [selectedLocationId, setSelectedLocationId] = React.useState<
-    string | null
+    number | null
   >(null);
 
   const [filterValues, setFilterValues] =
@@ -31,6 +31,7 @@ const HomeSection = () => {
   const { data, loading, error, fetchMore } = useQuery(
     GET_ALL_FACILITIES_QUERY,
     {
+      fetchPolicy: "network-only",
       variables: {
         paginationArgs: {
           limit: limit,
@@ -88,7 +89,7 @@ const HomeSection = () => {
               className="fixed top-108 w-[1000px] h-[56px] border-2 border-border bg-white/50 z-10 hover:bg-background"
             >
               <div className="flex items-start gap-x-1">
-                Show map <Map className="w-5 h-5" color="#040C11" />
+                Show map <Map className="w-5 h-5" />
               </div>
             </Button>
             <div className="h-[56px]"></div>
@@ -120,8 +121,7 @@ const HomeSection = () => {
               className="h-[56px] bg-primary text-primary-foreground border-2 border-primary shrink-0"
             >
               <div className="flex items-start gap-x-1">
-                Show list{" "}
-                <List className="w-5 h-5" color="#FFFFFF" strokeWidth={2.5} />
+                Show list <List className="w-5 h-5" strokeWidth={2.5} />
               </div>
             </Button>
             <ClustererMap

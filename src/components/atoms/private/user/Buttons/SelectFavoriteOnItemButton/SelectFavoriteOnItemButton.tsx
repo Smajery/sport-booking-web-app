@@ -12,20 +12,26 @@ import {
 } from "@/apollo/mutations/private/user/user";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/ShowErrorModal";
+import { GET_ALL_FACILITIES_QUERY } from "@/apollo/query/public/facility";
 
 interface ISelectFavoriteOnItemButton {
   currentUserIsFavorite: boolean;
   facilityId: number;
+  className?: string;
 }
 
 const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
   currentUserIsFavorite,
   facilityId,
+  className = "",
 }) => {
   const { isAuth } = useAuthContext();
   const { setIsLoginModal } = useModalContext();
   const [isFavoriteHovered, setIsFavoriteHovered] =
     React.useState<boolean>(false);
+  const [isFavorite, setIsFavorite] = React.useState<boolean>(
+    currentUserIsFavorite,
+  );
   const [requestError, setRequestError] = React.useState<
     ApolloError | undefined
   >(undefined);
@@ -36,6 +42,7 @@ const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
       context: {
         authRequired: true,
       },
+      onError: (e) => setRequestError(e),
     },
   );
 
@@ -44,7 +51,36 @@ const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
       context: {
         authRequired: true,
       },
+      onError: (e) => setRequestError(e),
     });
+
+  const handleAddToFavorite = async () => {
+    try {
+      await addToFavorite({
+        variables: { facilityId },
+      });
+      setIsFavorite(true);
+      setRequestError(undefined);
+    } catch (e) {
+      ErrorHandler.handle(e, {
+        componentName: "SelectFavoriteOnItemButton__addToFavorite",
+      });
+    }
+  };
+
+  const handleRemoveFromFavorite = async () => {
+    try {
+      await removeFromFavorite({
+        variables: { facilityId },
+      });
+      setIsFavorite(false);
+      setRequestError(undefined);
+    } catch (e) {
+      ErrorHandler.handle(e, {
+        componentName: "SelectFavoriteOnItemButton__removeFromFavorite",
+      });
+    }
+  };
 
   const handleSelectFavorite = async (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -52,25 +88,9 @@ const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
     e.stopPropagation();
     if (isAuth) {
       if (currentUserIsFavorite) {
-        try {
-          await removeFromFavorite({
-            variables: { facilityId },
-          });
-        } catch (e) {
-          ErrorHandler.handle(e, {
-            componentName: "SelectFavoriteOnItemButton__removeFromFavorite",
-          });
-        }
+        await handleRemoveFromFavorite();
       } else {
-        try {
-          await addToFavorite({
-            variables: { facilityId },
-          });
-        } catch (e) {
-          ErrorHandler.handle(e, {
-            componentName: "SelectFavoriteOnItemButton__addToFavorite",
-          });
-        }
+        await handleAddToFavorite();
       }
     } else {
       setIsLoginModal(true);
@@ -83,13 +103,13 @@ const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
         variant="none"
         size="none"
         asChild
-        className="cursor-pointer"
+        className={`cursor-pointer ${className}`}
         onMouseEnter={() => setIsFavoriteHovered(true)}
         onMouseLeave={() => setIsFavoriteHovered(false)}
         onClick={handleSelectFavorite}
         disabled={addToFavoriteLoading || removeFromFavoriteLoading}
       >
-        {currentUserIsFavorite || isFavoriteHovered ? (
+        {isFavorite || isFavoriteHovered ? (
           <Image
             width="24"
             height="24"

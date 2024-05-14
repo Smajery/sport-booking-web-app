@@ -97,9 +97,6 @@ module.exports = {
       textOverflow: {
         ellipsis: "ellipsis",
       },
-      borderWidth: {
-        1: "1px",
-      },
       boxShadow: {
         "bottom-sm": "0px 4px 4px rgba(0, 0, 0, 0.1)",
       },

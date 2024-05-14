@@ -9,6 +9,7 @@ export const routes = {
   HELP: "/help",
   DASHBOARD: "/dashboard/facilities",
   USER_FACILITIES: "/dashboard/facilities",
+  CREATE_FACILITY: "/dashboard/facilities/create",
   FAVORITES: "/favorites",
 };
 
