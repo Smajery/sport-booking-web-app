@@ -32,6 +32,9 @@ const HomeSection = () => {
     GET_ALL_FACILITIES_QUERY,
     {
       fetchPolicy: "network-only",
+      context: {
+        // authRequired: true,
+      },
       variables: {
         paginationArgs: {
           limit: limit,

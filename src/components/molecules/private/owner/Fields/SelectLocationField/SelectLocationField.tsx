@@ -69,7 +69,14 @@ const SelectLocationField: React.FC<ISearchAndSelectLocationField> = ({
     const { Map } = await loader.importLibrary("maps");
     const { Marker } = await loader.importLibrary("marker");
 
-    const initialCenter = { lat: 50.4501, lng: 30.5234 };
+    let initialCenter;
+
+    if (location) {
+      const [lat, lng] = location.split(", ").map(Number);
+      initialCenter = { lat, lng };
+    } else {
+      initialCenter = { lat: 50.4501, lng: 30.5234 };
+    }
     const mapOptions: google.maps.MapOptions = {
       disableDefaultUI: true,
       zoom: 13,
@@ -78,6 +85,7 @@ const SelectLocationField: React.FC<ISearchAndSelectLocationField> = ({
 
     const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
     const marker = new Marker({
+      position: location ? initialCenter : undefined,
       map,
     });
 

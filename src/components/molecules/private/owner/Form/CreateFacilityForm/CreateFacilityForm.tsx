@@ -39,6 +39,7 @@ const createFacilityFormSchema = z.object({
   }),
   location: z.string(),
   districtId: z.string(),
+  cityId: z.string(),
   description: z.string().min(1),
   photo: z.any().optional(),
 });
@@ -58,11 +59,11 @@ const CreateFacilityForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof createFacilityFormSchema>) => {
-    const { photo, ...otherValues } = values;
+    const { photo, cityId, ...otherValues } = values;
     const { sportType, coveringType, districtId, facilityType } = otherValues;
     const modifiedOtherValues = {
       ...otherValues,
-      sportType: sportType.map((sportType) => sportType.key),
+      sportType: sportType.map((sport) => sport.key),
       coveringType: coveringType.key,
       facilityType: facilityType.key,
       districtId: Number(districtId),
@@ -96,7 +97,6 @@ const CreateFacilityForm = () => {
 
   const handleCancel = () => {
     push(routes.USER_FACILITIES);
-    form.reset();
   };
 
   return (
@@ -127,6 +127,7 @@ const CreateFacilityForm = () => {
               <SelectCityAndDistrictField
                 form={form}
                 name="districtId"
+                cityName="cityId"
                 labelText="City/District"
               />
               <InputField
@@ -187,11 +188,12 @@ const CreateFacilityForm = () => {
             size="lg"
             type="button"
             onClick={handleCancel}
+            disabled={loading}
           >
             Cancel
           </Button>
-          <Button variant="primary" size="lg">
-            Save
+          <Button variant="primary" size="lg" disabled={loading}>
+            {!loading ? "Save" : "Loading..."}
           </Button>
         </div>
       </form>

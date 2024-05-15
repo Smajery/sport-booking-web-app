@@ -57,12 +57,12 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
             <Badge variant="background" className="truncate text-xl">
               {name}
             </Badge>
-            <Badge variant="background">
+            <div className="bg-background rounded-lg px-2 py-1 border border-transparent">
               <CompactRatingFrame
                 avgRating={avgRating}
                 ratingCount={ratingCount}
               />
-            </Badge>
+            </div>
           </div>
           <div className="flex justify-start gap-x-1">
             <Badge variant="background">

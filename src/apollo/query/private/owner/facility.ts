@@ -68,6 +68,7 @@ export const GET_ONE_FACILITY_QUERY = gql`
       coveringType
       facilityType
       description
+      minBookingTime
       location
       images {
         image

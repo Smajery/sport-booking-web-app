@@ -26,15 +26,16 @@ const MultiImageAvatarField: React.FC<IMultiImageAvatar> = ({
   imagesName,
   className = "",
 }) => {
-  const { control } = form as UseFormReturn;
+  const { control, watch } = form as UseFormReturn;
+  const filesWatch = watch(name) || [];
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
+  const [selectedFiles, setSelectedFiles] = React.useState<File[]>(filesWatch);
 
   const handleFiles = (files: File[]) => {
-    const updatedFiles = [...selectedFiles, ...files];
+    const updatedFiles = [...filesWatch, ...files];
     setSelectedFiles(updatedFiles);
-    form.setValue(name, updatedFiles);
+    form.setValue(name, files);
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +85,7 @@ const MultiImageAvatarField: React.FC<IMultiImageAvatar> = ({
         return (
           <>
             <SelectedImageCard
-              file={selectedFiles[1]}
+              file={selectedFiles[0]}
               imageName={imagesName}
               handleRemoveFile={() => handleRemoveFile(0)}
             />
@@ -172,7 +173,7 @@ const MultiImageAvatarField: React.FC<IMultiImageAvatar> = ({
               fileInputRef.current ? fileInputRef.current.click() : null
             }
           >
-            Add Images
+            {selectedFiles.length > 0 ? "Change Images" : "Add Images"}
             <ImagePlus />
           </Button>
         </FormItem>

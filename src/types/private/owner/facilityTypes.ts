@@ -36,11 +36,6 @@ export type TFacilityFilter = {
   ownerId?: number | null;
 };
 
-type TUserRate = {
-  id: string;
-  value: string;
-};
-
 export type TFacility = {
   address: string;
   avgRating: number;
@@ -48,8 +43,6 @@ export type TFacility = {
   bookings: TBooking[];
   city: TCity;
   coveringType: ECoveringType;
-  currentUserIsFavorite: boolean;
-  currentUserRate: TUserRate;
   description: string;
   district: TDistrict;
   facilityType: EFacilityType;

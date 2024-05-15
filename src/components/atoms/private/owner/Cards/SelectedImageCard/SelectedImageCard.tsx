@@ -4,9 +4,10 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { TImage } from "@/types/commonTypes";
 
 interface ISelectedImageCard {
-  file: File;
+  file: File | TImage;
   imageName: string;
   handleRemoveFile: () => void;
 }
@@ -17,6 +18,14 @@ const SelectedImageCard: React.FC<ISelectedImageCard> = ({
   handleRemoveFile,
 }) => {
   const [isImageHovered, setIsImageHovered] = React.useState<boolean>(false);
+
+  const getImageUrl = () => {
+    if (file instanceof File) {
+      return URL.createObjectURL(file);
+    } else {
+      return `${process.env.NEXT_PUBLIC_IMG_URL}/${file.image}`;
+    }
+  };
   return (
     <div
       className="flex relative grow"
@@ -25,7 +34,7 @@ const SelectedImageCard: React.FC<ISelectedImageCard> = ({
     >
       <Image
         unoptimized
-        src={URL.createObjectURL(file)}
+        src={getImageUrl()}
         alt={imageName}
         fill
         className="object-cover object-center"

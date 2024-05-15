@@ -38,6 +38,7 @@ type TDistrict = {
 interface ISelectCityAndDistrictField {
   form: any;
   name: string;
+  cityName: string;
   labelText?: string;
   noValidate?: boolean;
 }
@@ -45,15 +46,19 @@ interface ISelectCityAndDistrictField {
 const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
   form,
   name,
+  cityName,
   labelText,
   noValidate = false,
 }) => {
   const {
     control,
     formState: { isSubmitted },
+    watch,
   } = form as UseFormReturn;
 
-  const [cityId, setCityId] = React.useState<string | null>(null);
+  const cityIdWatch = watch(cityName) ?? null;
+
+  const [cityId, setCityId] = React.useState<string | null>(cityIdWatch);
   const [cities, setCities] = React.useState<TCity[]>([]);
   const [districts, setDistricts] = React.useState<TDistrict[]>([]);
 
@@ -95,6 +100,7 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
             <div className="w-full flex justify-between gap-x-2">
               <Select
                 onValueChange={(e) => setCityId(e)}
+                defaultValue={cityId ?? ""}
                 disabled={citiesLoading || !!citiesError}
               >
                 <SelectTrigger className="h-[56px] border border-input rounded-md text-lg text-muted-foreground font-light">
@@ -121,6 +127,7 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
               </Select>
               <Select
                 disabled={districtsLoading || !!districtsError || !cityId}
+                defaultValue={field.value}
                 onValueChange={field.onChange}
               >
                 <FormControl>
