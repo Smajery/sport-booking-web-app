@@ -7,13 +7,10 @@ import { Hash, MapPin, Text } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
-import {
-  getFullNameDuration,
-  getFormattedText,
-  getTitle,
-} from "@/utils/helpers/text.helpers";
+import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
 import { clsx } from "clsx";
 import CompactRatingFrame from "@/components/molecules/public/Frames/CompactRatingFrame/CompactRatingFrame";
+import { TIME_PER_SLOT } from "@/utils/constants/titles.constants";
 
 interface IFacilitiesItem {
   facility: TFacility;
@@ -28,16 +25,16 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
     address,
     sportType,
     avgPrice,
-    minBookingTime,
     coveringType,
     isWorking,
     avgRating,
     ratingCount,
     district,
+    facilityType,
   } = facility;
 
   return (
-    <li
+    <div
       className={clsx(
         "p-2 rounded-xl w-[340px] flex flex-col gap-y-4 cursor-pointer",
         {
@@ -54,7 +51,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
         />
         <div className="absolute top-0 left-0 p-2 flex flex-col justify-between w-full h-full">
           <div className="flex items-center justify-between">
-            <Badge variant="background" className="truncate text-xl">
+            <Badge variant="background" className="text-xl">
               {name}
             </Badge>
             <div className="bg-background rounded-lg px-2 py-1 border border-transparent">
@@ -66,9 +63,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           </div>
           <div className="flex justify-start gap-x-1">
             <Badge variant="background">
-              {avgPrice
-                ? `${avgPrice} ₴/${getFullNameDuration(minBookingTime)}`
-                : "No schedule"}
+              {avgPrice ? `${avgPrice} ₴/${TIME_PER_SLOT}` : "No schedule"}
             </Badge>
           </div>
         </div>
@@ -80,20 +75,25 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           </Badge>
           <Badge variant="outline">{district.name}</Badge>
         </div>
-        <ul className="flex gap-x-1">
+        <div className="flex gap-x-1">
           {sportType.map((sport) => (
-            <li key={sport}>
+            <div key={sport}>
               <Badge variant="primary" Icon={Hash}>
                 {getTitle(sport)}
               </Badge>
-            </li>
+            </div>
           ))}
-        </ul>
-        <Badge variant="accent" Icon={Text}>
-          {getFormattedText(coveringType)}
-        </Badge>
+        </div>
+        <div className="flex gap-x-1">
+          <Badge variant="accent" Icon={Hash}>
+            {getFormattedText(facilityType)}
+          </Badge>
+          <Badge variant="accent" Icon={Hash}>
+            {getFormattedText(coveringType)}
+          </Badge>
+        </div>
       </div>
-    </li>
+    </div>
   );
 };
 

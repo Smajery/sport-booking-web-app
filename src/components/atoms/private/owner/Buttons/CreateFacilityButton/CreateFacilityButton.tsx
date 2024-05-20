@@ -15,7 +15,7 @@ const CreateFacilityButton = () => {
       size="none"
       className="cursor-pointer"
       asChild
-      onClick={() => push(routes.CREATE_FACILITY)}
+      onClick={() => push(routes.FACILITY_CREATE)}
     >
       <div className="w-10 h-10 rounded-md bg-border hover:bg-primary hover:text-primary-foreground">
         <Plus />

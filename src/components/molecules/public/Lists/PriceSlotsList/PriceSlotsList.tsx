@@ -23,12 +23,12 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
     }
   };
   return (
-    <ul className="grow flex flex-col py-[30px]">
+    <div className="grow flex flex-col py-[30px]">
       {filteredTimeSlots.map((slot, index) => (
-        <li
+        <div
           key={slot.id}
           className={clsx(
-            "px-5 h-[40px] flex items-center justify-end text-lg font-light border-t border-border last:border-b-1 cursor-pointer",
+            "px-5 h-[40px] flex items-center justify-end text-lg font-light border-t border-border last:border-b cursor-pointer",
             {
               "text-primary": selectedSlotIds.find(
                 (selectedSlotId) => selectedSlotId === slot.id,
@@ -44,9 +44,9 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
             (selectedSlotId) => selectedSlotId === slot.id,
           ) && <Dot className="w-6 h-6 mr-auto" color="#ff8749" />}
           {slot.price} UAH
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 

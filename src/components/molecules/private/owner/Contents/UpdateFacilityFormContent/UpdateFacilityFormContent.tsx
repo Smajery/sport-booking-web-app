@@ -1,7 +1,5 @@
 import React from "react";
 import InputField from "@/components/molecules/private/owner/Fields/InputField/InputField";
-import SelectCityAndDistrictField from "@/components/molecules/private/owner/Fields/SelectCityAndDistrictField/SelectCityAndDistrictField";
-import SelectLocationField from "@/components/molecules/private/owner/Fields/SelectLocationField/SelectLocationField";
 import { Separator } from "@/components/ui/separator";
 import MultiSelectField from "@/components/molecules/private/owner/Fields/MultiSelectField/MultiSelectField";
 import { facilityConfig } from "@/config/public/facility";
@@ -33,33 +31,19 @@ const UpdateFacilityFormContent: React.FC<IUpdateFacilityFormContent> = ({
               type="text"
               labelText="Name"
               placeholder="Facility name..."
-              className="text-lg h-[56px] pl-3 pb-[6px]"
               maxLength={100}
             />
-            {/*<SelectCityAndDistrictField*/}
-            {/*  form={form}*/}
-            {/*  name="districtId"*/}
-            {/*  cityName="cityId"*/}
-            {/*  labelText="City/District"*/}
-            {/*/>*/}
             <InputField
               form={form}
               name="address"
               type="text"
               labelText="Address"
               placeholder="Facility address..."
-              className="text-lg h-[56px] pl-3 pb-[6px]"
               maxLength={100}
             />
-            {/*<SelectLocationField*/}
-            {/*  form={form}*/}
-            {/*  name="location"*/}
-            {/*  labelText="Location"*/}
-            {/*  className="bg-border rounded-xl h-[400px]"*/}
-            {/*/>*/}
           </div>
           <Separator />
-          <div className="w-full flex flex-col gap-y-2 text-lg">
+          <div className="w-full flex flex-col gap-y-2">
             <MultiSelectField
               form={form}
               name="sportType"

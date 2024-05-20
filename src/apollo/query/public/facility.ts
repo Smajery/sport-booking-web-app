@@ -13,14 +13,6 @@ export const GET_ALL_FACILITIES_QUERY = gql`
         id
         name
         district {
-          city {
-            districts {
-              id
-              name
-            }
-            id
-            name
-          }
           id
           name
         }
@@ -32,7 +24,6 @@ export const GET_ALL_FACILITIES_QUERY = gql`
         description
         avgPrice
         currentUserIsFavorite
-        minBookingTime
         images {
           image
           isMain
@@ -53,14 +44,6 @@ export const GET_ONE_FACILITY_QUERY = gql`
       id
       name
       district {
-        city {
-          districts {
-            id
-            name
-          }
-          id
-          name
-        }
         id
         name
       }
@@ -82,7 +65,6 @@ export const GET_ONE_FACILITY_QUERY = gql`
       }
       currentUserIsFavorite
       avgPrice
-      minBookingTime
     }
   }
 `;

@@ -8,13 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import CompactRatingFrame from "@/components/molecules/public/Frames/CompactRatingFrame/CompactRatingFrame";
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
-import {
-  getFullNameDuration,
-  getFormattedText,
-  getTitle,
-} from "@/utils/helpers/text.helpers";
+import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
 import SelectFavoriteOnItemButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnItemButton/SelectFavoriteOnItemButton";
 import { clsx } from "clsx";
+import { TIME_PER_SLOT } from "@/utils/constants/titles.constants";
 
 interface IFacilitiesItem {
   facility: TFacility;
@@ -34,13 +31,13 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
     district,
     currentUserIsFavorite,
     avgPrice,
-    minBookingTime,
     coveringType,
+    facilityType,
     isWorking,
   } = facility;
 
   return (
-    <li
+    <div
       className={clsx(
         "flex justify-between gap-x-4 p-4 overflow-hidden shadow-md h-[280px] w-[1000px] border border-border rounded-xl cursor-pointer",
         {
@@ -64,9 +61,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           </div>
           <div className="flex justify-start gap-x-1">
             <Badge variant="background">
-              {avgPrice
-                ? `${avgPrice} ₴/${getFullNameDuration(minBookingTime)}`
-                : "No schedule"}
+              {avgPrice ? `${avgPrice} ₴/${TIME_PER_SLOT}` : "No schedule"}
             </Badge>
           </div>
         </div>
@@ -97,21 +92,26 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           >
             {description}
           </Badge>
-          <ul className="flex gap-x-1">
+          <div className="flex gap-x-1">
             {sportType.map((sport) => (
-              <li key={sport}>
+              <div key={sport}>
                 <Badge variant="primary" Icon={Hash}>
                   {getTitle(sport)}
                 </Badge>
-              </li>
+              </div>
             ))}
-          </ul>
-          <Badge variant="accent" Icon={Text}>
-            {getFormattedText(coveringType)}
-          </Badge>
+          </div>
+          <div className="flex gap-x-1">
+            <Badge variant="accent" Icon={Hash}>
+              {getFormattedText(facilityType)}
+            </Badge>
+            <Badge variant="accent" Icon={Hash}>
+              {getFormattedText(coveringType)}
+            </Badge>
+          </div>
         </div>
       </div>
-    </li>
+    </div>
   );
 };
 

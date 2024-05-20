@@ -58,14 +58,14 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
             </FormLabel>
           )}
           <FormControl>
-            <ul
+            <div
               className={cn(
                 "bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4",
                 className,
               )}
             >
               {selectableItems.map((selectableItem) => (
-                <li
+                <div
                   key={selectableItem.key}
                   className="cursor-pointer"
                   onClick={() =>
@@ -92,9 +92,9 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
                   >
                     {selectableItem.name}
                   </Badge>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </FormControl>
         </FormItem>
       )}

@@ -53,9 +53,17 @@ module.exports = {
           foreground: "hsl(var(--popover-foreground))",
         },
 
-        success: "hsl(var(--success))",
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+
         warning: "hsl(var(--warning))",
-        danger: "hsl(var(--danger))",
+
+        danger: {
+          DEFAULT: "hsl(var(--danger))",
+          foreground: "hsl(var(--danger-foreground))",
+        },
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

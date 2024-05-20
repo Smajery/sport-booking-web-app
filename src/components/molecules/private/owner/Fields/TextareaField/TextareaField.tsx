@@ -68,7 +68,7 @@ const TextareaField: React.FC<ITextArea> = ({
                 onChange={(e) => {
                   field.onChange(e.target.value);
                 }}
-                className={clsx("", {
+                className={clsx("text-lg", {
                   "border-destructive focus-visible:ring-destructive":
                     (invalid && isSubmitted && !noValidate) || isRequestError,
                   "border-success focus-visible:ring-success":

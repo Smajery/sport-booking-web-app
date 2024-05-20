@@ -28,7 +28,7 @@ const createFacilityFormSchema = z.object({
         name: z.string(),
       }),
     )
-    .min(1, "At least 1 sport type"),
+    .min(1, "At least one sport type"),
   coveringType: z.object({
     key: z.string(),
     name: z.string(),
@@ -103,7 +103,7 @@ const CreateFacilityForm = () => {
     <FormProvider {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col py-5 pl-5 gap-y-10"
+        className="flex flex-col py-5 pl-5 gap-y-5"
         encType="multipart/form-data"
       >
         <ImageAvatarField
@@ -112,7 +112,7 @@ const CreateFacilityForm = () => {
           imagesName="Facility image"
           className="h-[460px] rounded-2xl"
         />
-        <div className="flex justify-between">
+        <div className="flex justify-between mt-5">
           <div className="w-[700px] flex flex-col gap-y-5">
             <div className="flex flex-col gap-y-2">
               <InputField
@@ -121,7 +121,6 @@ const CreateFacilityForm = () => {
                 type="text"
                 labelText="Name"
                 placeholder="Facility name..."
-                className="text-lg h-[56px] pl-3 pb-[6px]"
                 maxLength={100}
               />
               <SelectCityAndDistrictField
@@ -136,7 +135,6 @@ const CreateFacilityForm = () => {
                 type="text"
                 labelText="Address"
                 placeholder="Facility address..."
-                className="text-lg h-[56px] pl-3 pb-[6px]"
                 maxLength={100}
               />
               <SelectLocationField
@@ -175,16 +173,16 @@ const CreateFacilityForm = () => {
               form={form}
               name="description"
               labelText="Description"
-              className="text-lg max-h-[200px] min-h-[98px]"
+              className="max-h-[200px] min-h-[98px]"
               placeholder="Facility description..."
               maxLength={400}
             />
           </div>
         </div>
-        <Separator />
+        <Separator className="mt-5" />
         <div className="w-[700px] flex justify-end gap-x-2">
           <Button
-            variant="outlineSecondary"
+            variant="outline"
             size="lg"
             type="button"
             onClick={handleCancel}

@@ -28,7 +28,7 @@ const UpdateUserFormContent: React.FC<IUpdateUserFormContent> = ({
       <UserDatePickerField
         form={form}
         name="dateOfBirth"
-        labelText="Your date of birth"
+        labelText="Date of birth"
       />
     </div>
   );

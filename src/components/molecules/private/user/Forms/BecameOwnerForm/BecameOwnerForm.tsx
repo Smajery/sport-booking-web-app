@@ -83,15 +83,15 @@ const BecameOwnerForm: React.FC<IBecameOwnerForm> = ({ setIsBecameOwner }) => {
           <Separator />
           <div className="pl-[80px] flex justify-start gap-x-3">
             <Button
-              variant="outlineSecondary"
-              size="sm"
+              variant="outline"
+              size="md"
               type="button"
               disabled={loading}
               onClick={handleCancel}
             >
               Cancel
             </Button>{" "}
-            <Button variant="primary" size="sm" disabled={loading}>
+            <Button variant="primary" size="md" disabled={loading}>
               {!loading ? "Save" : "Loading..."}
             </Button>
           </div>

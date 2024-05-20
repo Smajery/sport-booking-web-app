@@ -59,6 +59,17 @@ const makeClient = () => {
         },
       },
     }),
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: "no-cache",
+      },
+      query: {
+        fetchPolicy: "no-cache",
+      },
+      mutate: {
+        fetchPolicy: "no-cache",
+      },
+    },
     link: link,
   });
 };

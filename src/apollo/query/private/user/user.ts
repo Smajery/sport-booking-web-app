@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_USER_FAVORITES = gql`
+export const GET_USER_FAVORITES_QUERY = gql`
   query GetUserFavorites($paginationArgs: PaginationArgs) {
     getUserFavorites(paginationArgs: $paginationArgs) {
       totalCount
@@ -20,7 +20,6 @@ export const GET_USER_FAVORITES = gql`
         coveringType
         facilityType
         description
-        minBookingTime
         images {
           image
         }

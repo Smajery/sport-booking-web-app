@@ -48,3 +48,23 @@ export const UPDATE_FACILITY_PHOTOS_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_SCHEDULE_MUTATION = gql`
+  mutation CreateSchedule($createScheduleInput: CreateScheduleInput!) {
+    createSchedule(createScheduleInput: $createScheduleInput) {
+      dayOfWeek
+      endTime
+      facilityId
+      price
+      startTime
+    }
+  }
+`;
+
+export const UPDATE_SCHEDULE_MUTATION = gql`
+  mutation UpdateTimeSlots($updateTimeSlotsInput: UpdateTimeSlotsInput!) {
+    updateTimeSlots(updateTimeSlotsInput: $updateTimeSlotsInput) {
+      id
+    }
+  }
+`;

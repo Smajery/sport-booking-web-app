@@ -52,14 +52,6 @@ export const GET_ONE_FACILITY_QUERY = gql`
       id
       name
       district {
-        city {
-          districts {
-            id
-            name
-          }
-          id
-          name
-        }
         id
         name
       }
@@ -76,6 +68,7 @@ export const GET_ONE_FACILITY_QUERY = gql`
       }
       ratingCount
       avgRating
+      avgPrice
       currentUserRate {
         id
         value
@@ -87,6 +80,7 @@ export const GET_ONE_FACILITY_QUERY = gql`
 export const GET_FACILITY_SCHEDULE_QUERY = gql`
   query FindFacilitySchedule($id: Int!) {
     facility(id: $id) {
+      id
       minBookingTime
       timeSlots {
         id

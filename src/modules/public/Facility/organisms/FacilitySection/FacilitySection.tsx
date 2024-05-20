@@ -7,15 +7,12 @@ import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import { TFacility } from "@/types/public/facilityTypes";
 import { Separator } from "@/components/ui/separator";
 import MultiImageAvatar from "@/components/atoms/public/Avatars/MultiImageAvatar/MultiImageAvatar";
-import {
-  getFormattedText,
-  getFullNameDuration,
-  getTitle,
-} from "@/utils/helpers/text.helpers";
+import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
 import RatingFrame from "@/components/molecules/public/Frames/RatingFrame/RatingFrame";
 import BookButton from "@/components/atoms/public/Buttons/BookButton/BookButton";
 import SelectFavoriteOnPageButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnPageButton/SelectFavoriteOnPageButton";
 import ShareOnPageButton from "@/components/atoms/private/user/Buttons/ShareOnPageButton/ShareOnPageButton";
+import { TIME_PER_SLOT } from "@/utils/constants/titles.constants";
 
 interface IFacilitySection {
   facilityId: number;
@@ -45,7 +42,6 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
     coveringType,
     currentUserIsFavorite,
     avgPrice,
-    minBookingTime,
   } = data.facility as TFacility;
 
   const isComma = (index: number, arrayLength: number) => {
@@ -89,16 +85,16 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
               <p>Covering:</p>
             </div>
             <div className="flex flex-col text-lg">
-              <ul className="flex gap-x-1">
+              <div className="flex gap-x-1">
                 {sportType.map((sport, index) => (
-                  <li key={sport}>
+                  <div key={sport}>
                     <p>
                       {getTitle(sport)}
                       {isComma(index, sportType.length) && ","}
                     </p>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
               <p>{getTitle(facilityType)}</p>
               <p>{getFormattedText(coveringType)}</p>
             </div>
@@ -112,7 +108,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
           <p className="text-xl font-light">
             {avgPrice} UAH{" "}
             <span className="text-muted-foreground text-lg">
-              /{getFullNameDuration(minBookingTime)}
+              /{TIME_PER_SLOT}
             </span>
           </p>
           <BookButton facilityId={id} />

@@ -77,7 +77,7 @@ const ImageAvatarField: React.FC<IImageAvatarField> = ({
     <FormField
       control={control}
       name={name}
-      render={({ field, fieldState: { invalid } }) => (
+      render={({ fieldState: { invalid } }) => (
         <FormItem className="flex flex-col space-y-1">
           <FormControl>
             <Input

@@ -22,4 +22,13 @@ export const facilityConfig = {
     { key: "Київський", name: "Kyivskyi" },
     { key: "Суворовський", name: "Suvorovsky" },
   ],
+  daysOfWeek: [
+    { key: 1, name: "Mon" },
+    { key: 2, name: "Tue" },
+    { key: 3, name: "Wed" },
+    { key: 4, name: "Thu" },
+    { key: 5, name: "Fri" },
+    { key: 6, name: "Sat" },
+    { key: 7, name: "Sun" },
+  ],
 };

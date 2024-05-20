@@ -59,6 +59,7 @@ export type TFacility = {
 };
 
 export type TFacilitySchedule = {
+  id: number;
   minBookingTime: number;
   timeSlots: TTimeSlot[];
 };

@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
-import ErrorPage from '@/modules/public/Error/pages'
+import ErrorPage from "@/modules/public/Error/pages";
 
 export default function Error({
-	error
+  error,
 }: {
-	error: Error & { digest?: string }
+  error: Error & { digest?: string };
 }) {
-	return (
-		<main className='min-h-screen flex'>
-			<ErrorPage error={error} />
-		</main>
-	)
+  return (
+    <main className="min-h-screen flex">
+      <ErrorPage error={error} />
+    </main>
+  );
 }

@@ -37,9 +37,9 @@ const MultiSelect = () => {
     selectedItems.some((item) => item.key === itemKey);
 
   return (
-    <ul className="bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4">
+    <div className="bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4">
       {selectableItems.map((selectableItem) => (
-        <li
+        <div
           key={selectableItem.key}
           className="cursor-pointer"
           onClick={() => handleSelectItem(selectableItem)}
@@ -49,9 +49,9 @@ const MultiSelect = () => {
           >
             {selectableItem.name}
           </Badge>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 

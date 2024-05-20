@@ -20,11 +20,23 @@ export const GET_USER_QUERY = gql`
   }
 `;
 
+export const GET_USER_INFO_QUERY = gql`
+  query GetProfile {
+    getProfile {
+      id
+      email
+      roles {
+        value
+      }
+    }
+  }
+`;
+
 export const GET_USER_AVATAR_QUERY = gql`
   query GetProfile {
     getProfile {
-      fullname
       avatar
+      fullname
     }
   }
 `;

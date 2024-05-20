@@ -13,7 +13,7 @@ import { clsx } from "clsx";
 import { Check, X } from "lucide-react";
 
 type TSelectedItem = {
-  key: string;
+  key: string | number;
   name: string;
 };
 
@@ -72,14 +72,14 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
           )}
           <div className="flex justify-between items-center gap-x-5">
             <FormControl>
-              <ul
+              <div
                 className={cn(
-                  "bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4",
+                  "bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4 text-lg",
                   className,
                 )}
               >
                 {selectableItems.map((selectableItem) => (
-                  <li
+                  <div
                     key={selectableItem.key}
                     className="cursor-pointer"
                     onClick={() =>
@@ -106,9 +106,9 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
                     >
                       {selectableItem.name}
                     </Badge>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </FormControl>
             <div
               className={clsx(

@@ -18,6 +18,7 @@ interface IInputField extends InputProps {
   name: string;
   labelText?: string;
   noValidate?: boolean;
+  className?: string;
 }
 
 const InputField: React.FC<IInputField> = ({
@@ -25,6 +26,7 @@ const InputField: React.FC<IInputField> = ({
   name,
   labelText,
   noValidate = false,
+  className = "",
   ...props
 }) => {
   const {
@@ -66,7 +68,7 @@ const InputField: React.FC<IInputField> = ({
                 onChange={(e) => {
                   field.onChange(e.target.value);
                 }}
-                className={clsx("", {
+                className={clsx(`text-lg h-[56px] pl-3 pb-[6px] ${className}`, {
                   "border-destructive focus-visible:ring-destructive":
                     invalid && isSubmitted && !noValidate,
                   "border-success focus-visible:ring-success":

@@ -35,9 +35,9 @@ const SingleSelect: React.FC<ISingleSelect> = ({
     selectedItem && itemKey === selectedItem.key;
 
   return (
-    <ul className="bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4">
+    <div className="bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4">
       {selectableItems.map((selectableItem) => (
-        <li
+        <div
           key={selectableItem.key}
           className="cursor-pointer"
           onClick={() => handleSelectItem(selectableItem)}
@@ -47,9 +47,9 @@ const SingleSelect: React.FC<ISingleSelect> = ({
           >
             {selectableItem.name}
           </Badge>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 

@@ -26,6 +26,8 @@
     --destructive-foreground: 210 40% 98%;
 
     --success: 141 82% 38%;
+    --success-foreground: 0 0% 100%; /* #ffffff */
+
     --warning: 39 89% 52%;
     --danger: 336 91% 44%;
 
@@ -65,8 +67,12 @@
     --destructive-foreground: 210 40% 98%;
 
     --success: 141 82% 38%;
+    --success-foreground: 0 0% 100%; /* #ffffff */
+
     --warning: 39 89% 52%;
+
     --danger: 336 91% 44%;
+    --danger-foreground: 0 0% 100%; /* #ffffff */
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;
@@ -80,19 +86,22 @@
     --ring: 215 20.2% 65.1%;
     --radius: 0.5rem;
   }
-
-
 }
 
 @layer base {
   body {
-    @apply relative bg-no-repeat bg-fixed bg-background text-foreground
+    @apply relative bg-no-repeat bg-fixed bg-background text-foreground;
   }
 }
 
 @layer utilities {
   .body-gradient {
-    background-image: linear-gradient(180deg, hsla(20, 100%, 64%, 1) 20%, hsla(20, 100%, 67%, 1) 50%, hsla(20, 100%, 80%, 1) 100%);
+    background-image: linear-gradient(
+      180deg,
+      hsla(20, 100%, 64%, 1) 20%,
+      hsla(20, 100%, 67%, 1) 50%,
+      hsla(20, 100%, 80%, 1) 100%
+    );
   }
 
   .facebook-gradient {
@@ -113,7 +122,7 @@
     background: linear-gradient(to right, #ff691f, #ff8749);
   }
   .auth-btn-gradient:hover {
-    background: linear-gradient(to right, #ff691f, #FF7733);
+    background: linear-gradient(to right, #ff691f, #ff7733);
   }
 
   .primary-gradient-225 {
@@ -122,7 +131,7 @@
 
   .variant-gradient {
     background: linear-gradient(to right, #ff8749, #ff9398);
-    color: #ffffff;
+    @apply text-primary-foreground;
   }
 
   /* CSS Tricks */
@@ -148,21 +157,18 @@
 
   /* Floating labels */
   .floating-label {
-    @apply absolute font-normal left-3 top-1/2 transform -translate-y-1/2 transition-all duration-200 ease-in pointer-events-none
+    @apply absolute font-normal left-3 top-1/2 transform -translate-y-1/2 transition-all duration-200 ease-in pointer-events-none;
   }
 
   .focused .floating-label,
   .floating .floating-label {
-    @apply top-[18px] text-xs
+    @apply top-[18px] text-xs;
   }
 
   /* Hover tricks */
 
   .font-hover-high {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    @apply inline-flex flex-col items-center justify-between;
   }
 
   .font-hover-high:hover {
@@ -171,17 +177,20 @@
 
   .font-hover-high::before {
     content: attr(data-content);
-    height: 0;
     visibility: hidden;
-    overflow: hidden;
     user-select: none;
-    pointer-events: none;
-    @apply text-2xl leading-7;
+    @apply h-0 overflow-hidden pointer-events-none text-2xl leading-7;
   }
 
   @media speech {
     .font-hover-high::before {
-      display: none;
+      @apply hidden;
     }
+  }
+
+  /* Input */
+  .input__no-time-select::-webkit-inner-spin-button,
+  .input__no-time-select::-webkit-calendar-picker-indicator {
+    @apply hidden;
   }
 }

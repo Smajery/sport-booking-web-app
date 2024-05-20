@@ -1,4 +1,4 @@
-import Index from "@/modules/private/owner/Facilities/pages";
+import Facilities from "@/modules/private/owner/Facilities/pages";
 
 export const metadata = {
   title: "Facilities",
@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 const FacilitiesPage = () => {
-  return <Index />;
+  return <Facilities />;
 };
 
 export default FacilitiesPage;

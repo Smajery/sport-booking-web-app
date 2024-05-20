@@ -2,16 +2,14 @@ import { TFacility } from "@/types/public/facilityTypes";
 import { TBooking } from "@/types/commonTypes";
 
 type TUserOwner = {
-  id: string;
+  id: number;
   organizationName: string;
   phone: string;
-  userId: string;
+  userId: number;
 };
 
 type Role = {
-  description: string;
-  id: string;
-  values: string;
+  value: string;
 };
 
 export type TUser = {
@@ -25,10 +23,15 @@ export type TUser = {
   facilities: TFacility[];
   fullname: string | null;
   googleId: string | null;
-  id: string;
+  id: number;
   isActivated: boolean;
+  userOwner: TUserOwner | null;
+};
+
+export type TUserInfo = {
+  id: number;
+  email: string;
   roles: Role[];
-  userOwner: TUserOwner;
 };
 
 export type TUserAvatar = {

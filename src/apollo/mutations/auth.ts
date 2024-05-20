@@ -14,13 +14,6 @@ export const REGISTER_USER_MUTATION = gql`
 export const LOGIN_USER_MUTATION = gql`
   mutation login($loginInput: LoginDto!) {
     login(loginInput: $loginInput) {
-      user {
-        id
-        email
-        roles {
-          value
-        }
-      }
       accessToken
       refreshToken
     }

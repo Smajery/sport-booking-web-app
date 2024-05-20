@@ -5,6 +5,7 @@ import FacilitiesSection from "@/modules/private/owner/Facilities/organisms/Faci
 import { useQuery } from "@apollo/client";
 import { GET_USER_ID_QUERY } from "@/apollo/query/private/user/profile";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
+import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 
 const Facilities = () => {
   const {
@@ -21,6 +22,7 @@ const Facilities = () => {
   if (userError) return <div>{getApolloErrorMessage(userError)}</div>;
 
   const { id: ownerId } = userData.getProfile as { id: number };
+
   return (
     <div className="w-full flex flex-col">
       <FacilitiesSection ownerId={ownerId} />

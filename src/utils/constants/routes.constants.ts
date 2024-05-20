@@ -9,8 +9,11 @@ export const routes = {
   HELP: "/help",
   DASHBOARD: "/dashboard/facilities",
   USER_FACILITIES: "/dashboard/facilities",
-  CREATE_FACILITY: "/dashboard/facilities/create",
+  FACILITY_CREATE: "/dashboard/facilities/facility-create",
+  SCHEDULE_CREATE: "/schedule-create",
+  SCHEDULE: "/schedule",
   FAVORITES: "/favorites",
+  RESERVATIONS: "/reservations",
 };
 
 export const names = {
@@ -24,6 +27,8 @@ export const names = {
   HELP: "Help",
   USER_FACILITIES: "Facilities",
   FAVORITES: "Favorites",
+  RESERVATIONS: "Reservations",
+  DASHBOARD: "Dashboard",
 };
 
 export default { routes, names };

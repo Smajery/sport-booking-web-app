@@ -16,7 +16,6 @@ import { TFacility } from "@/types/private/owner/facilityTypes";
 import UpdateFacilityFormContent from "@/components/molecules/private/owner/Contents/UpdateFacilityFormContent/UpdateFacilityFormContent";
 import FacilityCardFrame from "@/components/molecules/private/owner/Frames/FacilityCardFrame/FacilityCardFrame";
 import _ from "lodash";
-import { GET_ONE_FACILITY_QUERY } from "@/apollo/query/private/owner/facility";
 
 type TItem = {
   key: string;
@@ -33,7 +32,7 @@ const updateFacilityFormSchema = z.object({
         name: z.string(),
       }),
     )
-    .min(1, "At least 1 sport type"),
+    .min(1, "At least one sport type"),
   coveringType: z.object({
     key: z.string(),
     name: z.string(),
@@ -42,12 +41,9 @@ const updateFacilityFormSchema = z.object({
     key: z.string(),
     name: z.string(),
   }),
-  minBookingTime: z.string(),
-  // location: z.string(),
-  // districtId: z.string(),
-  // cityId: z.string(),
+  minBookingTime: z.string().optional(),
   description: z.string().min(1),
-  isWorking: z.boolean(),
+  isWorking: z.boolean().optional(),
   photos: z.any().optional(),
 });
 
@@ -61,11 +57,9 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
     name,
     description,
     address,
-    // district,
     sportType,
     facilityType,
     coveringType,
-    // location,
     images,
   } = facility;
 
@@ -86,12 +80,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
       sportType: sportType.map((sport) => ({ key: sport, name: sport })),
       coveringType: { key: coveringType, name: coveringType },
       facilityType: { key: facilityType, name: facilityType },
-      // districtId: String(district.id),
-      // cityId: String(district.city.id),
-      // location: location,
       photos: images,
-      minBookingTime: "60", //Temporary solution
-      isWorking: false, //Temporary solution
     },
   });
 
@@ -139,21 +128,14 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
             context: {
               authRequired: true,
             },
-            refetchQueries: [
-              {
-                query: GET_ONE_FACILITY_QUERY,
-                variables: { id: id },
-              },
-            ],
             variables: {
               input: {
                 ...otherChangedValues,
-                minBookingTime: 60,
-                isWorking: false,
                 id: id,
               },
             },
           });
+          window.location.reload();
         }
         if (photos.length) {
           await updateFacilityPhotos({
@@ -161,19 +143,12 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
               headers: headers,
               authRequired: true,
             },
-            refetchQueries: [
-              {
-                query: GET_ONE_FACILITY_QUERY,
-                variables: { id: id },
-              },
-            ],
             variables: {
               facilityId: id,
               photos: photos,
             },
           });
         }
-        handleCancel();
       } catch (e) {
         ErrorHandler.handle(e, {
           componentName: "UpdateFacilityForm__onSubmit",
@@ -183,6 +158,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
   };
 
   const handleCancel = () => {
+    form.reset();
     setIsEditFacility(false);
   };
 
@@ -203,7 +179,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
           {isEditFacility ? (
             <>
               <Button
-                variant="outlineSecondary"
+                variant="outline"
                 size="lg"
                 type="button"
                 onClick={handleCancel}

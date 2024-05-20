@@ -21,7 +21,6 @@ const FacilitiesSection: React.FC<IFacilitiesSection> = ({ ownerId }) => {
   const { data, loading, error, fetchMore } = useQuery(
     GET_ALL_FACILITIES_QUERY,
     {
-      fetchPolicy: "network-only",
       context: {
         authRequired: true,
       },

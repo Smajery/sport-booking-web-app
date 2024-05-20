@@ -6,8 +6,8 @@ import { getAbbreviation } from "@/utils/helpers/text.helpers";
 import { User2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@apollo/client";
-import { GET_USER_AVATAR_QUERY } from "@/apollo/query/private/user/profile";
 import { TUserAvatar } from "@/types/private/user/profileTypes";
+import { GET_USER_AVATAR_QUERY } from "@/apollo/query/private/user/profile";
 
 const UserHeaderAvatar = () => {
   const { data, loading, error } = useQuery(GET_USER_AVATAR_QUERY, {

@@ -1,7 +1,7 @@
-import NotFound from '@/modules/public/NotFound/pages'
+import NotFound from "@/modules/public/NotFound/pages";
 
 const NotFoundPage = () => {
-	return <NotFound />
-}
+  return <NotFound />;
+};
 
-export default NotFoundPage
+export default NotFoundPage;

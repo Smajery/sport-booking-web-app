@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { TTimeSlot } from "@/types/commonTypes";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,8 @@ import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { getMinutesFromIsoTime } from "@/utils/helpers/time.helpers";
 import FormErrorsFrame from "@/components/molecules/public/Frames/FormErrorsFrame/FormErrorsFrame";
 import ApolloErrorFrame from "@/components/molecules/public/Frames/ApolloErrorFrame/ApolloErrorFrame";
-import PayButton from "@/components/atoms/public/Buttons/PayButton/PayButton";
+import { v4 as uuidv4 } from "uuid";
+import { TFacilitySchedule } from "@/types/public/facilityTypes";
 import { getDuration } from "@/utils/helpers/text.helpers";
 
 const createBookingFormSchema = z.object({
@@ -25,25 +25,48 @@ const createBookingFormSchema = z.object({
 });
 
 interface IBookSchedule {
+  facilitySchedule: TFacilitySchedule;
   facilityId: number;
-  minBookingTime: number;
-  timeSlots: TTimeSlot[];
   handleCloseModal: () => void;
 }
 
 const BookSchedule: React.FC<IBookSchedule> = ({
   facilityId,
-  minBookingTime,
-  timeSlots,
+  facilitySchedule,
   handleCloseModal,
 }) => {
+  const { minBookingTime, timeSlots } = facilitySchedule;
+
   const [createBooking, { loading: isBookLoading, error }] = useMutation(
     CREATE_BOOKING_MUTATION,
   );
 
-  const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<number>(1);
+  const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<number>(
+    timeSlots[0].dayOfWeek,
+  );
   const [selectedSlotIds, setSelectedSlotIds] = React.useState<number[]>([]);
   const [isMinBookingTime, setIsBookingTime] = React.useState<boolean>(false);
+
+  const data = {
+    version: 3,
+    public_key: process.env.NEXT_PUBLIC_LIQPAY_PUBLIC_KEY as string,
+    action: "pay",
+    currency: "UAH",
+    description: "Facility booking",
+    order_id: uuidv4(),
+    language: "en",
+  };
+
+  const privateKey = process.env.NEXT_PUBLIC_LIQPAY_PRIVATE_KEY as string;
+
+  const dataBase64 = Buffer.from(JSON.stringify(data)).toString("base64");
+
+  const createPayment = async () => {
+    // const liqPayCheckoutUrl = `https://www.liqpay.ua/api/3/checkout?data=${encodeURIComponent(dataBase64)}`;
+    const liqPayCheckoutUrl =
+      "https://www.liqpay.ua/en/checkout/sandbox_i69297607762";
+    window.location.href = liqPayCheckoutUrl;
+  };
 
   const form = useForm<z.infer<typeof createBookingFormSchema>>({
     resolver: zodResolver(createBookingFormSchema),
@@ -56,6 +79,9 @@ const BookSchedule: React.FC<IBookSchedule> = ({
     try {
       const { timeSlotIds } = values;
       await createBooking({
+        context: {
+          authRequired: true,
+        },
         variables: {
           createBookingInput: {
             facilityId,
@@ -63,6 +89,7 @@ const BookSchedule: React.FC<IBookSchedule> = ({
           },
         },
       });
+      await createPayment();
       handleCancel();
     } catch (e) {
       ErrorHandler.handle(e, { componentName: "BookSchedule__onSubmit" });
@@ -92,15 +119,17 @@ const BookSchedule: React.FC<IBookSchedule> = ({
     return total;
   };
 
+  const handleSelectSlotIds = (selectedSlotIds: number[]) => {
+    form.setValue("timeSlotIds", selectedSlotIds);
+    setSelectedSlotIds(selectedSlotIds);
+  };
+
   const handleCancel = () => {
     setSelectedSlotIds([]);
     handleCloseModal();
   };
 
-  React.useEffect(() => {
-    form.setValue("timeSlotIds", selectedSlotIds);
-  }, [selectedSlotIds]);
-
+  //Temporary solution
   React.useEffect(() => {
     const totalDuration = selectedSlotIds.reduce((total, id) => {
       const slot = timeSlots.find((slot) => slot.id === id);
@@ -119,10 +148,10 @@ const BookSchedule: React.FC<IBookSchedule> = ({
     <FormProvider {...form}>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col">
-          <div className="flex bg-secondary">
-            <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-5 w-[88px] border-r border-white">
-              <Clock className="w-6 h-6" color="#FFFFFF" />
-              <p className="w-full truncate text-xs text-center text-secondary-foreground">
+          <div className="flex bg-primary">
+            <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-1 w-[88px] border-r border-white text-primary-foreground">
+              <Clock className="w-6 h-6" />
+              <p className="w-full truncate text-xs text-center">
                 Min: {getDuration(minBookingTime)}
               </p>
             </div>
@@ -133,12 +162,12 @@ const BookSchedule: React.FC<IBookSchedule> = ({
             />
           </div>
           <ScrollArea className="h-[500px]">
-            <div className="flex">
+            <div className="min-h-[500px] flex">
               <TimeSlotsList filteredTimeSlots={filteredTimeSlots} />
               <PriceSlotsList
                 filteredTimeSlots={filteredTimeSlots}
                 selectedSlotIds={selectedSlotIds}
-                setSelectedSlotIds={setSelectedSlotIds}
+                setSelectedSlotIds={handleSelectSlotIds}
               />
             </div>
           </ScrollArea>
@@ -151,17 +180,22 @@ const BookSchedule: React.FC<IBookSchedule> = ({
             <ApolloErrorFrame error={error} />
             <div className="flex justify-end gap-x-4 px-5">
               <Button
-                variant="ghost"
+                variant="outline"
                 size="md"
                 type="button"
                 onClick={handleCancel}
+                disabled={isBookLoading}
               >
                 Cancel
               </Button>
-              <PayButton
+              <Button
+                variant="none"
+                size="md"
+                className="variant-gradient"
                 disabled={isMinBookingTime || isBookLoading}
-                description="Facility booking"
-              />
+              >
+                Pay
+              </Button>
             </div>
           </div>
         </div>

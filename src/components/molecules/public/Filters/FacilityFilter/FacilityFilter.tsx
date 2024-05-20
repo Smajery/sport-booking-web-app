@@ -112,7 +112,10 @@ const FilterForm: React.FC<ISearchForm> = ({
 
   return (
     <FormProvider {...form}>
-      <form noValidate className="flex flex-col gap-y-4">
+      <form
+        noValidate
+        className="flex flex-col gap-y-4 sticky top-[110px] z-50" //Temporary solution for sticky
+      >
         <FloatingField
           form={form}
           name="search"
@@ -153,8 +156,8 @@ const FilterForm: React.FC<ISearchForm> = ({
           <Slider defaultValue={[0, 100]} min={0} max={100} step={1} />
         </div>
         <Button
-          variant="secondary"
-          size="sm"
+          variant="outlineSecondary"
+          size="md"
           type="button"
           className="mt-4 mr-auto"
           onClick={handleReset}

@@ -11,7 +11,6 @@ import { Form as FormProvider } from "@/components/ui/form";
 
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import GoogleAuthButton from "@/components/atoms/public/Buttons/GoogleAuthButton/GoogleAuthButton";
-import FacebookAuthButton from "@/components/atoms/public/Buttons/FacebookAuthButton/FacebookAuthButton";
 import { LOGIN_USER_MUTATION } from "@/apollo/mutations/auth";
 import ModalCard from "@/components/atoms/public/Cards/ModalCard/ModalCard";
 import { useMutation } from "@apollo/client";
@@ -124,7 +123,6 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
       <div className="text-with-separators lowercase my-[16px]">Or</div>
       <div className="flex flex-col gap-y-[16px]">
         <GoogleAuthButton>Login with Google</GoogleAuthButton>
-        <FacebookAuthButton>Login with Facebook</FacebookAuthButton>
       </div>
     </ModalCard>
   );

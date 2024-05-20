@@ -165,31 +165,31 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
               {isEdit ? (
                 <div className="flex gap-x-5">
                   <Button
-                    variant="outlineSecondary"
-                    size="sm"
+                    variant="outline"
+                    size="md"
                     type="button"
                     disabled={loading}
                     onClick={handleCancel}
                   >
                     Cancel
                   </Button>{" "}
-                  <Button variant="primary" size="sm" disabled={loading}>
+                  <Button variant="primary" size="md" disabled={loading}>
                     {!loading ? "Save" : "Loading..."}
                   </Button>
                 </div>
               ) : (
                 <Button
                   variant="outlineSecondary"
-                  size="sm"
+                  size="md"
                   type="button"
                   onClick={() => setIsEdit(true)}
                 >
-                  Edit Profile
+                  Edit
                 </Button>
               )}
               <Button
                 variant="outlineSecondary"
-                size="sm"
+                size="md"
                 type="button"
                 disabled
               >

@@ -10,7 +10,7 @@ import NavAuthButtonsList from "@/components/molecules/public/Lists/NavAuthButto
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { routes } from "@/utils/constants/routes.constants";
+import { names, routes } from "@/utils/constants/routes.constants";
 import UserHeaderAvatar from "@/components/atoms/private/user/Avatars/UserHeaderAvatar/UserHeaderAvatar";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -20,7 +20,11 @@ interface IHeaderContent {
 
 const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
   const { push } = useRouter();
-  const { isAuth, isAuthLoading, handleLogout } = useAuthContext();
+  const { user, isAuth, isAuthLoading, handleLogout } = useAuthContext();
+
+  const isHasUserCurrentRole = (role: string) => {
+    return user && user.roles.some((userRole) => userRole.value === role);
+  };
 
   const renderLeftNavContent = () => {
     if (isAuth) {
@@ -38,41 +42,52 @@ const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
       );
     }
     if (isAuth) {
-      return (
-        <div className="flex items-center gap-x-4">
-          <Button
-            variant="none"
-            size="none"
-            onClick={() => push(routes.FAVORITES)}
-          >
-            Favorites
-          </Button>
-          <Button
-            variant="none"
-            size="none"
-            onClick={() => push(routes.DASHBOARD)}
-          >
-            Dashboard
-          </Button>
-          <Button
-            variant="none"
-            size="none"
-            onClick={() => push(routes.PROFILE)}
-          >
-            Profile
-          </Button>
-          <UserHeaderAvatar />
-          <Button
-            variant="none"
-            size="none"
-            className="cursor-pointer"
-            asChild
-            onClick={handleLogout}
-          >
-            <LogOut className="w-5 h-5" />
-          </Button>
-        </div>
-      );
+      if (isHasUserCurrentRole("USER")) {
+        return (
+          <div className="flex items-center gap-x-4">
+            {isHasUserCurrentRole("OWNER") && (
+              <Button
+                variant="none"
+                size="none"
+                onClick={() => push(routes.DASHBOARD)}
+              >
+                {names.DASHBOARD}
+              </Button>
+            )}
+            <Button
+              variant="none"
+              size="none"
+              onClick={() => push(routes.RESERVATIONS)}
+            >
+              {names.RESERVATIONS}
+            </Button>
+            <Button
+              variant="none"
+              size="none"
+              onClick={() => push(routes.FAVORITES)}
+            >
+              {names.FAVORITES}
+            </Button>
+            <Button
+              variant="none"
+              size="none"
+              onClick={() => push(routes.PROFILE)}
+            >
+              {names.PROFILE}
+            </Button>
+            <UserHeaderAvatar />
+            <Button
+              variant="none"
+              size="none"
+              className="cursor-pointer"
+              asChild
+              onClick={handleLogout}
+            >
+              <LogOut className="w-5 h-5" />
+            </Button>
+          </div>
+        );
+      }
     } else {
       return <NavAuthButtonsList isScrolled={isScrolled} />;
     }

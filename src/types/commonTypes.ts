@@ -12,7 +12,7 @@ export enum EScheduleStatus {
 }
 
 type BookingSlot = {
-  id: string;
+  id: number;
   timeSlot: TTimeSlot;
 };
 
@@ -20,7 +20,7 @@ export type TBooking = {
   bookingSlots: BookingSlot[];
   createdAt: string;
   facility: TFacility;
-  id: string;
+  id: number;
   price: string;
   status: string;
 };
@@ -36,13 +36,13 @@ export type TTimeSlot = {
 };
 
 export type TCity = {
-  id: string;
+  id: number;
   name: string;
-  districts: { id: string; name: string }[];
+  districts: { id: number; name: string }[];
 };
 
 export type TDistrict = {
-  id: string;
+  id: number;
   name: string;
   city: TCity;
 };

@@ -1,30 +1,11 @@
 "use client";
 
 import React from "react";
-import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
-import { NavigationMenu } from "@/components/ui/navigation-menu";
-import NavLinksList from "@/components/molecules/public/Lists/NavLinksList/NavLinksList";
-import { siteConfig } from "@/config/site";
-import SportBookingLogo from "@/components/atoms/public/Logos/SportBookingLogo/SportBookingLogo";
-import NavAuthButtonsList from "@/components/molecules/public/Lists/NavAuthButtonsList/NavAuthButtonsList";
 import { clsx } from "clsx";
 import HeaderContent from "@/components/molecules/public/Contents/HeaderContent/HeaderContent";
-import { locales, TLocale } from "@/navigation";
-import { usePathname } from "next/navigation";
 
 const Header = () => {
-  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = React.useState(false);
-
-  const pathParts = pathname
-    .split("/")
-    .filter(Boolean)
-    .filter((part) => !locales.includes(part as TLocale));
-
-  const currentSubNavItems = pathParts.map((part, index) => ({
-    text: part,
-    href: `/${pathParts.slice(0, index + 1).join("/")}`,
-  }));
 
   React.useEffect(() => {
     const handleScroll = () => {

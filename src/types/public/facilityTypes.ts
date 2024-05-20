@@ -1,10 +1,4 @@
-import {
-  TBooking,
-  TCity,
-  TDistrict,
-  TImage,
-  TTimeSlot,
-} from "@/types/commonTypes";
+import { TBooking, TDistrict, TImage, TTimeSlot } from "@/types/commonTypes";
 import { TUser } from "@/types/private/user/profileTypes";
 
 export enum ESportType {
@@ -36,7 +30,7 @@ export type TFacilityFilter = {
 };
 
 type TUserRate = {
-  id: string;
+  id: number;
   value: string;
 };
 
@@ -45,7 +39,6 @@ export type TFacility = {
   avgRating: number;
   avgPrice: number;
   bookings: TBooking[];
-  city: TCity;
   coveringType: ECoveringType;
   currentUserIsFavorite: boolean;
   currentUserRate: TUserRate;
@@ -60,7 +53,6 @@ export type TFacility = {
   ownerId: number;
   ratingCount: number;
   sportType: ESportType[];
-  minBookingTime: number;
   isWorking: boolean;
 };
 

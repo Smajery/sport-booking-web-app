@@ -33,8 +33,7 @@ const BookModal: React.FC<IBookModal> = ({ setIsModal, facilityId }) => {
         <BookSchedule
           facilityId={facilityId}
           handleCloseModal={handleCloseModal}
-          timeSlots={data.facility.timeSlots}
-          minBookingTime={data.facility.minBookingTime}
+          facilitySchedule={data.facility}
         />
       )}
     </BookModalCard>
