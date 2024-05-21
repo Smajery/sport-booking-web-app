@@ -11,6 +11,7 @@ import { GET_ALL_FACILITIES_QUERY } from "@/apollo/query/public/facility";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { TFacilityFilter } from "@/types/public/facilityTypes";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
+import { TPriceRange } from "@/types/commonTypes";
 
 const limit = 10;
 
@@ -22,6 +23,10 @@ const HomeSection = () => {
 
   const [filterValues, setFilterValues] =
     React.useState<TFacilityFilter | null>(null);
+  const [priceRange, setPriceRange] = React.useState<TPriceRange>({
+    min: 0,
+    max: 0,
+  });
   const [currentPage, setCurrentPage] = React.useState(1);
 
   const handleSetFilterValues = (newFilterValues: TFacilityFilter | null) => {
@@ -32,7 +37,7 @@ const HomeSection = () => {
     GET_ALL_FACILITIES_QUERY,
     {
       context: {
-        // authRequired: true,
+        authRequired: true,
       },
       variables: {
         paginationArgs: {
@@ -41,6 +46,7 @@ const HomeSection = () => {
         },
         facilitiesFilterInput: filterValues,
       },
+      onCompleted: (data) => setPriceRange(data.findAll.priceRange),
     },
   );
 
@@ -79,6 +85,7 @@ const HomeSection = () => {
         <FacilityFilter
           handleSetFilterValues={handleSetFilterValues}
           isFetchLoading={loading}
+          priceRange={priceRange}
         />
       </div>
       <div className="w-[1000px] flex flex-col gap-y-4">

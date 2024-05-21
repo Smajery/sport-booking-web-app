@@ -140,6 +140,7 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
                             ? "Something went wrong"
                             : "Select district second"
                       }
+                      className="text-lg text-muted-foreground"
                     />
                   </SelectTrigger>
                 </FormControl>
@@ -169,7 +170,7 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
           <FormMessage />
         </FormItem>
       )}
-    ></FormField>
+    />
   );
 };
 

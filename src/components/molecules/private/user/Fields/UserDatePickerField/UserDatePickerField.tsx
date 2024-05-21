@@ -143,7 +143,7 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
           <FormMessage />
         </FormItem>
       )}
-    ></FormField>
+    />
   );
 };
 

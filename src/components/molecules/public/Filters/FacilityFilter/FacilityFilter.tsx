@@ -5,17 +5,23 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 import FloatingField from "@/components/molecules/public/Fields/FloatingField/FloatingField";
-import { Slider } from "@/components/ui/slider";
 import { TFacilityFilter } from "@/types/public/facilityTypes";
 import SingleSelectField from "@/components/molecules/public/Fields/SingleSelectField/SingleSelectField";
 import { facilityConfig } from "@/config/public/facility";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import _ from "lodash";
+import MultiSelectField from "@/components/molecules/public/Fields/MultiSelectField/MultiSelectField";
+import CitySelectField from "@/components/molecules/public/Fields/CitySelectField/CitySelectField";
+import DistrictsSelectField from "@/components/molecules/public/Fields/DistrictsSelectField/DistrictsSelectField";
+import { TPriceRange } from "@/types/commonTypes";
+import PriceSliderField from "@/components/molecules/public/Fields/PriceSliderField/PriceSliderField";
+import { Separator } from "@/components/ui/separator";
 
 interface ISearchForm {
   handleSetFilterValues: (value: TFacilityFilter | null) => void;
   isFetchLoading: boolean;
+  priceRange: TPriceRange;
 }
 
 const filterFormSchema = z.object({
@@ -32,13 +38,31 @@ const filterFormSchema = z.object({
       name: z.string(),
     })
     .nullable(),
-  sportType: z
+  sportType: z.array(
+    z.object({
+      key: z.string(),
+      name: z.string(),
+    }),
+  ),
+  districts: z.array(
+    z.object({
+      key: z.string(),
+      name: z.string(),
+    }),
+  ),
+  cityId: z
     .object({
       key: z.string(),
       name: z.string(),
     })
     .nullable(),
-  district: z
+  priceRange: z
+    .object({
+      minPrice: z.number(),
+      maxPrice: z.number(),
+    })
+    .nullable(),
+  sortBy: z
     .object({
       key: z.string(),
       name: z.string(),
@@ -49,28 +73,45 @@ const filterFormSchema = z.object({
 const FilterForm: React.FC<ISearchForm> = ({
   isFetchLoading,
   handleSetFilterValues,
+  priceRange,
 }) => {
-  const facilityFilterTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
-
   const form = useForm<z.infer<typeof filterFormSchema>>({
     resolver: zodResolver(filterFormSchema),
     defaultValues: {
       search: null,
       coveringType: null,
       facilityType: null,
-      sportType: null,
-      district: null,
+      sportType: [],
+      districts: [],
+      cityId: null,
+      priceRange: null,
+      sortBy: null,
     },
   });
 
   const onSubmit = async (values: z.infer<typeof filterFormSchema>) => {
-    const { search, sportType, coveringType, district, facilityType } = values;
+    const {
+      priceRange,
+      search,
+      sportType,
+      coveringType,
+      cityId,
+      districts,
+      facilityType,
+      sortBy,
+    } = values;
     const modifiedValues = {
       search: search && search.length !== 0 ? search : null,
-      sportType: sportType?.key ?? null,
+      sportType: sportType.length ? sportType.map((sport) => sport.key) : null,
       coveringType: coveringType?.key ?? null,
       facilityType: facilityType?.key ?? null,
-      district: district?.key ?? null,
+      districts: districts.length
+        ? districts.map((district) => Number(district.key))
+        : null,
+      cityId: cityId ? Number(cityId.key) : null,
+      minPrice: priceRange?.minPrice ?? null,
+      maxPrice: priceRange?.maxPrice ?? null,
+      sortBy: sortBy?.key ?? null,
     };
     const filteredValues = Object.fromEntries(
       Object.entries(modifiedValues).filter(([, value]) => value !== null),
@@ -84,7 +125,10 @@ const FilterForm: React.FC<ISearchForm> = ({
   const coveringTypeWatch = form.watch("coveringType");
   const facilityTypeWatch = form.watch("facilityType");
   const sportTypeWatch = form.watch("sportType");
-  const districtWatch = form.watch("district");
+  const cityIdWatch = form.watch("cityId");
+  const districtsWatch = form.watch("districts");
+  const priceRangeWatch = form.watch("priceRange");
+  const sortByWatch = form.watch("sortBy");
 
   React.useEffect(() => {
     const debouncedSubmit = _.debounce(() => {
@@ -100,9 +144,10 @@ const FilterForm: React.FC<ISearchForm> = ({
     coveringTypeWatch,
     facilityTypeWatch,
     sportTypeWatch,
-    districtWatch,
-    onSubmit,
-    form,
+    cityIdWatch,
+    districtsWatch,
+    priceRangeWatch,
+    sortByWatch,
   ]);
 
   const handleReset = () => {
@@ -125,7 +170,7 @@ const FilterForm: React.FC<ISearchForm> = ({
           IconComponent={Search}
           noValidate
         />
-        <SingleSelectField
+        <MultiSelectField
           form={form}
           name="sportType"
           labelText="Sport"
@@ -143,23 +188,31 @@ const FilterForm: React.FC<ISearchForm> = ({
           labelText="Facility"
           selectableItems={facilityConfig.facilityType}
         />
-        <div className="opacity-50 pointer-events-none">
-          <SingleSelectField
-            form={form}
-            name="district"
-            labelText="District"
-            selectableItems={facilityConfig.district}
-          />
-        </div>
-        <div className="flex flex-col gap-y-4 opacity-50 pointer-events-none">
-          <p className="text-primary font-semibold">Price</p>
-          <Slider defaultValue={[0, 100]} min={0} max={100} step={1} />
-        </div>
+        <CitySelectField form={form} name="cityId" labelText="City" />
+        <DistrictsSelectField
+          form={form}
+          name="districts"
+          labelText="Districts"
+          cityId={cityIdWatch ? Number(cityIdWatch.key) : null}
+        />
+        <PriceSliderField
+          form={form}
+          name="priceRange"
+          labelText="Price"
+          priceRange={priceRange}
+        />
+        <SingleSelectField
+          form={form}
+          name="sortBy"
+          labelText="Sort by"
+          selectableItems={facilityConfig.sortBy}
+        />
+        <Separator />
         <Button
           variant="outlineSecondary"
           size="md"
           type="button"
-          className="mt-4 mr-auto"
+          className="mr-auto"
           onClick={handleReset}
           disabled={isFetchLoading}
         >

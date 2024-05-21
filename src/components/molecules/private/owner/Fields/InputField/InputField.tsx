@@ -92,7 +92,7 @@ const InputField: React.FC<IInputField> = ({
           <FormMessage />
         </FormItem>
       )}
-    ></FormField>
+    />
   );
 };
 

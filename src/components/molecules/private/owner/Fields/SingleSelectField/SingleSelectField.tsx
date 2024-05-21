@@ -11,11 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import { clsx } from "clsx";
 import { Check, X } from "lucide-react";
-
-type TSelectedItem = {
-  key: string;
-  name: string;
-};
+import { TSelectedItem } from "@/types/commonTypes";
 
 interface ISingleSelectField {
   form: any;

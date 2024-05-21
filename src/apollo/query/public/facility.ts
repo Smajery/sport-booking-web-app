@@ -34,6 +34,10 @@ export const GET_ALL_FACILITIES_QUERY = gql`
         isWorking
       }
       totalCount
+      priceRange {
+        max
+        min
+      }
     }
   }
 `;

@@ -98,7 +98,7 @@ const FloatingField: React.FC<IFloatingField> = ({
           <FormMessage />
         </FormItem>
       )}
-    ></FormField>
+    />
   );
 };
 

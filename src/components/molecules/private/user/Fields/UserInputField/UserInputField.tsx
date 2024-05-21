@@ -81,7 +81,7 @@ const UserInputField: React.FC<IUserInputField> = ({
           <FormMessage />
         </FormItem>
       )}
-    ></FormField>
+    />
   );
 };
 

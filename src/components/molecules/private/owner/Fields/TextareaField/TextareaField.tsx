@@ -92,7 +92,7 @@ const TextareaField: React.FC<ITextArea> = ({
           <FormMessage />
         </FormItem>
       )}
-    ></FormField>
+    />
   );
 };
 

@@ -8,11 +8,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-
-type TSelectedItem = {
-  key: string;
-  name: string;
-};
+import { TSelectedItem } from "@/types/commonTypes";
 
 interface IMultiSelectField {
   form: any;
@@ -35,7 +31,6 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
     newSelectedItem: TSelectedItem,
     isSameItem: boolean,
   ) => {
-    console.log(arrayWatch);
     if (isSameItem) {
       setValue(
         name,
@@ -60,7 +55,7 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
           <FormControl>
             <div
               className={cn(
-                "bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4",
+                "min-h-[52px] bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4",
                 className,
               )}
             >

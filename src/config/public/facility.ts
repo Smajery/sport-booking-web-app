@@ -22,6 +22,10 @@ export const facilityConfig = {
     { key: "Київський", name: "Kyivskyi" },
     { key: "Суворовський", name: "Suvorovsky" },
   ],
+  sortBy: [
+    { key: "price_asc", name: "Price up" },
+    { key: "price_desc", name: "Price down" },
+  ],
   daysOfWeek: [
     { key: 1, name: "Mon" },
     { key: 2, name: "Tue" },

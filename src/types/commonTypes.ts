@@ -46,3 +46,13 @@ export type TDistrict = {
   name: string;
   city: TCity;
 };
+
+export type TSelectedItem = {
+  key: string;
+  name: string;
+};
+
+export type TPriceRange = {
+  min: number;
+  max: number;
+};

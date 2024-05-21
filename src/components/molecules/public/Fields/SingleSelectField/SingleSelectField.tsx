@@ -8,11 +8,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-
-type TSelectedItem = {
-  key: string;
-  name: string;
-};
+import { TSelectedItem } from "@/types/commonTypes";
 
 interface ISingleSelectField {
   form: any;
@@ -45,7 +41,7 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
     <FormField
       control={control}
       name={name}
-      render={({ field }) => (
+      render={({ field: { value } }) => (
         <FormItem className="flex flex-col space-y-1">
           {labelText && (
             <FormLabel className="text-base text-primary font-semibold">
@@ -55,7 +51,7 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
           <FormControl>
             <div
               className={cn(
-                "bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4",
+                "min-h-[52px] bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4",
                 className,
               )}
             >
@@ -66,13 +62,13 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
                   onClick={() =>
                     handleSelectItem(
                       selectableItem,
-                      field.value && field.value.key === selectableItem.key,
+                      value && value.key === selectableItem.key,
                     )
                   }
                 >
                   <Badge
                     variant={
-                      field.value && field.value.key === selectableItem.key
+                      value && value.key === selectableItem.key
                         ? "primary"
                         : "outline"
                     }

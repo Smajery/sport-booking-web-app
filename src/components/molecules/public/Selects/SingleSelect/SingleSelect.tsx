@@ -1,10 +1,6 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-
-type TSelectedItem = {
-  key: string;
-  name: string;
-};
+import { TSelectedItem } from "@/types/commonTypes";
 
 interface ISingleSelect {
   name: string;

@@ -73,14 +73,15 @@ const SelectLocationField: React.FC<ISearchAndSelectLocationField> = ({
 
     if (location) {
       const [lat, lng] = location.split(", ").map(Number);
-      initialCenter = { lat, lng };
+      initialCenter = new google.maps.LatLng(lat, lng);
     } else {
-      initialCenter = { lat: 50.4501, lng: 30.5234 };
+      initialCenter = new google.maps.LatLng(50.4501, 30.5234);
     }
     const mapOptions: google.maps.MapOptions = {
-      disableDefaultUI: true,
       zoom: 13,
+      minZoom: 3,
       center: initialCenter,
+      mapId: process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID as string,
     };
 
     const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
@@ -151,7 +152,7 @@ const SelectLocationField: React.FC<ISearchAndSelectLocationField> = ({
           <FormMessage />
         </FormItem>
       )}
-    ></FormField>
+    />
   );
 };
 
