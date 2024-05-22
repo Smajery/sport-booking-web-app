@@ -10,6 +10,7 @@ import { ModalProvider } from "@/providers/ModalProvider/ModalProvider";
 import { IntlClientProvider } from "@/providers/IntlClientProvider/IntlClientProvider";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { locales } from "@/navigation";
+import { GoogleOAuthProvider } from "@/providers/GoogleOAuthProvider/GoogleOAuthProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -46,7 +47,9 @@ export default async function LocaleLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <IntlClientProvider>
               <AuthProvider>
-                <ModalProvider>{children}</ModalProvider>
+                <GoogleOAuthProvider>
+                  <ModalProvider>{children}</ModalProvider>
+                </GoogleOAuthProvider>
               </AuthProvider>
             </IntlClientProvider>
           </ThemeProvider>

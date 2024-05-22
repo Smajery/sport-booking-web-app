@@ -31,3 +31,12 @@ export const LOGOUT_USER_MUTATION = gql`
     logout
   }
 `;
+
+export const GOOGLE_AUTH_MUTATION = gql`
+  mutation GoogleAuth($token: String!) {
+    googleAuth(token: $token) {
+      accessToken
+      refreshToken
+    }
+  }
+`;
