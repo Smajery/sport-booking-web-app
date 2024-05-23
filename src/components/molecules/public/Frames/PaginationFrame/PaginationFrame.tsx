@@ -6,43 +6,19 @@ import ReactPaginate from "react-paginate";
 import { Input } from "@/components/ui/input";
 
 interface IPaginationFrame {
-  totalItems: number;
   handlePageChange: (value: any) => void;
   totalPages: number;
   currentPage: number;
-  setCurrentPage: (value: number) => void;
   isFetchLoading: boolean;
 }
 
 const PaginationFrame: React.FC<IPaginationFrame> = ({
-  totalItems,
   handlePageChange,
   totalPages,
   currentPage,
-  setCurrentPage,
   isFetchLoading,
 }) => {
   const paginationTypingTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
-  const [numPage, setNumPage] = React.useState<string>("");
-
-  const handleType = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const inputValue = e.target.value;
-      const pageNumber = parseInt(inputValue, 10);
-
-      if (paginationTypingTimeoutRef.current) {
-        clearTimeout(paginationTypingTimeoutRef.current);
-      }
-
-      if (pageNumber <= totalPages) {
-        paginationTypingTimeoutRef.current = setTimeout(() => {
-          setCurrentPage(pageNumber || 0);
-        }, 1000);
-        setNumPage(inputValue);
-      }
-    },
-    [setCurrentPage, totalPages],
-  );
 
   React.useEffect(() => {
     return () => {
@@ -55,11 +31,11 @@ const PaginationFrame: React.FC<IPaginationFrame> = ({
   if (totalPages <= 1 || isFetchLoading) return null;
 
   return (
-    <div className="flex items-center justify-center gap-x-2 mt-10 mb-5">
+    <div className="flex justify-center p-10">
       <ReactPaginate
         breakLabel="..."
         onPageChange={handlePageChange}
-        forcePage={currentPage}
+        forcePage={currentPage - 1}
         pageRangeDisplayed={3}
         pageCount={totalPages}
         containerClassName="flex gap-x-2"
@@ -75,16 +51,6 @@ const PaginationFrame: React.FC<IPaginationFrame> = ({
         previousLabel={<ArrowLeftCircle className="w-8 h-8" strokeWidth={1} />}
         nextLabel={<ArrowRightCircle className="w-8 h-8" strokeWidth={1} />}
         renderOnZeroPageCount={null}
-      />
-      <p className="ml-5">Go To</p>
-      <Input
-        name="page"
-        type="number"
-        value={numPage}
-        onChange={handleType}
-        min={1}
-        placeholder="Page"
-        className="w-[100px]"
       />
     </div>
   );

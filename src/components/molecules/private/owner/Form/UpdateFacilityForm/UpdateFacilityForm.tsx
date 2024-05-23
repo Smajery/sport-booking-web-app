@@ -6,8 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import {
+  DELETE_FACILITY_MUTATION,
   UPDATE_FACILITY_MUTATION,
   UPDATE_FACILITY_PHOTOS_MUTATION,
 } from "@/apollo/mutations/private/owner/facility";
@@ -16,6 +17,10 @@ import { TFacility } from "@/types/private/owner/facilityTypes";
 import UpdateFacilityFormContent from "@/components/molecules/private/owner/Contents/UpdateFacilityFormContent/UpdateFacilityFormContent";
 import FacilityCardFrame from "@/components/molecules/private/owner/Frames/FacilityCardFrame/FacilityCardFrame";
 import _ from "lodash";
+import ApproveActionCard from "@/components/atoms/private/user/Cards/ApproveActionCard/ApproveActionCard";
+import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/ShowErrorModal";
+import { useRouter } from "next/navigation";
+import { routes } from "@/utils/constants/routes.constants";
 
 type TItem = {
   key: string;
@@ -52,6 +57,7 @@ interface IUpdateFacilityForm {
 }
 
 const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
+  const { push } = useRouter();
   const {
     id,
     name,
@@ -64,12 +70,19 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
   } = facility;
 
   const [isEditFacility, setIsEditFacility] = React.useState<boolean>(false);
+  const [requestError, setRequestError] = React.useState<
+    ApolloError | undefined
+  >(undefined);
 
-  const [updateFacility, { loading: facilityLoading }] = useMutation(
+  const [updateFacility, { loading: updateFacilityLoading }] = useMutation(
     UPDATE_FACILITY_MUTATION,
   );
-  const [updateFacilityPhotos, { loading: facilityPhotosLoading }] =
+  const [updateFacilityPhotos, { loading: updateFacilityPhotosLoading }] =
     useMutation(UPDATE_FACILITY_PHOTOS_MUTATION);
+
+  const [deleteFacility, { loading: deleteFacilityLoading }] = useMutation(
+    DELETE_FACILITY_MUTATION,
+  );
 
   const form = useForm<z.infer<typeof updateFacilityFormSchema>>({
     resolver: zodResolver(updateFacilityFormSchema),
@@ -157,59 +170,100 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
     }
   };
 
+  const handleDeleteFacility = async () => {
+    try {
+      await deleteFacility({
+        context: {
+          authRequired: true,
+        },
+        variables: {
+          id,
+        },
+      });
+      push(routes.USER_FACILITIES);
+    } catch (e) {
+      setRequestError(e as ApolloError);
+      ErrorHandler.handle(e, {
+        componentName: "UpdateFacilityForm__handleDeleteFacility",
+      });
+    }
+  };
+
   const handleCancel = () => {
     form.reset();
     setIsEditFacility(false);
   };
 
   return (
-    <FormProvider {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col py-5 pl-5 gap-y-5"
-        encType="multipart/form-data"
-      >
-        {isEditFacility ? (
-          <UpdateFacilityFormContent form={form} />
-        ) : (
-          <FacilityCardFrame facility={facility} />
-        )}
-        <Separator className="mt-5" />
-        <div className="flex gap-x-2">
+    <>
+      <FormProvider {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col py-5 pl-5 gap-y-5"
+          encType="multipart/form-data"
+        >
           {isEditFacility ? (
-            <>
+            <UpdateFacilityFormContent form={form} />
+          ) : (
+            <FacilityCardFrame facility={facility} />
+          )}
+          <Separator />
+          <div className="flex gap-x-2">
+            {isEditFacility ? (
+              <>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  type="button"
+                  onClick={handleCancel}
+                  disabled={
+                    updateFacilityLoading || updateFacilityPhotosLoading
+                  }
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  disabled={
+                    updateFacilityLoading || updateFacilityPhotosLoading
+                  }
+                >
+                  {!updateFacilityLoading && !updateFacilityPhotosLoading
+                    ? "Save"
+                    : "Loading..."}
+                </Button>
+              </>
+            ) : (
               <Button
-                variant="outline"
+                variant="outlineSecondary"
                 size="lg"
                 type="button"
-                onClick={handleCancel}
-                disabled={facilityLoading || facilityPhotosLoading}
+                onClick={() => setIsEditFacility(true)}
               >
-                Cancel
+                Edit Facility
               </Button>
-              <Button
-                variant="primary"
-                size="lg"
-                disabled={facilityLoading || facilityPhotosLoading}
-              >
-                {!facilityLoading && !facilityPhotosLoading
-                  ? "Save"
-                  : "Loading..."}
-              </Button>
-            </>
-          ) : (
-            <Button
-              variant="outlineSecondary"
-              size="lg"
-              type="button"
-              onClick={() => setIsEditFacility(true)}
+            )}
+            <ApproveActionCard
+              handleApprove={handleDeleteFacility}
+              alertDescription="This action cannot be undone. This will permanently delete your
+            facility and remove its data from our servers."
             >
-              Edit Facility
-            </Button>
-          )}
-        </div>
-      </form>
-    </FormProvider>
+              <Button
+                type="button"
+                variant="outlineDestructive"
+                size="lg"
+                className="ml-auto"
+                disabled={isEditFacility || true}
+              >
+                Delete Facility
+              </Button>
+            </ApproveActionCard>
+          </div>
+        </form>
+      </FormProvider>
+      <ShowErrorModal error={requestError} setError={setRequestError} />
+    </>
   );
 };
 

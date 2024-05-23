@@ -13,13 +13,13 @@ import { Button } from "@/components/ui/button";
 import { TUser } from "@/types/private/user/profileTypes";
 import SingleMessageField from "@/components/molecules/public/Fields/SingleMessageField/SingleMessageField";
 
-interface IUserProfileAvatar {
+interface IUserProfileAvatarFrame {
   isEdit: boolean;
   user: TUser;
   form: any;
 }
 
-const UserProfileAvatar: React.FC<IUserProfileAvatar> = ({
+const UserProfileAvatarFrame: React.FC<IUserProfileAvatarFrame> = ({
   isEdit,
   user,
   form,
@@ -64,10 +64,7 @@ const UserProfileAvatar: React.FC<IUserProfileAvatar> = ({
       <div className="relative">
         <Avatar className="h-[150px] w-[150px]">
           {selectedAvatar && (
-            <AvatarImage
-              src={selectedAvatar}
-              className="bg-no-repeat bg-cover bg-top"
-            />
+            <AvatarImage src={selectedAvatar} alt="User Avatar" />
           )}
           <AvatarFallback className="text-5xl">
             {fullname ? (
@@ -82,7 +79,7 @@ const UserProfileAvatar: React.FC<IUserProfileAvatar> = ({
             <Input
               type="file"
               onChange={handleFileInput}
-              accept={ACCEPTED_IMAGE_TYPES.join(",")}
+              accept={ACCEPTED_IMAGE_TYPES.join(", ")}
               className="hidden"
               ref={fileInputRef}
             />
@@ -109,4 +106,4 @@ const UserProfileAvatar: React.FC<IUserProfileAvatar> = ({
   );
 };
 
-export default UserProfileAvatar;
+export default UserProfileAvatarFrame;

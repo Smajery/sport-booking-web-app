@@ -69,6 +69,19 @@ const SelectLocationField: React.FC<ISearchAndSelectLocationField> = ({
     const { Map } = await loader.importLibrary("maps");
     const { Marker } = await loader.importLibrary("marker");
 
+    // const odessaBounds = {
+    //   north: 46.605,
+    //   south: 46.358,
+    //   west: 30.627,
+    //   east: 30.824,
+    // };
+    // const kyivBounds = {
+    //   north: 50.590798,
+    //   south: 50.213273,
+    //   west: 30.23944,
+    //   east: 30.825941,
+    // };
+
     let initialCenter;
 
     if (location) {
@@ -85,6 +98,12 @@ const SelectLocationField: React.FC<ISearchAndSelectLocationField> = ({
     };
 
     const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
+    // const bounds = new google.maps.LatLngBounds(
+    //   new google.maps.LatLng(odessaBounds.south, odessaBounds.west),
+    //   new google.maps.LatLng(odessaBounds.north, odessaBounds.east),
+    // );
+    //
+    // map.fitBounds(bounds);
     const marker = new Marker({
       position: location ? initialCenter : undefined,
       map,

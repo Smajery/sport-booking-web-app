@@ -18,6 +18,7 @@ interface ITextArea extends TextareaProps {
   labelText?: string;
   noValidate?: boolean;
   isRequestError?: boolean;
+  className?: string;
 }
 
 const TextareaField: React.FC<ITextArea> = ({
@@ -26,6 +27,7 @@ const TextareaField: React.FC<ITextArea> = ({
   labelText,
   noValidate = false,
   isRequestError = false,
+  className = "",
   ...props
 }) => {
   const {
@@ -68,7 +70,7 @@ const TextareaField: React.FC<ITextArea> = ({
                 onChange={(e) => {
                   field.onChange(e.target.value);
                 }}
-                className={clsx("text-lg", {
+                className={clsx(`text-lg pl-3 pb-[6px] ${className}`, {
                   "border-destructive focus-visible:ring-destructive":
                     (invalid && isSubmitted && !noValidate) || isRequestError,
                   "border-success focus-visible:ring-success":

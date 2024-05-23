@@ -14,7 +14,10 @@ const ProfileSection = () => {
   const [isBecameOwner, setIsBecameOwner] = React.useState<boolean>(false);
 
   const { data, loading, error } = useQuery(GET_USER_QUERY, {
-    context: { authRequired: true },
+    fetchPolicy: "cache-and-network",
+    context: {
+      authRequired: true,
+    },
   });
 
   if (loading) return <div>Loading...</div>;

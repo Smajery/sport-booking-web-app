@@ -1,11 +1,8 @@
 import React from "react";
 import UserInfoFrame from "@/components/molecules/private/user/Frames/UserInfoFrame/UserInfoFrame";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getAbbreviation } from "@/utils/helpers/text.helpers";
-import { User2 } from "lucide-react";
 import { TUser } from "@/types/private/user/profileTypes";
 import format from "@/lib/format";
-import { useLocale } from "use-intl";
+import { useLocale } from "next-intl";
 import { TLocale } from "@/navigation";
 
 interface IUserCardFrame {

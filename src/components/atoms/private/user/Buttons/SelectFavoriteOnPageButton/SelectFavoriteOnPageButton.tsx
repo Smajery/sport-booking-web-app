@@ -25,6 +25,10 @@ const SelectFavoriteOnPageButton: React.FC<ISelectFavoriteOnPageButton> = ({
 }) => {
   const { isAuth } = useAuthContext();
   const { setIsLoginModal } = useModalContext();
+
+  const [isFavorite, setIsFavorite] = React.useState<boolean>(
+    currentUserIsFavorite,
+  );
   const [requestError, setRequestError] = React.useState<
     ApolloError | undefined
   >(undefined);
@@ -45,31 +49,43 @@ const SelectFavoriteOnPageButton: React.FC<ISelectFavoriteOnPageButton> = ({
       },
     });
 
+  const handleAddToFavorite = async () => {
+    try {
+      await addToFavorite({
+        variables: { facilityId },
+      });
+      setIsFavorite(true);
+      setRequestError(undefined);
+    } catch (e) {
+      ErrorHandler.handle(e, {
+        componentName: "SelectFavoriteOnPageButton__addToFavorite",
+      });
+    }
+  };
+
+  const handleRemoveFromFavorite = async () => {
+    try {
+      await removeFromFavorite({
+        variables: { facilityId },
+      });
+      setIsFavorite(false);
+      setRequestError(undefined);
+    } catch (e) {
+      ErrorHandler.handle(e, {
+        componentName: "SelectFavoriteOnPageButton__removeFromFavorite",
+      });
+    }
+  };
+
   const handleSelectFavorite = async (
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.stopPropagation();
     if (isAuth) {
-      if (currentUserIsFavorite) {
-        try {
-          await removeFromFavorite({
-            variables: { facilityId },
-          });
-        } catch (e) {
-          ErrorHandler.handle(e, {
-            componentName: "SelectFavoriteOnPageButton__removeFromFavorite",
-          });
-        }
+      if (isFavorite) {
+        await handleRemoveFromFavorite();
       } else {
-        try {
-          await addToFavorite({
-            variables: { facilityId },
-          });
-        } catch (e) {
-          ErrorHandler.handle(e, {
-            componentName: "SelectFavoriteOnPageButton__addToFavorite",
-          });
-        }
+        await handleAddToFavorite();
       }
     } else {
       setIsLoginModal(true);
@@ -85,7 +101,7 @@ const SelectFavoriteOnPageButton: React.FC<ISelectFavoriteOnPageButton> = ({
         onClick={handleSelectFavorite}
         disabled={addToFavoriteLoading || removeFromFavoriteLoading}
       >
-        {currentUserIsFavorite ? (
+        {isFavorite ? (
           <>
             In Favorite
             <Image

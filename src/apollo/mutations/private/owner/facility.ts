@@ -40,6 +40,14 @@ export const UPDATE_FACILITY_MUTATION = gql`
   }
 `;
 
+export const DELETE_FACILITY_MUTATION = gql`
+  mutation RemoveFacility($id: Int!) {
+    removeFacility(id: $id) {
+      id
+    }
+  }
+`;
+
 export const UPDATE_FACILITY_PHOTOS_MUTATION = gql`
   mutation UploadFacilityPhotos($facilityId: Float!, $photos: [Upload!]!) {
     uploadFacilityPhotos(facilityId: $facilityId, photos: $photos) {
@@ -66,5 +74,11 @@ export const UPDATE_SCHEDULE_MUTATION = gql`
     updateTimeSlots(updateTimeSlotsInput: $updateTimeSlotsInput) {
       id
     }
+  }
+`;
+
+export const DELETE_SCHEDULE_MUTATION = gql`
+  mutation DeleteSchedule($facilityId: Float!) {
+    deleteSchedule(facilityId: $facilityId)
   }
 `;

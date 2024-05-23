@@ -20,7 +20,7 @@ const badgeVariants = cva("min-w-0 max-w-max inline-flex gap-x-2 border", {
     },
     size: {
       default: "rounded-lg px-2 py-1",
-      sm: "rounded-full px-2",
+      sm: "rounded-full px-3",
     },
   },
   defaultVariants: {

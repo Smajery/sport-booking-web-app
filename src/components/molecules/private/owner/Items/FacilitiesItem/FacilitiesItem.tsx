@@ -3,7 +3,7 @@
 import React from "react";
 import { TFacility } from "@/types/private/owner/facilityTypes";
 import ImageAvatar from "@/components/atoms/public/Avatars/ImageAvatar/ImageAvatar";
-import { Hash, MapPin, Text } from "lucide-react";
+import { Hash, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";

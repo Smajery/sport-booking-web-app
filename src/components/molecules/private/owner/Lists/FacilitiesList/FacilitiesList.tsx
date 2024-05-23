@@ -2,7 +2,7 @@
 
 import React from "react";
 import FacilitiesItem from "@/components/molecules/private/owner/Items/FacilitiesItem/FacilitiesItem";
-import { TFacility } from "@/types/public/facilityTypes";
+import { TFacility } from "@/types/private/owner/facilityTypes";
 import CreateFacilityButton from "@/components/atoms/private/owner/Buttons/CreateFacilityButton/CreateFacilityButton";
 
 interface IFacilitiesList {

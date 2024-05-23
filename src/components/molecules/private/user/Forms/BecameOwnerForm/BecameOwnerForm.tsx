@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import * as z from "zod";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
@@ -10,6 +12,8 @@ import { BECAME_OWNER_MUTATION } from "@/apollo/mutations/private/user/user";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/ShowErrorModal";
+import { useRouter } from "next/navigation";
+import { routes } from "@/utils/constants/routes.constants";
 
 const becameOwnerSchema = z.object({
   phone: z.string().min(1).max(20),
@@ -21,17 +25,12 @@ interface IBecameOwnerForm {
 }
 
 const BecameOwnerForm: React.FC<IBecameOwnerForm> = ({ setIsBecameOwner }) => {
+  const { push } = useRouter();
   const [requestError, setRequestError] = React.useState<
     ApolloError | undefined
   >(undefined);
 
   const [becameOwner, { loading }] = useMutation(BECAME_OWNER_MUTATION, {
-    context: {
-      authRequired: true,
-    },
-    refetchQueries: [
-      { query: GET_USER_QUERY, context: { authRequired: true } },
-    ],
     onError: (e) => setRequestError(e),
   });
 
@@ -41,6 +40,12 @@ const BecameOwnerForm: React.FC<IBecameOwnerForm> = ({ setIsBecameOwner }) => {
   const onSubmit = async (values: z.infer<typeof becameOwnerSchema>) => {
     try {
       await becameOwner({
+        context: {
+          authRequired: true,
+        },
+        refetchQueries: [
+          { query: GET_USER_QUERY, context: { authRequired: true } },
+        ],
         variables: {
           ownerInfo: values,
         },

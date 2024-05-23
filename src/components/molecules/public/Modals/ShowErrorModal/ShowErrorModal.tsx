@@ -3,10 +3,13 @@ import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
+  AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
 import ApolloErrorFrame from "@/components/molecules/public/Frames/ApolloErrorFrame/ApolloErrorFrame";
 import { ApolloError } from "@apollo/client";
+import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 
 interface IShowErrorModal {
   error: ApolloError | undefined;
@@ -17,7 +20,11 @@ const ShowErrorModal: React.FC<IShowErrorModal> = ({ error, setError }) => {
   return (
     <AlertDialog open={!!error}>
       <AlertDialogContent>
-        <ApolloErrorFrame error={error} className="text-base" />
+        <AlertDialogHeader>
+          <AlertDialogDescription className="text-destructive">
+            {error && getApolloErrorMessage(error)}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setError(undefined)}>
             Close

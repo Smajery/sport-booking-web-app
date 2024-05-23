@@ -1,14 +1,9 @@
 import { gql } from "@apollo/client";
 
-export const GET_ALL_FACILITIES_QUERY = gql`
-  query FindAllFacilities(
-    $facilitiesFilterInput: FacilitiesFilterInput
-    $paginationArgs: PaginationArgs
-  ) {
-    findAll(
-      facilitiesFilterInput: $facilitiesFilterInput
-      paginationArgs: $paginationArgs
-    ) {
+export const GET_ALL_OWNER_FACILITIES_QUERY = gql`
+  query findOwnerFacilities($paginationArgs: PaginationArgs) {
+    findOwnerFacilities(paginationArgs: $paginationArgs) {
+      totalCount
       facilities {
         id
         name
@@ -41,7 +36,6 @@ export const GET_ALL_FACILITIES_QUERY = gql`
         avgRating
         isWorking
       }
-      totalCount
     }
   }
 `;

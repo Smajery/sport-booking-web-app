@@ -28,8 +28,10 @@
     --success: 141 82% 38%;
     --success-foreground: 0 0% 100%; /* #ffffff */
 
-    --warning: 39 89% 52%;
     --danger: 336 91% 44%;
+    --danger-foreground: 0 0% 100%; /* #ffffff */
+
+    --warning: 39 89% 52%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;

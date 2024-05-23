@@ -11,8 +11,7 @@ import ReservationsList from "@/components/molecules/private/user/Lists/Reservat
 const limit = 10;
 
 const ReservationsSection = () => {
-  const { pagination, setPagination, handleSetCurrentPage, handlePageChange } =
-    usePagination();
+  const { pagination, setPagination, handlePageChange } = usePagination();
   const { currentPage, totalPages, totalItems } = pagination;
 
   const { data, loading, error, fetchMore } = useQuery(
@@ -53,11 +52,9 @@ const ReservationsSection = () => {
         <ReservationsList bookings={data.findAllBookings.bookings} />
       )}
       <PaginationFrame
-        totalItems={totalItems}
         handlePageChange={handlePageChange}
         totalPages={totalPages}
         currentPage={currentPage}
-        setCurrentPage={handleSetCurrentPage}
         isFetchLoading={loading}
       />
     </section>

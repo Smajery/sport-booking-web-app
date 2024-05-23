@@ -11,6 +11,7 @@ import { GET_USER_AVATAR_QUERY } from "@/apollo/query/private/user/profile";
 
 const UserHeaderAvatar = () => {
   const { data, loading, error } = useQuery(GET_USER_AVATAR_QUERY, {
+    fetchPolicy: "cache-and-network",
     context: { authRequired: true },
   });
 

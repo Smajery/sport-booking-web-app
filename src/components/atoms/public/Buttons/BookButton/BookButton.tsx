@@ -2,15 +2,15 @@
 
 import React from "react";
 import BookModal from "@/components/molecules/public/Modals/BookModal/BookModal";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 import { useModalContext } from "@/providers/ModalProvider/ModalProvider";
 
-interface IBookButton {
+interface IBookButton extends ButtonProps {
   facilityId: number;
 }
 
-const BookButton: React.FC<IBookButton> = ({ facilityId }) => {
+const BookButton: React.FC<IBookButton> = ({ facilityId, ...props }) => {
   const { isAuth } = useAuthContext();
   const { setIsLoginModal } = useModalContext();
   const [isBookModal, setIsBookModal] = React.useState(false);
@@ -24,7 +24,12 @@ const BookButton: React.FC<IBookButton> = ({ facilityId }) => {
   };
   return (
     <>
-      <Button size="md" className="variant-gradient" onClick={handleBook}>
+      <Button
+        size="md"
+        className="variant-gradient"
+        onClick={handleBook}
+        {...props}
+      >
         Book
       </Button>
       {isBookModal && (

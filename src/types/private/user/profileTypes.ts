@@ -1,6 +1,3 @@
-import { TFacility } from "@/types/public/facilityTypes";
-import { TBooking } from "@/types/commonTypes";
-
 type TUserOwner = {
   id: number;
   organizationName: string;
@@ -15,14 +12,9 @@ type Role = {
 export type TUser = {
   activationLink: string;
   avatar: string | null;
-  bookings: TBooking[];
-  createdAt: string;
   dateOfBirth: string | null;
   email: string;
-  facebookId: string | null;
-  facilities: TFacility[];
   fullname: string | null;
-  googleId: string | null;
   id: number;
   isActivated: boolean;
   userOwner: TUserOwner | null;

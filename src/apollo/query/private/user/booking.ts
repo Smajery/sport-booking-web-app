@@ -12,11 +12,11 @@ export const GET_USER_BOOKINGS_QUERY = gql`
         facility {
           id
           name
-          sportType
-          coveringType
-          facilityType
-          images {
-            image
+          currentUserRate {
+            value
+          }
+          owner {
+            id
           }
         }
       }

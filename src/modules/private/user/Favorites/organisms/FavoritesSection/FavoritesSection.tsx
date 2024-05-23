@@ -11,8 +11,7 @@ import { usePagination } from "@/hooks/usePagination/usePagination";
 const limit = 10;
 
 const FavoritesSection = () => {
-  const { pagination, setPagination, handleSetCurrentPage, handlePageChange } =
-    usePagination();
+  const { pagination, setPagination, handlePageChange } = usePagination();
   const { currentPage, totalPages, totalItems } = pagination;
 
   const { data, loading, error, fetchMore } = useQuery(
@@ -54,11 +53,9 @@ const FavoritesSection = () => {
         <FavoriteFacilitiesList facilities={data.getUserFavorites.facilities} />
       )}
       <PaginationFrame
-        totalItems={totalItems}
         handlePageChange={handlePageChange}
         totalPages={totalPages}
         currentPage={currentPage}
-        setCurrentPage={handleSetCurrentPage}
         isFetchLoading={loading}
       />
     </section>

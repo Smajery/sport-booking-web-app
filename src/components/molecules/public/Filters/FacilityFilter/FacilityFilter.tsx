@@ -195,19 +195,19 @@ const FilterForm: React.FC<ISearchForm> = ({
           labelText="Districts"
           cityId={cityIdWatch ? Number(cityIdWatch.key) : null}
         />
-        <PriceSliderField
-          form={form}
-          name="priceRange"
-          labelText="Price"
-          priceRange={priceRange}
-        />
         <SingleSelectField
           form={form}
           name="sortBy"
           labelText="Sort by"
           selectableItems={facilityConfig.sortBy}
         />
-        <Separator />
+        <PriceSliderField
+          form={form}
+          name="priceRange"
+          labelText="Price"
+          priceRange={priceRange}
+        />
+        <Separator className="mt-5" />
         <Button
           variant="outlineSecondary"
           size="md"

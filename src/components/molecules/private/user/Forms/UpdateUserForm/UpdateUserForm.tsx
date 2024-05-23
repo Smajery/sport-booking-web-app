@@ -12,21 +12,11 @@ import { ApolloError, useMutation } from "@apollo/client";
 import { UPDATE_USER_MUTATION } from "@/apollo/mutations/private/user/profile";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import UpdateUserFormContent from "@/components/molecules/private/user/Contents/UpdateUserFormContent/UpdateUserFormContent";
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-} from "@/components/ui/alert-dialog";
-import ApolloErrorFrame from "@/components/molecules/public/Frames/ApolloErrorFrame/ApolloErrorFrame";
 import _ from "lodash";
-import UserProfileAvatar from "@/components/atoms/private/user/Avatars/UserProfileAvatar/UserProfileAvatar";
 import { GET_USER_QUERY } from "@/apollo/query/private/user/profile";
-import BecameOwnerButton from "@/components/atoms/private/user/Buttons/BecameOwnerButton/BecameOwnerButton";
-import BecameOwnerForm from "@/components/molecules/private/user/Forms/BecameOwnerForm/BecameOwnerForm";
 import UserInfoFrame from "@/components/molecules/private/user/Frames/UserInfoFrame/UserInfoFrame";
 import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/ShowErrorModal";
-import Link from "next/link";
+import CropUserProfileAvatarFrame from "@/components/molecules/private/user/Frames/CropUserProfileAvatarFrame/CropUserProfileAvatarFrame";
 
 interface IUpdateUserForm {
   user: TUser;
@@ -51,9 +41,6 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
   const { fullname, dateOfBirth, avatar, userOwner, isActivated } = user;
 
   const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION, {
-    refetchQueries: [
-      { query: GET_USER_QUERY, context: { authRequired: true } },
-    ],
     onError: (e) => setRequestError(e),
   });
 
@@ -92,6 +79,9 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
       //
       try {
         await updateUser({
+          refetchQueries: [
+            { query: GET_USER_QUERY, context: { authRequired: true } },
+          ],
           context: {
             headers: headers,
             authRequired: true,
@@ -99,7 +89,6 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
           variables: {
             profileInput: {
               ...otherChangedValues,
-              dateOfBirth: values.dateOfBirth,
             }, //Temporary solution
             avatar: avatar,
           },
@@ -126,7 +115,11 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
           encType="multipart/form-data"
         >
           <div className="flex justify-between">
-            <UserProfileAvatar isEdit={isEdit} user={user} form={form} />
+            <CropUserProfileAvatarFrame
+              isEdit={isEdit}
+              user={user}
+              form={form}
+            />
             {isEdit ? (
               <UpdateUserFormContent form={form} user={user} />
             ) : (

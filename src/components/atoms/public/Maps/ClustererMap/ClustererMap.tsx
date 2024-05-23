@@ -3,13 +3,13 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import React from "react";
-import { TFacility } from "@/types/public/facilityTypes";
+import { TFacilityItem } from "@/types/public/facilityTypes";
 import { cn } from "@/lib/utils";
 import { useLocale } from "next-intl";
 import { TLocale } from "@/navigation";
 
 interface IClustererMap {
-  facilities: TFacility[];
+  facilities: TFacilityItem[];
   selectedLocationId: number | null;
   setSelectedLocationId: (value: number) => void;
   className?: string;

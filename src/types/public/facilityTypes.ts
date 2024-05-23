@@ -1,5 +1,4 @@
-import { TBooking, TDistrict, TImage, TTimeSlot } from "@/types/commonTypes";
-import { TUser } from "@/types/private/user/profileTypes";
+import { TDistrict, TImage, TTimeSlot } from "@/types/commonTypes";
 
 export enum ESportType {
   basketball = "basketball",
@@ -29,19 +28,16 @@ export type TFacilityFilter = {
   district?: string | null;
 };
 
-type TUserRate = {
-  id: number;
-  value: string;
+type TFacilityOwner = {
+  userOwner: { phone: string };
 };
 
-export type TFacility = {
+export type TFacilityItem = {
   address: string;
   avgRating: number;
   avgPrice: number;
-  bookings: TBooking[];
   coveringType: ECoveringType;
   currentUserIsFavorite: boolean;
-  currentUserRate: TUserRate;
   description: string;
   district: TDistrict;
   facilityType: EFacilityType;
@@ -49,8 +45,25 @@ export type TFacility = {
   images: TImage[];
   location: string;
   name: string;
-  owner: TUser;
-  ownerId: number;
+  ratingCount: number;
+  sportType: ESportType[];
+  isWorking: boolean;
+};
+
+export type TFacility = {
+  address: string;
+  avgRating: number;
+  avgPrice: number;
+  coveringType: ECoveringType;
+  currentUserIsFavorite: boolean;
+  description: string;
+  district: TDistrict;
+  facilityType: EFacilityType;
+  id: number;
+  images: TImage[];
+  location: string;
+  name: string;
+  owner: TFacilityOwner;
   ratingCount: number;
   sportType: ESportType[];
   isWorking: boolean;

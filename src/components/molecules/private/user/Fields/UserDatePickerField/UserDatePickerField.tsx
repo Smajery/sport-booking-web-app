@@ -21,7 +21,7 @@ import format from "@/lib/format";
 import { Calendar } from "@/components/ui/calendar";
 import { InputProps } from "@/components/ui/input";
 import { formatISO, getYear, parseISO, subYears } from "date-fns";
-import { useLocale } from "use-intl";
+import { useLocale } from "next-intl";
 import { TLocale } from "@/navigation";
 import YearSelect from "@/components/atoms/private/user/Selects/YearSelect/YearSelect";
 

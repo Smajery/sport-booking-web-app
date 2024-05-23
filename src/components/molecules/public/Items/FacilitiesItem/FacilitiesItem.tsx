@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { TFacility } from "@/types/public/facilityTypes";
+import { TFacilityItem } from "@/types/public/facilityTypes";
 import ImageAvatar from "@/components/atoms/public/Avatars/ImageAvatar/ImageAvatar";
 import { Hash, MapPin, Text } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +14,7 @@ import { clsx } from "clsx";
 import { TIME_PER_SLOT } from "@/utils/constants/titles.constants";
 
 interface IFacilitiesItem {
-  facility: TFacility;
+  facility: TFacilityItem;
 }
 
 const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {

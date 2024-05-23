@@ -26,7 +26,7 @@ const updateScheduleFormSchema = z.object({
 const UpdateScheduleForm: React.FC<IUpdateScheduleForm> = ({
   facilitySchedule,
 }) => {
-  const { timeSlots, minBookingTime } = facilitySchedule;
+  const { timeSlots, minBookingTime, id } = facilitySchedule;
   const [updateSchedule, { loading }] = useMutation(UPDATE_SCHEDULE_MUTATION);
 
   const [isEditSchedule, setIsEditSchedule] = React.useState<boolean>(false);
@@ -142,6 +142,7 @@ const UpdateScheduleForm: React.FC<IUpdateScheduleForm> = ({
             setIsEditSchedule={setIsEditSchedule}
             handleCancel={handleCancel}
             isRequestLoading={loading}
+            facilityId={id}
           />
         </div>
       </form>

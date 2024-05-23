@@ -10,7 +10,7 @@ const ReservationsList: React.FC<IReservationsList> = ({ bookings }) => {
   return (
     <div className="flex flex-wrap gap-5">
       {bookings.map((booking) => (
-        <ReservationsItem key={booking} booking={booking} />
+        <ReservationsItem key={booking.id} booking={booking} />
       ))}
     </div>
   );

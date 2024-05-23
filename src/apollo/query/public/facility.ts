@@ -63,12 +63,14 @@ export const GET_ONE_FACILITY_QUERY = gql`
       }
       ratingCount
       avgRating
-      currentUserRate {
-        id
-        value
-      }
       currentUserIsFavorite
       avgPrice
+      isWorking
+      owner {
+        userOwner {
+          phone
+        }
+      }
     }
   }
 `;

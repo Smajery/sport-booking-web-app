@@ -1,6 +1,6 @@
 import React from "react";
 import { TTimeSlot } from "@/types/commonTypes";
-import { useLocale } from "use-intl";
+import { useLocale } from "next-intl";
 import { TLocale } from "@/navigation";
 import format from "@/lib/format";
 import { parseISO } from "date-fns";

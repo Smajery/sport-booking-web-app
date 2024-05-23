@@ -2,27 +2,36 @@ import React from "react";
 import { TBooking } from "@/types/private/user/bookingTypes";
 import { Badge } from "@/components/ui/badge";
 import format from "@/lib/format";
-import { formatISO } from "date-fns";
-import { Hash } from "lucide-react";
-import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
+import { parseISO } from "date-fns";
 import Link from "next/link";
 import { routes } from "@/utils/constants/routes.constants";
 import { getBookingStatusVariant } from "@/utils/helpers/variant.helpers";
+import { useLocale } from "next-intl";
+import { TLocale } from "@/navigation";
+import CreateRatingForm from "@/components/molecules/private/user/Forms/CreateRatingForm/CreateRatingForm";
+import UpdateRatingForm from "@/components/molecules/private/user/Forms/UpdateRatingForm/UpdateRatingForm";
+import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 
 interface IBookingItem {
   booking: TBooking;
 }
 
 const ReservationsItem: React.FC<IBookingItem> = ({ booking }) => {
+  const locale = useLocale() as TLocale;
+  const { user } = useAuthContext();
+
   const {
     startTime,
     endTime,
     status,
-    facility: { name, id, images, sportType, coveringType, facilityType },
+    facility: { id, name, currentUserRate, owner },
   } = booking;
+
+  const isOwnerFacility = !!(user && user.id && user.id === owner.id);
+
   return (
     <div className="h-[260px] rounded-xl shadow-md flex">
-      <div className="p-5 w-[300px] flex flex-col gap-y-4">
+      <div className="px-5 pt-5 pb-10 w-[300px] flex flex-col gap-y-4">
         <Badge variant={getBookingStatusVariant(status)} size="sm">
           {status}
         </Badge>
@@ -32,28 +41,34 @@ const ReservationsItem: React.FC<IBookingItem> = ({ booking }) => {
         >
           {name}
         </Link>
-        <div className="mt-auto flex flex-col gap-y-2">
-          <div className="flex flex-wrap gap-x-1">
-            {sportType.map((sport) => (
-              <div key={sport}>
-                <Badge variant="outline" Icon={Hash}>
-                  {getTitle(sport)}
-                </Badge>
-              </div>
-            ))}
-          </div>
-        </div>
+        {!isOwnerFacility &&
+          status === "completed" &&
+          (!currentUserRate ? (
+            <CreateRatingForm
+              facilityId={id}
+              ratingsCount={5}
+              userRating={0}
+              className="pointer-events-none opacity-50"
+            />
+          ) : (
+            <UpdateRatingForm
+              ratingsCount={5}
+              userRating={Number(currentUserRate.value)}
+              ratingId={currentUserRate.id}
+              className="pointer-events-none opacity-50"
+            />
+          ))}
       </div>
-      <div className="flex py-5">
-        <div className="mb-5 px-5 flex flex-col justify-center items-center border-l border-border">
+      <div className="flex py-10">
+        <div className="px-5 flex flex-col justify-center items-center border-l border-border">
           <p className="text-xl font-light">
-            {format(formatISO(startTime), "MMMM")}
+            {format(parseISO(startTime), "MMMM", locale)}
           </p>
           <p className="text-4xl font-light">
-            {format(formatISO(startTime), "d")}
+            {format(parseISO(startTime), "d", locale)}
           </p>
           <p className="text-xl font-light">
-            {`${format(formatISO(startTime), "HH:mm")} - ${format(formatISO(endTime), "HH:mm")}`}
+            {`${format(parseISO(startTime), "HH:mm", locale)} - ${format(parseISO(endTime), "HH:mm", locale)}`}
           </p>
         </div>
       </div>

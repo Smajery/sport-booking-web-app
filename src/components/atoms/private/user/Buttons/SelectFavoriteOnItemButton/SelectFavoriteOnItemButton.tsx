@@ -87,7 +87,7 @@ const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
   ) => {
     e.stopPropagation();
     if (isAuth) {
-      if (currentUserIsFavorite) {
+      if (isFavorite) {
         await handleRemoveFromFavorite();
       } else {
         await handleAddToFavorite();

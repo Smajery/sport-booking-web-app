@@ -1,10 +1,3 @@
-import {
-  ECoveringType,
-  EFacilityType,
-  ESportType,
-} from "@/types/public/facilityTypes";
-import { TImage } from "@/types/commonTypes";
-
 export enum EBookingStatus {
   pending = "pending",
   approved = "approved",
@@ -16,13 +9,20 @@ export enum EBookingStatus {
   failed = "failed",
 }
 
+type TCurrentUserRate = {
+  id: number;
+  value: string;
+};
+
+type TOwner = {
+  id: number;
+};
+
 type TBookingFacility = {
   id: number;
   name: string;
-  sportType: ESportType[];
-  facilityType: EFacilityType;
-  coveringType: ECoveringType;
-  images: TImage[];
+  currentUserRate: TCurrentUserRate | null;
+  owner: TOwner;
 };
 
 export type TBooking = {

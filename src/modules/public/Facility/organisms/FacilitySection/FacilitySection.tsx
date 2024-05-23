@@ -13,6 +13,9 @@ import BookButton from "@/components/atoms/public/Buttons/BookButton/BookButton"
 import SelectFavoriteOnPageButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnPageButton/SelectFavoriteOnPageButton";
 import ShareOnPageButton from "@/components/atoms/private/user/Buttons/ShareOnPageButton/ShareOnPageButton";
 import { TIME_PER_SLOT } from "@/utils/constants/titles.constants";
+import { clsx } from "clsx";
+import PhoneLink from "@/components/atoms/public/Links/PhoneLink/PhoneLink";
+import { Phone } from "lucide-react";
 
 interface IFacilitySection {
   facilityId: number;
@@ -20,6 +23,9 @@ interface IFacilitySection {
 
 const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
   const { data, loading, error } = useQuery(GET_ONE_FACILITY_QUERY, {
+    context: {
+      authRequired: true,
+    },
     variables: {
       id: facilityId,
     },
@@ -42,6 +48,8 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
     coveringType,
     currentUserIsFavorite,
     avgPrice,
+    isWorking,
+    owner,
   } = data.facility as TFacility;
 
   const isComma = (index: number, arrayLength: number) => {
@@ -103,16 +111,38 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
           <div>
             <p className="text-lg">{description}</p>
           </div>
+          <Separator />
+          <div className="mr-auto flex flex-col border border-border rounded-xl gap-y-2 p-4">
+            <div className="flex gap-x-2 items-center">
+              <p className="text-lg font-light">Contact the organization</p>
+              <Phone className="w-5 h-5" />
+            </div>
+            <div className="flex gap-x-4">
+              <div className="flex flex-col text-muted-foreground text-lg font-light">
+                <p>Phone number:</p>
+              </div>
+              <div className="flex flex-col text-lg font-light">
+                <PhoneLink phone={owner.userOwner.phone} />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex items-end flex-col gap-y-2 shrink-0">
-          <p className="text-xl font-light">
-            {avgPrice} UAH{" "}
-            <span className="text-muted-foreground text-lg">
-              /{TIME_PER_SLOT}
-            </span>
-          </p>
-          <BookButton facilityId={id} />
-        </div>
+        {avgPrice && (
+          <div className="flex items-end flex-col gap-y-2 shrink-0">
+            <p className="text-xl font-light">
+              {avgPrice} UAH{" "}
+              <span className="text-muted-foreground text-lg">
+                /{TIME_PER_SLOT}
+              </span>
+            </p>
+            <BookButton facilityId={id} disabled={!isWorking} />
+            {!isWorking && (
+              <p className="text-sm italic text-muted-foreground">
+                Temporarily not working
+              </p>
+            )}
+          </div>
+        )}
       </div>
       <Separator />
     </section>
