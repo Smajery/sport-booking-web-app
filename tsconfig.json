@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -19,7 +21,10 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/atoms/": ["components/atoms/*"],
+      "@/molecules/": ["components/molecules/*"],
+      "@/*": ["./src/*"],
+      "@/apollo-client": ["./apollo-client.js"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

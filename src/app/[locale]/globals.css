@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* #ffffff */
+
+    --foreground: 203 62% 4%; /* #040C11 */
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 0 0% 44%; /* #717171 */
+    --muted-foreground-100: 0 0% 84%; /* D6D6D6 */
+
+    --primary: 20 100% 64%; /* #ff8749 */
+    --primary-300: 25 100% 88%; /* #ffdbc2 */
+    --primary-foreground: 0 0% 100%; /* #ffffff */
+
+    --secondary: 202 62% 40%; /* #2779A7 */
+    --secondary-foreground: 0 0% 100%; /* #ffffff */
+
+    --accent: 357 100% 79%; /* #ff9398 */
+    --accent-foreground: 0 0% 100%; /* #ffffff */
+
+    --destructive: 357 100% 44%; /* #e0000b */
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 141 82% 38%;
+    --success-foreground: 0 0% 100%; /* #ffffff */
+
+    --danger: 336 91% 44%;
+    --danger-foreground: 0 0% 100%; /* #ffffff */
+
+    --warning: 39 89% 52%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --border: 0 0% 92%; /* #ebebeb */
+    /*--input: 214.3 31.8% 91.4%;*/
+    --input: 0 0% 92%;
+    --ring: 215 20.2% 65.1%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 100%; /* #ffffff */
+
+    --foreground: 203 62% 4%; /* #040C11 */
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 0 0% 44%; /* #717171 */
+    --muted-foreground-100: 0 0% 84%; /* D6D6D6 */
+
+    --primary: 20 100% 64%; /* #ff8749 */
+    --primary-300: 25 100% 88%; /* #ffdbc2 */
+    --primary-foreground: 0 0% 100%; /* #ffffff */
+
+    --secondary: 202 62% 40%; /* #2779A7 */
+    --secondary-foreground: 0 0% 100%; /* #ffffff */
+
+    --accent: 357 100% 79%; /* #ff9398 */
+    --accent-foreground: 0 0% 100%; /* #ffffff */
+
+    --destructive: 357 100% 44%; /* #e0000b */
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 141 82% 38%;
+    --success-foreground: 0 0% 100%; /* #ffffff */
+
+    --warning: 39 89% 52%;
+
+    --danger: 336 91% 44%;
+    --danger-foreground: 0 0% 100%; /* #ffffff */
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --border: 0 0% 92%; /* #ebebeb */
+    /*--input: 214.3 31.8% 91.4%;*/
+    --input: 0 0% 92%;
+    --ring: 215 20.2% 65.1%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  body {
+    @apply relative bg-no-repeat bg-fixed bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .body-gradient {
+    background-image: linear-gradient(
+      180deg,
+      hsla(20, 100%, 64%, 1) 20%,
+      hsla(20, 100%, 67%, 1) 50%,
+      hsla(20, 100%, 80%, 1) 100%
+    );
+  }
+
+  .facebook-gradient {
+    background: linear-gradient(to right, #3b5998, #1877f2);
+  }
+  .google-gradient {
+    background: linear-gradient(to right, #b94032, #dc4136);
+  }
+
+  .facebook-gradient:hover {
+    background: linear-gradient(to right, #3b5998, #145b9d);
+  }
+  .google-gradient:hover {
+    background: linear-gradient(to right, #b94032, #b02e26);
+  }
+
+  .auth-btn-gradient {
+    background: linear-gradient(to right, #ff691f, #ff8749);
+  }
+  .auth-btn-gradient:hover {
+    background: linear-gradient(to right, #ff691f, #ff7733);
+  }
+
+  .primary-gradient-225 {
+    background: linear-gradient(225deg, #ffffff, #ff8749);
+  }
+
+  .variant-gradient {
+    background: linear-gradient(to right, #ff8749, #ff9398);
+    @apply text-primary-foreground;
+  }
+
+  /* CSS Tricks */
+
+  /* Text with separators */
+  .text-with-separators {
+    @apply relative flex items-center;
+  }
+
+  .text-with-separators::before,
+  .text-with-separators::after {
+    @apply w-full h-[1px] bg-border;
+    content: "";
+  }
+
+  .text-with-separators::before {
+    @apply mr-[20px];
+  }
+
+  .text-with-separators::after {
+    @apply ml-[20px];
+  }
+
+  /* Floating labels */
+  .floating-label {
+    @apply absolute font-normal left-3 top-1/2 transform -translate-y-1/2 transition-all duration-200 ease-in pointer-events-none;
+  }
+
+  .focused .floating-label,
+  .floating .floating-label {
+    @apply top-[18px] text-xs;
+  }
+
+  /* Hover tricks */
+
+  .font-hover-high {
+    @apply inline-flex flex-col items-center justify-between;
+  }
+
+  .font-hover-high:hover {
+    @apply text-2xl leading-7;
+  }
+
+  .font-hover-high::before {
+    content: attr(data-content);
+    visibility: hidden;
+    user-select: none;
+    @apply h-0 overflow-hidden pointer-events-none text-2xl leading-7;
+  }
+
+  @media speech {
+    .font-hover-high::before {
+      @apply hidden;
+    }
+  }
+
+  /* Input */
+  .input__no-time-select::-webkit-inner-spin-button,
+  .input__no-time-select::-webkit-calendar-picker-indicator {
+    @apply hidden;
+  }
+}
