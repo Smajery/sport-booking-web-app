@@ -2,18 +2,18 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 interface IFormErrorsFrame {
-  fieldErrors: { [key: string]: any };
+  formErrors: { [key: string]: any };
   className?: string;
 }
 
 const FormErrorsFrame: React.FC<IFormErrorsFrame> = ({
-  fieldErrors,
+  formErrors,
   className,
 }) => {
-  return Object.keys(fieldErrors).length !== 0 ? (
+  return Object.keys(formErrors).length !== 0 ? (
     <div className={cn("flex flex-col text-sm text-destructive", className)}>
-      {Object.keys(fieldErrors).map((fieldError) => (
-        <p key={fieldError}>{fieldErrors[fieldError]}</p>
+      {Object.keys(formErrors).map((formError) => (
+        <p key={formError}>{formErrors[formError]}</p>
       ))}
     </div>
   ) : null;

@@ -84,7 +84,7 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
     <FormField
       control={control}
       name={name}
-      render={({ field, fieldState: { invalid } }) => (
+      render={({ field: { value, onChange }, fieldState: { invalid } }) => (
         <FormItem className="flex flex-col space-y-1">
           {labelText && (
             <FormLabel
@@ -127,8 +127,8 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
               </Select>
               <Select
                 disabled={districtsLoading || !!districtsError || !cityId}
-                defaultValue={field.value}
-                onValueChange={field.onChange}
+                defaultValue={value}
+                onValueChange={onChange}
               >
                 <FormControl>
                   <SelectTrigger className="h-[56px] border border-input rounded-md text-lg text-muted-foreground font-light">
@@ -159,12 +159,12 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
               className={clsx(
                 "shrink-0 flex items-center justify-center text-white w-[30px] h-[30px] rounded-[5px]",
                 {
-                  "bg-success": field.value,
-                  "bg-danger": !field.value,
+                  "bg-success": value,
+                  "bg-danger": !value,
                 },
               )}
             >
-              {field.value ? <Check /> : <X />}
+              {value ? <Check /> : <X />}
             </div>
           </div>
           <FormMessage />

@@ -28,13 +28,19 @@ export const UPDATE_FACILITY_MUTATION = gql`
       facility {
         id
         name
+        district {
+          id
+          name
+        }
         address
         sportType
         coveringType
         facilityType
         description
-        isWorking
-        minBookingTime
+        images {
+          image
+          isMain
+        }
       }
     }
   }

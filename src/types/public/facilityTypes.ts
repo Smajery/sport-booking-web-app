@@ -29,7 +29,13 @@ export type TFacilityFilter = {
 };
 
 type TFacilityOwner = {
+  id: number;
   userOwner: { phone: string };
+};
+
+export type TCurrentUserRate = {
+  id: number;
+  value: number;
 };
 
 export type TFacilityItem = {
@@ -56,6 +62,7 @@ export type TFacility = {
   avgPrice: number;
   coveringType: ECoveringType;
   currentUserIsFavorite: boolean;
+  currentUserRate: TCurrentUserRate;
   description: string;
   district: TDistrict;
   facilityType: EFacilityType;

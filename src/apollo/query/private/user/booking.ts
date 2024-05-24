@@ -12,12 +12,6 @@ export const GET_USER_BOOKINGS_QUERY = gql`
         facility {
           id
           name
-          currentUserRate {
-            value
-          }
-          owner {
-            id
-          }
         }
       }
     }

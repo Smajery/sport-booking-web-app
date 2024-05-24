@@ -27,6 +27,11 @@ type TItem = {
   name: string;
 };
 
+interface IUpdateFacilityForm {
+  facility: TFacility;
+  refetchFacility: () => void;
+}
+
 const updateFacilityFormSchema = z.object({
   name: z.string().min(1),
   address: z.string().min(1),
@@ -46,17 +51,15 @@ const updateFacilityFormSchema = z.object({
     key: z.string(),
     name: z.string(),
   }),
-  minBookingTime: z.string().optional(),
   description: z.string().min(1),
   isWorking: z.boolean().optional(),
   photos: z.any().optional(),
 });
 
-interface IUpdateFacilityForm {
-  facility: TFacility;
-}
-
-const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
+const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
+  facility,
+  refetchFacility,
+}) => {
   const { push } = useRouter();
   const {
     id,
@@ -67,6 +70,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
     facilityType,
     coveringType,
     images,
+    isWorking,
   } = facility;
 
   const [isEditFacility, setIsEditFacility] = React.useState<boolean>(false);
@@ -94,6 +98,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
       coveringType: { key: coveringType, name: coveringType },
       facilityType: { key: facilityType, name: facilityType },
       photos: images,
+      isWorking: isWorking,
     },
   });
 
@@ -111,7 +116,9 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
       return transformDictionary[key] ? transformDictionary[key](value) : value;
     };
 
-    const changedValues: { [key: string]: any } = {};
+    const changedValues: {
+      [key: string]: any;
+    } = {};
 
     Object.keys(values).forEach((key: string) => {
       const valuesKey = key as keyof typeof values;
@@ -128,15 +135,18 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
 
     if (Object.keys(changedValues).length !== 0) {
       const { photos, ...otherChangedValues } = changedValues;
+      //Temporary solution
       const headers: {
         "Content-Type"?: string;
         "apollo-require-preflight": boolean;
       } = {
-        "Content-Type": "multipart/form-data",
         "apollo-require-preflight": true,
       };
-      try {
-        if (Object.keys(otherChangedValues).length !== 0) {
+      if (photos) {
+        headers["Content-Type"] = "multipart/form-data";
+      }
+      if (Object.keys(otherChangedValues).length !== 0) {
+        try {
           await updateFacility({
             context: {
               authRequired: true,
@@ -144,28 +154,41 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
             variables: {
               input: {
                 ...otherChangedValues,
-                id: id,
+                id,
               },
             },
           });
-          window.location.reload();
+
+          refetchFacility();
+
+          handleCancel();
+        } catch (e) {
+          ErrorHandler.handle(e, {
+            componentName: "UpdateFacilityForm__onSubmit",
+          });
         }
-        if (photos.length) {
+      }
+      if (photos) {
+        try {
           await updateFacilityPhotos({
             context: {
-              headers: headers,
+              headers,
               authRequired: true,
             },
             variables: {
               facilityId: id,
-              photos: photos,
+              photos,
             },
           });
+
+          refetchFacility();
+
+          handleCancel();
+        } catch (e) {
+          ErrorHandler.handle(e, {
+            componentName: "UpdateFacilityForm__onSubmit",
+          });
         }
-      } catch (e) {
-        ErrorHandler.handle(e, {
-          componentName: "UpdateFacilityForm__onSubmit",
-        });
       }
     }
   };
@@ -190,8 +213,8 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({ facility }) => {
   };
 
   const handleCancel = () => {
-    form.reset();
     setIsEditFacility(false);
+    form.reset();
   };
 
   return (

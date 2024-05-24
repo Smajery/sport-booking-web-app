@@ -67,7 +67,7 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
     <FormField
       control={form.control}
       name={name}
-      render={({ field, fieldState: { invalid } }) => (
+      render={({ field: { value }, fieldState: { invalid } }) => (
         <FormItem className="space-y-1">
           {labelText && (
             <FormLabel
@@ -87,11 +87,11 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
                     size="none"
                     className={cn(
                       "h-10 w-full justify-start gap-x-2 rounded-md border bg-background px-3 py-2 border-input text-2xl",
-                      !field.value && "text-muted-foreground",
+                      !value && "text-muted-foreground",
                     )}
                   >
-                    {field.value ? (
-                      format(field.value, "dd.MM.yyyy", locale)
+                    {value ? (
+                      format(value, "dd.MM.yyyy", locale)
                     ) : (
                       <span className="font-light">Pick a date</span>
                     )}
@@ -131,12 +131,12 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
                 className={clsx(
                   "shrink-0 flex items-center justify-center text-white w-[30px] h-[30px] rounded-[5px]",
                   {
-                    "bg-success": field.value,
-                    "bg-danger": !field.value,
+                    "bg-success": value,
+                    "bg-danger": !value,
                   },
                 )}
               >
-                {field.value ? <Check /> : <X />}
+                {value ? <Check /> : <X />}
               </div>
             </div>
           </FormControl>

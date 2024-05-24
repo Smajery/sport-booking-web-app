@@ -11,7 +11,7 @@ import {
 } from "@/utils/constants/files.constants";
 import { Button } from "@/components/ui/button";
 import { TUser } from "@/types/private/user/profileTypes";
-import SingleMessageField from "@/components/molecules/public/Fields/SingleMessageField/SingleMessageField";
+import ErrorMessageField from "@/components/molecules/public/Fields/ErrorMessageField/ErrorMessageField";
 import getCroppedImg from "@/utils/helpers/image.helpers";
 import Cropper from "react-easy-crop";
 import { Area } from "react-easy-crop/types";
@@ -122,7 +122,7 @@ const CropUserProfileAvatarFrame: React.FC<ICropUserProfileAvatarFrame> = ({
           handleCancel={handleCancel}
         />
       )}
-      <SingleMessageField
+      <ErrorMessageField
         form={form}
         name="avatar"
         className="mt-10 text-center"

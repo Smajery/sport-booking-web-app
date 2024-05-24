@@ -4,7 +4,6 @@ import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import React from "react";
 import UpdateUserForm from "@/components/molecules/private/user/Forms/UpdateUserForm/UpdateUserForm";
 import BecameOwnerForm from "@/components/molecules/private/user/Forms/BecameOwnerForm/BecameOwnerForm";
-import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 import BecameOwnerButton from "@/components/atoms/private/user/Buttons/BecameOwnerButton/BecameOwnerButton";
 import { useQuery } from "@apollo/client";
 import { GET_USER_QUERY } from "@/apollo/query/private/user/profile";

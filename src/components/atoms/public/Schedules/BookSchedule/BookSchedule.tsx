@@ -45,7 +45,7 @@ const BookSchedule: React.FC<IBookSchedule> = ({
     useMutation(CREATE_PAYMENT_MUTATION);
 
   const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<number>(
-    timeSlots[0].dayOfWeek,
+    new Date().getDay(),
   );
   const [selectedSlotIds, setSelectedSlotIds] = React.useState<number[]>([]);
   const [isMinBookingTime, setIsBookingTime] = React.useState<boolean>(false);
@@ -72,24 +72,25 @@ const BookSchedule: React.FC<IBookSchedule> = ({
             timeSlotIds,
           },
         },
-      });
+        onCompleted: async () => {
+          await handleCreatePayment();
 
-      await handleCreatePayment();
-
-      const { id, price } = data.createBooking as {
-        id: number;
-        price: number;
-      };
-      await createPayment({
-        context: {
-          authRequired: true,
-        },
-        variables: {
-          input: {
-            bookingId: id,
-            amount: price,
-            orderId: orderId,
-          },
+          const { id, price } = data.createBooking as {
+            id: number;
+            price: number;
+          };
+          await createPayment({
+            context: {
+              authRequired: true,
+            },
+            variables: {
+              input: {
+                bookingId: id,
+                amount: price,
+                orderId: orderId,
+              },
+            },
+          });
         },
       });
 
@@ -98,10 +99,6 @@ const BookSchedule: React.FC<IBookSchedule> = ({
       ErrorHandler.handle(e, { componentName: "BookSchedule__onSubmit" });
     }
   };
-
-  const {
-    formState: { errors },
-  } = form;
 
   const filteredTimeSlots = timeSlots.filter(
     (timeSlot) =>

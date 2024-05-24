@@ -40,9 +40,7 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
 
   const { fullname, dateOfBirth, avatar, userOwner, isActivated } = user;
 
-  const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION, {
-    onError: (e) => setRequestError(e),
-  });
+  const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION);
 
   const form = useForm<z.infer<typeof updateUserSchema>>({
     resolver: zodResolver(updateUserSchema),
@@ -95,6 +93,7 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
         });
         handleCancel();
       } catch (e) {
+        setRequestError(e as ApolloError);
         ErrorHandler.handle(e, { componentName: "UpdateUserForm__onSubmit" });
       }
     }

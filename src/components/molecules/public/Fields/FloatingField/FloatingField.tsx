@@ -7,35 +7,33 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { Input } from "@/components/ui/input";
+import { Input, InputProps } from "@/components/ui/input";
 
 import { clsx } from "clsx";
 import { UseFormReturn } from "react-hook-form";
 
-interface IFloatingField {
+interface IFloatingField extends InputProps {
   form: any;
   IconComponent?: any;
   name: string;
-  type: string;
   labelText?: string;
-  placeholder?: string;
   noValidate?: boolean;
   isRequestError?: boolean;
+  placeholder?: string;
 }
 
 const FloatingField: React.FC<IFloatingField> = ({
   form,
   IconComponent,
   name,
-  type,
   labelText,
-  placeholder = "",
   noValidate = false,
   isRequestError = false,
+  placeholder = "",
+  ...props
 }) => {
   const {
     formState: { isSubmitted },
-    register,
   } = form as UseFormReturn;
 
   const [isFocused, setIsFocused] = React.useState(false);
@@ -47,17 +45,17 @@ const FloatingField: React.FC<IFloatingField> = ({
     <FormField
       control={form.control}
       name={name}
-      render={({ field, fieldState: { invalid } }) => (
+      render={({ field: { value, onChange }, fieldState: { invalid } }) => (
         <FormItem>
           <div
             className={clsx("relative flex items-center", {
-              focused: isFocused || field.value,
+              focused: isFocused || value,
             })}
           >
             {labelText && (
               <FormLabel
                 className={clsx("floating-label", {
-                  floating: isFocused || field.value,
+                  floating: isFocused || value,
                   "text-success":
                     !invalid && isSubmitted && !noValidate && !isRequestError,
                   "text-destructive":
@@ -69,16 +67,13 @@ const FloatingField: React.FC<IFloatingField> = ({
             )}
             <FormControl>
               <Input
-                {...field}
-                {...register(name)}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 autoComplete="off"
-                type={type}
-                placeholder={isFocused || field.value ? placeholder : ""}
-                value={field.value ? field.value : ""}
+                placeholder={isFocused || value ? placeholder : ""}
+                value={value ?? ""}
                 onChange={(e) => {
-                  field.onChange(e.target.value);
+                  onChange(e.target.value);
                 }}
                 className={clsx("h-[56px] pl-3 pr-10 pb-[6px] pt-[26px]", {
                   "border-destructive focus-visible:ring-destructive":
@@ -86,13 +81,11 @@ const FloatingField: React.FC<IFloatingField> = ({
                   "border-success focus-visible:ring-success":
                     !invalid && isSubmitted && !noValidate && !isRequestError,
                 })}
+                {...props}
               />
             </FormControl>
             {IconComponent && (
-              <IconComponent
-                className="w-5 h-5 absolute right-4"
-                color="#040C11"
-              />
+              <IconComponent className="w-5 h-5 absolute right-4" />
             )}
           </div>
           <FormMessage />

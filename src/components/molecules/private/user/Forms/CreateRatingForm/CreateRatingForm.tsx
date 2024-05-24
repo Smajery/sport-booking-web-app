@@ -12,6 +12,13 @@ import { ApolloError, useMutation } from "@apollo/client";
 import { CREATE_RATING_MUTATION } from "@/apollo/mutations/private/user/rating";
 import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/ShowErrorModal";
 import { Loader2 } from "lucide-react";
+import { GET_ONE_FACILITY_QUERY } from "@/apollo/query/public/facility";
+import { clsx } from "clsx";
+import {
+  getRatingImagePath,
+  getThemeIconsPath,
+} from "@/utils/helpers/icon.helpers";
+import { useTheme } from "next-themes";
 
 interface ICreateRatingForm {
   ratingsCount: number;
@@ -31,12 +38,16 @@ const CreateRatingForm: React.FC<ICreateRatingForm> = ({
   facilityId,
   className = "",
 }) => {
+  const { theme } = useTheme();
+
   const ratings = Array.from({ length: ratingsCount }, (_, i) => i + 1);
   const [currentUserRating, setCurrentUserRating] =
     React.useState<number>(userRating);
   const [requestError, setRequestError] = React.useState<
     ApolloError | undefined
   >(undefined);
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [createRating, { loading }] = useMutation(CREATE_RATING_MUTATION);
 
@@ -48,6 +59,7 @@ const CreateRatingForm: React.FC<ICreateRatingForm> = ({
   });
 
   const onSubmit = async (values: z.infer<typeof createRatingFormSchema>) => {
+    setIsLoading(true);
     try {
       await createRating({
         context: {
@@ -56,18 +68,21 @@ const CreateRatingForm: React.FC<ICreateRatingForm> = ({
         variables: {
           createRatingInput: values,
         },
+        refetchQueries: [
+          {
+            query: GET_ONE_FACILITY_QUERY,
+            context: { authRequired: true },
+            variables: {
+              id: facilityId,
+            },
+          },
+        ],
       });
     } catch (e) {
       setRequestError(e as ApolloError);
       ErrorHandler.handle(e, { componentName: "CreateRatingForm__onSubmit" });
-    }
-  };
-
-  const getRatingImagePath = (rating: number) => {
-    if (rating <= currentUserRating) {
-      return "rating-star.svg";
-    } else {
-      return "no-rating-star.svg";
+    } finally {
+      setTimeout(() => setIsLoading(false), 500);
     }
   };
 
@@ -81,7 +96,7 @@ const CreateRatingForm: React.FC<ICreateRatingForm> = ({
       <FormProvider {...form}>
         <form noValidate className={cn("flex flex-col gap-y-2", className)}>
           <div className="flex gap-x-2 items-start">
-            <div className="flex">
+            <div className="h-[28px] flex items-center">
               {ratings.map((rating) => (
                 <Button
                   key={rating}
@@ -89,14 +104,16 @@ const CreateRatingForm: React.FC<ICreateRatingForm> = ({
                   size="none"
                   type="button"
                   asChild
-                  className="cursor-pointer"
+                  className={clsx("cursor-pointer", {
+                    hidden: (loading || isLoading) && rating === ratingsCount,
+                  })}
                   onClick={() => handleSetRating(rating)}
                   onMouseEnter={() => setCurrentUserRating(rating)}
                   onMouseLeave={() => setCurrentUserRating(userRating)}
                 >
                   <div className="pr-1 pl-1 last-of-type:pr-0 first-of-type:pl-0">
                     <Image
-                      src={`/icons/${getRatingImagePath(rating)}`}
+                      src={`/${getThemeIconsPath(theme)}/${getRatingImagePath(rating, currentUserRating)}`}
                       alt={`Rating ${rating}`}
                       width={20}
                       height={20}
@@ -105,11 +122,8 @@ const CreateRatingForm: React.FC<ICreateRatingForm> = ({
                 </Button>
               ))}
             </div>
-            {loading && <Loader2 className={`animate-spin w-5 h-5`} />}
+            {loading && <Loader2 className={`ml-1 animate-spin w-5 h-5`} />}
           </div>
-          <p className="text-sm text-muted-foreground italic">
-            Please rate this facility
-          </p>
         </form>
       </FormProvider>
       <ShowErrorModal error={requestError} setError={setRequestError} />

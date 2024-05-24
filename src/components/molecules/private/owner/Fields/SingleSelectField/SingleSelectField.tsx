@@ -50,7 +50,7 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
     <FormField
       control={control}
       name={name}
-      render={({ field, fieldState: { invalid } }) => (
+      render={({ field: { value }, fieldState: { invalid } }) => (
         <FormItem className="flex flex-col space-y-1">
           {labelText && (
             <FormLabel
@@ -77,13 +77,13 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
                     onClick={() =>
                       handleSelectItem(
                         selectableItem,
-                        field.value && field.value.key === selectableItem.key,
+                        value && value.key === selectableItem.key,
                       )
                     }
                   >
                     <Badge
                       variant={
-                        field.value && field.value.key === selectableItem.key
+                        value && value.key === selectableItem.key
                           ? "primary"
                           : "outline"
                       }
@@ -98,12 +98,12 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
               className={clsx(
                 "shrink-0 flex items-center justify-center text-white w-[30px] h-[30px] rounded-[5px]",
                 {
-                  "bg-success": field.value,
-                  "bg-danger": !field.value,
+                  "bg-success": value,
+                  "bg-danger": !value,
                 },
               )}
             >
-              {field.value ? <Check /> : <X />}
+              {value ? <Check /> : <X />}
             </div>
           </div>
           <FormMessage />

@@ -1,5 +1,10 @@
 import React from "react";
 import Image from "next/image";
+import {
+  getAvgRatingImagePath,
+  getThemeIconsPath,
+} from "@/utils/helpers/icon.helpers";
+import { useTheme } from "next-themes";
 
 interface IRatingFrame {
   avgRating: number;
@@ -12,6 +17,8 @@ const RatingFrame: React.FC<IRatingFrame> = ({
   ratingCount,
   className = "",
 }) => {
+  const { systemTheme } = useTheme();
+
   return (
     <div className={`flex flex-col items-center ${className}`}>
       <div className="relative flex">
@@ -21,11 +28,11 @@ const RatingFrame: React.FC<IRatingFrame> = ({
         </p>
       </div>
       <div className="flex gap-x-[2px]">
-        {[1, 2, 3, 4, 5].map((rate) => (
+        {[1, 2, 3, 4, 5].map((rating) => (
           <Image
-            key={rate}
-            src="/icons/rating-star.svg"
-            alt={`Rating ${rate}`}
+            key={rating}
+            src={`/${getThemeIconsPath(systemTheme)}/${getAvgRatingImagePath(rating, avgRating)}`}
+            alt={`Rating ${rating}`}
             width={12}
             height={12}
           />

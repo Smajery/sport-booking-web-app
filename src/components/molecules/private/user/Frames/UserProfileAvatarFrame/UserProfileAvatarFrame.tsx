@@ -11,7 +11,7 @@ import {
 } from "@/utils/constants/files.constants";
 import { Button } from "@/components/ui/button";
 import { TUser } from "@/types/private/user/profileTypes";
-import SingleMessageField from "@/components/molecules/public/Fields/SingleMessageField/SingleMessageField";
+import ErrorMessageField from "@/components/molecules/public/Fields/ErrorMessageField/ErrorMessageField";
 
 interface IUserProfileAvatarFrame {
   isEdit: boolean;
@@ -97,7 +97,7 @@ const UserProfileAvatarFrame: React.FC<IUserProfileAvatarFrame> = ({
           </div>
         )}
       </div>
-      <SingleMessageField
+      <ErrorMessageField
         form={form}
         name="avatar"
         className="mt-10 text-center"

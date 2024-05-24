@@ -12,7 +12,8 @@ interface IFacilitySection {
 }
 
 const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
-  const { data, loading, error } = useQuery(GET_ONE_FACILITY_QUERY, {
+  const { data, loading, error, refetch } = useQuery(GET_ONE_FACILITY_QUERY, {
+    fetchPolicy: "cache-and-network",
     variables: {
       id: facilityId,
     },
@@ -21,11 +22,9 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{getApolloErrorMessage(error)}</div>;
 
-  const facility = data.facility as TFacility;
-
   return (
     <section className="flex flex-col">
-      <UpdateFacilityForm facility={facility} />
+      <UpdateFacilityForm facility={data.facility} refetchFacility={refetch} />
     </section>
   );
 };

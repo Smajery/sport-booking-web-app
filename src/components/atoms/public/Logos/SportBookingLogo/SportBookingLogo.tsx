@@ -25,7 +25,7 @@ const SportBookingLogo: React.FC<ISportBookingLogo> = ({
         className={clsx(
           "uppercase font-extrabold text-2xl leading-6 text-center",
           {
-            "text-background": isScrolledHeader,
+            "text-primary-foreground": isScrolledHeader,
             "text-primary": !isScrolledHeader,
           },
         )}

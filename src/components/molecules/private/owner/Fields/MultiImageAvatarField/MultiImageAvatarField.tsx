@@ -50,8 +50,14 @@ const MultiImageAvatarField: React.FC<IMultiImageAvatar> = ({
     updatedFiles.splice(index, 1);
     setSelectedFiles(updatedFiles);
     form.setValue(name, updatedFiles);
+
     const dataTransfer = new DataTransfer();
-    updatedFiles.forEach((file) => dataTransfer.items.add(file));
+    updatedFiles.forEach((file) => {
+      if (file instanceof File) {
+        dataTransfer.items.add(file);
+      }
+    });
+
     if (fileInputRef.current) {
       fileInputRef.current.files = dataTransfer.files;
     }

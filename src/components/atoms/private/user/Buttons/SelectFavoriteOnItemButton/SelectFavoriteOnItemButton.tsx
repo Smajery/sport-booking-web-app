@@ -42,7 +42,6 @@ const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
       context: {
         authRequired: true,
       },
-      onError: (e) => setRequestError(e),
     },
   );
 
@@ -51,7 +50,6 @@ const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
       context: {
         authRequired: true,
       },
-      onError: (e) => setRequestError(e),
     });
 
   const handleAddToFavorite = async () => {
@@ -62,6 +60,7 @@ const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
       setIsFavorite(true);
       setRequestError(undefined);
     } catch (e) {
+      setRequestError(e as ApolloError);
       ErrorHandler.handle(e, {
         componentName: "SelectFavoriteOnItemButton__addToFavorite",
       });
@@ -76,6 +75,7 @@ const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
       setIsFavorite(false);
       setRequestError(undefined);
     } catch (e) {
+      setRequestError(e as ApolloError);
       ErrorHandler.handle(e, {
         componentName: "SelectFavoriteOnItemButton__removeFromFavorite",
       });

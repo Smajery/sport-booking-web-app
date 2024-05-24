@@ -64,9 +64,14 @@ export const GET_ONE_FACILITY_QUERY = gql`
       ratingCount
       avgRating
       currentUserIsFavorite
+      currentUserRate {
+        id
+        value
+      }
       avgPrice
       isWorking
       owner {
+        id
         userOwner {
           phone
         }

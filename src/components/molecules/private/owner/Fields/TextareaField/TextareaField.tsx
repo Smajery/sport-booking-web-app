@@ -39,7 +39,7 @@ const TextareaField: React.FC<ITextArea> = ({
     <FormField
       control={form.control}
       name={name}
-      render={({ field, fieldState: { invalid } }) => (
+      render={({ field: { value, onChange }, fieldState: { invalid } }) => (
         <FormItem className="space-y-1">
           <div className="flex items-center pr-[50px]">
             {labelText && (
@@ -56,19 +56,17 @@ const TextareaField: React.FC<ITextArea> = ({
             )}
             {props.maxLength && (
               <p className="ml-auto text-muted-foreground text-sm font-light">
-                {field.value.length}/{props.maxLength}
+                {value.length}/{props.maxLength}
               </p>
             )}
           </div>
           <div className="flex gap-x-5">
             <FormControl>
               <Textarea
-                {...field}
-                {...register(name)}
                 autoComplete="off"
-                value={field.value ? field.value : ""}
+                value={value ?? ""}
                 onChange={(e) => {
-                  field.onChange(e.target.value);
+                  onChange(e.target.value);
                 }}
                 className={clsx(`text-lg pl-3 pb-[6px] ${className}`, {
                   "border-destructive focus-visible:ring-destructive":
@@ -83,12 +81,12 @@ const TextareaField: React.FC<ITextArea> = ({
               className={clsx(
                 "shrink-0 flex items-center justify-center text-white w-[30px] h-[30px] rounded-[5px]",
                 {
-                  "bg-success": field.value,
-                  "bg-danger": !field.value,
+                  "bg-success": value,
+                  "bg-danger": !value,
                 },
               )}
             >
-              {field.value ? <Check /> : <X />}
+              {value ? <Check /> : <X />}
             </div>
           </div>
           <FormMessage />

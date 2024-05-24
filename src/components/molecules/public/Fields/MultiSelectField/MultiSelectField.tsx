@@ -45,7 +45,7 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
     <FormField
       control={control}
       name={name}
-      render={({ field }) => (
+      render={({ field: { value } }) => (
         <FormItem className="flex flex-col space-y-1">
           {labelText && (
             <FormLabel className="text-base text-primary font-semibold">
@@ -66,8 +66,8 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
                   onClick={() =>
                     handleSelectItem(
                       selectableItem,
-                      field.value.length &&
-                        field.value.some(
+                      value.length &&
+                        value.some(
                           (item: TSelectedItem) =>
                             item.key === selectableItem.key,
                         ),
@@ -76,8 +76,8 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
                 >
                   <Badge
                     variant={
-                      field.value.length &&
-                      field.value.some(
+                      value.length &&
+                      value.some(
                         (item: TSelectedItem) =>
                           item.key === selectableItem.key,
                       )

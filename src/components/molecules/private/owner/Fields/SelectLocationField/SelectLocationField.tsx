@@ -138,7 +138,7 @@ const SelectLocationField: React.FC<ISearchAndSelectLocationField> = ({
     <FormField
       control={control}
       name={name}
-      render={({ field, fieldState: { invalid } }) => (
+      render={({ field: { value }, fieldState: { invalid } }) => (
         <FormItem className="space-y-1">
           <div className="flex pr-[50px]">
             {labelText && (
@@ -160,12 +160,12 @@ const SelectLocationField: React.FC<ISearchAndSelectLocationField> = ({
               className={clsx(
                 "ml-auto shrink-0 flex items-center justify-center text-white w-[30px] h-[30px] rounded-[5px]",
                 {
-                  "bg-success": field.value,
-                  "bg-danger": !field.value,
+                  "bg-success": value,
+                  "bg-danger": !value,
                 },
               )}
             >
-              {field.value ? <Check /> : <X />}
+              {value ? <Check /> : <X />}
             </div>
           </div>
           <FormMessage />

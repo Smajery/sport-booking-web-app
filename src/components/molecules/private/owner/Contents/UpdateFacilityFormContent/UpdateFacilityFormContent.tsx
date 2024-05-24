@@ -6,6 +6,9 @@ import { facilityConfig } from "@/config/public/facility";
 import SingleSelectField from "@/components/molecules/private/owner/Fields/SingleSelectField/SingleSelectField";
 import TextareaField from "@/components/molecules/private/owner/Fields/TextareaField/TextareaField";
 import MultiImageAvatarField from "@/components/molecules/private/owner/Fields/MultiImageAvatarField/MultiImageAvatarField";
+import FormErrorsFrame from "@/components/molecules/public/Frames/FormErrorsFrame/FormErrorsFrame";
+import ErrorMessageField from "@/components/molecules/public/Fields/ErrorMessageField/ErrorMessageField";
+import CheckboxField from "@/components/molecules/private/owner/Fields/CheckboxField/CheckboxField";
 
 interface IUpdateFacilityFormContent {
   form: any;
@@ -75,6 +78,14 @@ const UpdateFacilityFormContent: React.FC<IUpdateFacilityFormContent> = ({
             placeholder="Facility description..."
             maxLength={400}
           />
+          <CheckboxField
+            form={form}
+            labelText="Facility status"
+            name="isWorking"
+            checkboxId="isWorkingCheckbox"
+            checkboxLabelText="Working"
+          />
+          <ErrorMessageField form={form} name="photos" />
         </div>
       </div>
     </div>

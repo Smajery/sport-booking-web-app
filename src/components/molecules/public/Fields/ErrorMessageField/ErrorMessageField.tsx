@@ -1,13 +1,13 @@
 import React from "react";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 
-interface ISingleMessageField {
+interface IErrorMessageField {
   form: any;
   name: string;
   className?: string;
 }
 
-const SingleMessageField: React.FC<ISingleMessageField> = ({
+const ErrorMessageField: React.FC<IErrorMessageField> = ({
   form,
   name,
   className,
@@ -25,4 +25,4 @@ const SingleMessageField: React.FC<ISingleMessageField> = ({
   );
 };
 
-export default SingleMessageField;
+export default ErrorMessageField;

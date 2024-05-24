@@ -9,11 +9,6 @@ export enum EBookingStatus {
   failed = "failed",
 }
 
-type TCurrentUserRate = {
-  id: number;
-  value: string;
-};
-
 type TOwner = {
   id: number;
 };
@@ -21,8 +16,6 @@ type TOwner = {
 type TBookingFacility = {
   id: number;
   name: string;
-  currentUserRate: TCurrentUserRate | null;
-  owner: TOwner;
 };
 
 export type TBooking = {

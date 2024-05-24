@@ -104,18 +104,23 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
               </Button>
             </div>
           ) : (
-            <Button
-              variant="none"
-              size="lg"
-              className="variant-gradient"
-              onClick={() =>
-                push(
-                  `${routes.USER_FACILITIES}/${id}/${routes.SCHEDULE_CREATE}`,
-                )
-              }
-            >
-              Create schedule
-            </Button>
+            <>
+              <Button
+                variant="none"
+                size="lg"
+                className="variant-gradient"
+                onClick={() =>
+                  push(
+                    `${routes.USER_FACILITIES}/${id}/${routes.SCHEDULE_CREATE}`,
+                  )
+                }
+              >
+                Create schedule
+              </Button>
+              <p className="text-sm italic text-muted-foreground">
+                Facility without schedule is not public
+              </p>
+            </>
           )}
         </div>
       </div>

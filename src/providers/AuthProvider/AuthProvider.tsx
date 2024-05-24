@@ -43,21 +43,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuth, setIsAuth] = React.useState<boolean>(false);
   const [isAuthLoading, setIsAuthLoading] = React.useState<boolean>(true);
 
-  const [user, setUser] = React.useState<TUserInfo | null>(null);
-  const [isUserLoading, setIsUserLoading] = React.useState<boolean>(true);
-
   const [logoutUserMutation, { loading: logoutLoading }] =
     useMutation(LOGOUT_USER_MUTATION);
   const [refreshTokenMutation] = useMutation(REFRESH_TOKEN_MUTATION);
 
-  const {} = useQuery(GET_USER_INFO_QUERY, {
+  const {
+    data: userData,
+    loading: userLoading,
+    error: userError,
+  } = useQuery(GET_USER_INFO_QUERY, {
     skip: !isAuth,
+    fetchPolicy: "cache-and-network",
     context: {
       authRequired: true,
-    },
-    onCompleted: (data) => {
-      setUser(data.getProfile);
-      setIsUserLoading(false);
     },
   });
 
@@ -119,8 +117,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     isAuthLoading,
     isLogoutLoading: logoutLoading,
     isAuth,
-    user,
-    isUserLoading,
+    user: isAuth && !userLoading && !userError ? userData.getProfile : null,
+    isUserLoading: userLoading,
   };
 
   const authActions: AuthActions = {

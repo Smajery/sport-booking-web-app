@@ -7,38 +7,41 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { Input, InputProps } from "@/components/ui/input";
-
 import { clsx } from "clsx";
 import { UseFormReturn } from "react-hook-form";
 import { Check, X } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckboxProps } from "@radix-ui/react-checkbox";
 
-interface IInputField extends InputProps {
+interface IInputField extends CheckboxProps {
   form: any;
   name: string;
   labelText?: string;
+  checkboxId: string;
+  checkboxLabelText: string;
   noValidate?: boolean;
-  className?: string;
 }
 
 const InputField: React.FC<IInputField> = ({
   form,
   name,
   labelText,
+  checkboxId,
+  checkboxLabelText,
   noValidate = false,
-  className = "",
   ...props
 }) => {
   const {
     control,
     formState: { isSubmitted },
+    register,
   } = form as UseFormReturn;
 
   return (
     <FormField
       control={control}
       name={name}
-      render={({ field: { value, onChange }, fieldState: { invalid } }) => (
+      render={({ field: { value }, fieldState: { invalid } }) => (
         <FormItem className="space-y-1">
           <div className="flex items-center pr-[50px]">
             {labelText && (
@@ -51,28 +54,24 @@ const InputField: React.FC<IInputField> = ({
                 {labelText}
               </FormLabel>
             )}
-            {props.maxLength && (
-              <p className="ml-auto text-muted-foreground text-sm font-light">
-                {value.length}/{props.maxLength}
-              </p>
-            )}
           </div>
-          <div className="flex items-center gap-x-5">
+          <div className="flex items-center justify-between gap-x-5">
             <FormControl>
-              <Input
-                autoComplete="off"
-                value={value ?? ""}
-                onChange={(e) => {
-                  onChange(e.target.value);
-                }}
-                className={clsx(`text-lg h-[56px] pl-3 pb-[6px] ${className}`, {
-                  "border-destructive focus-visible:ring-destructive":
-                    invalid && isSubmitted && !noValidate,
-                  "border-success focus-visible:ring-success":
-                    !invalid && isSubmitted && !noValidate,
-                })}
-                {...props}
-              />
+              <div className="flex items-center gap-x-2">
+                <Checkbox
+                  id={checkboxId}
+                  checked={value}
+                  onCheckedChange={onChange}
+                  className="rounded-full w-5 h-5"
+                  {...props}
+                />
+                <label
+                  htmlFor={checkboxId}
+                  className="-mb-[2px] text-lg leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {checkboxLabelText}
+                </label>
+              </div>
             </FormControl>
             <div
               className={clsx(

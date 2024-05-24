@@ -63,10 +63,6 @@ export const GET_ONE_FACILITY_QUERY = gql`
       ratingCount
       avgRating
       avgPrice
-      currentUserRate {
-        id
-        value
-      }
     }
   }
 `;

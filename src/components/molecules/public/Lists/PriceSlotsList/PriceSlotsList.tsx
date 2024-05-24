@@ -22,6 +22,14 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
       setSelectedSlotIds([...selectedSlotIds, slotId]);
     }
   };
+
+  if (!filteredTimeSlots.length)
+    return (
+      <div className="p-5 text-lg italic text-muted-foreground">
+        No time slots for current day of week
+      </div>
+    );
+
   return (
     <div className="grow flex flex-col py-[30px]">
       {filteredTimeSlots.map((slot, index) => (

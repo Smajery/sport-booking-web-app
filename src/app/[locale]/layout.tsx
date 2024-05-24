@@ -41,7 +41,7 @@ export default async function LocaleLayout({
   unstable_setRequestLocale(locale);
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${roboto.className}`}>
         <ApolloProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

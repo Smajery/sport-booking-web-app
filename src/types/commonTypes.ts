@@ -48,7 +48,7 @@ export type TDistrict = {
 };
 
 export type TSelectedItem = {
-  key: string;
+  key: string | number;
   name: string;
 };
 

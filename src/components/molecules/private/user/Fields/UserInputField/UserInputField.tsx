@@ -29,14 +29,13 @@ const UserInputField: React.FC<IUserInputField> = ({
 }) => {
   const {
     formState: { isSubmitted },
-    register,
   } = form as UseFormReturn;
 
   return (
     <FormField
       control={form.control}
       name={name}
-      render={({ field, fieldState: { invalid } }) => (
+      render={({ field: { value, onChange }, fieldState: { invalid } }) => (
         <FormItem className="space-y-1">
           {labelText && (
             <FormLabel
@@ -50,12 +49,10 @@ const UserInputField: React.FC<IUserInputField> = ({
           <FormControl>
             <div className="flex items-center gap-x-5">
               <Input
-                {...field}
-                {...register(name)}
                 autoComplete="off"
-                value={field.value ?? ""}
+                value={value ?? ""}
                 onChange={(e) => {
-                  field.onChange(e.target.value);
+                  onChange(e.target.value);
                 }}
                 className={clsx("text-2xl pl-3 pr-[30px]", {
                   "border-destructive focus-visible:ring-destructive":
@@ -69,12 +66,12 @@ const UserInputField: React.FC<IUserInputField> = ({
                 className={clsx(
                   "shrink-0 flex items-center justify-center text-white w-[30px] h-[30px] rounded-[5px]",
                   {
-                    "bg-success": field.value,
-                    "bg-danger": !field.value,
+                    "bg-success": value,
+                    "bg-danger": !value,
                   },
                 )}
               >
-                {field.value ? <Check /> : <X />}
+                {value ? <Check /> : <X />}
               </div>
             </div>
           </FormControl>

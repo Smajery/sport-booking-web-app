@@ -8,9 +8,6 @@ import { routes } from "@/utils/constants/routes.constants";
 import { getBookingStatusVariant } from "@/utils/helpers/variant.helpers";
 import { useLocale } from "next-intl";
 import { TLocale } from "@/navigation";
-import CreateRatingForm from "@/components/molecules/private/user/Forms/CreateRatingForm/CreateRatingForm";
-import UpdateRatingForm from "@/components/molecules/private/user/Forms/UpdateRatingForm/UpdateRatingForm";
-import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 
 interface IBookingItem {
   booking: TBooking;
@@ -18,16 +15,13 @@ interface IBookingItem {
 
 const ReservationsItem: React.FC<IBookingItem> = ({ booking }) => {
   const locale = useLocale() as TLocale;
-  const { user } = useAuthContext();
 
   const {
     startTime,
     endTime,
     status,
-    facility: { id, name, currentUserRate, owner },
+    facility: { id, name },
   } = booking;
-
-  const isOwnerFacility = !!(user && user.id && user.id === owner.id);
 
   return (
     <div className="h-[260px] rounded-xl shadow-md flex">
@@ -41,23 +35,6 @@ const ReservationsItem: React.FC<IBookingItem> = ({ booking }) => {
         >
           {name}
         </Link>
-        {!isOwnerFacility &&
-          status === "completed" &&
-          (!currentUserRate ? (
-            <CreateRatingForm
-              facilityId={id}
-              ratingsCount={5}
-              userRating={0}
-              className="pointer-events-none opacity-50"
-            />
-          ) : (
-            <UpdateRatingForm
-              ratingsCount={5}
-              userRating={Number(currentUserRate.value)}
-              ratingId={currentUserRate.id}
-              className="pointer-events-none opacity-50"
-            />
-          ))}
       </div>
       <div className="flex py-10">
         <div className="px-5 flex flex-col justify-center items-center border-l border-border">

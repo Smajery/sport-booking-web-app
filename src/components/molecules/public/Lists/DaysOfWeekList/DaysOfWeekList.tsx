@@ -16,9 +16,7 @@ const DaysOfWeekList: React.FC<IDaysOfWeekList> = ({
 }) => {
   const dayAvailability = facilityConfig.daysOfWeek.reduce(
     (acc, day) => {
-      acc[day.key] = timeSlots.some(
-        (slot) => slot.dayOfWeek === day.key && slot.status === "available",
-      );
+      acc[day.key] = timeSlots.some((slot) => slot.dayOfWeek === day.key);
       return acc;
     },
     {} as {
@@ -26,18 +24,17 @@ const DaysOfWeekList: React.FC<IDaysOfWeekList> = ({
     },
   );
   return (
-    <div className="flex items-center px-10 py-3 gap-x-10">
+    <div className="px-5 bg-primary text-primary-foreground flex items-center">
       {facilityConfig.daysOfWeek.map((day) => (
         <div
           key={day.key}
           className={clsx(
-            "text-primary-foreground flex justify-center cursor-pointer font-hover-high",
+            "px-5 py-1 rounded-xl flex justify-center cursor-pointer text-2xl",
             {
-              "text-2xl leading-7": selectedDayOfWeek === day.key,
-              "opacity-50 pointer-events-none": !dayAvailability[day.key],
+              "bg-black/10": selectedDayOfWeek === day.key,
+              "opacity-50": !dayAvailability[day.key],
             },
           )}
-          data-content={day.name}
           onClick={() => setSelectedDayOfWeek(day.key)}
         >
           {day.name}
