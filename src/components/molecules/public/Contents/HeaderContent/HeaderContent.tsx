@@ -76,7 +76,6 @@ const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
             >
               {names.PROFILE}
             </Button>
-            <SwitchThemeButton />
             <UserHeaderAvatar />
             <Button
               variant="none"
@@ -98,12 +97,13 @@ const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
   return (
     <div className="py-5 container mx-auto">
       <NavigationMenu className="max-w-full justify-between hidden md:flex">
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-4">
           <SportBookingLogo isScrolledHeader={isScrolled} className="mr-5" />
           <NavLinksList navItems={siteConfig.publicNavItems} />
+          <SwitchThemeButton />
           {renderLeftNavContent()}
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-4">
           {/*<LanguageSelect />*/}
           {renderRightNavContent()}
         </div>
