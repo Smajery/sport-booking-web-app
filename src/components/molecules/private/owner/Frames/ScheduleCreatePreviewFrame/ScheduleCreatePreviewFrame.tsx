@@ -10,13 +10,16 @@ import { clsx } from "clsx";
 import { TTimeSlot } from "@/types/commonTypes";
 import { Clock } from "lucide-react";
 import PreviewPriceSlotsList from "@/components/molecules/private/owner/Lists/PreviewPriceSlotsList/PreviewPriceSlotsList";
+import { getDuration } from "@/utils/helpers/text.helpers";
 
-interface IScheduleCreateCardFrame {
+interface IScheduleCreatePreviewFrame {
   timeSlots: TTimeSlot[];
+  minBookingTime: number;
 }
 
-const ScheduleCreateCardFrame: React.FC<IScheduleCreateCardFrame> = ({
+const ScheduleCreatePreviewFrame: React.FC<IScheduleCreatePreviewFrame> = ({
   timeSlots,
+  minBookingTime,
 }) => {
   const dayAvailability = facilityConfig.daysOfWeek.reduce(
     (acc, day) => {
@@ -52,7 +55,9 @@ const ScheduleCreateCardFrame: React.FC<IScheduleCreateCardFrame> = ({
           <div className="flex bg-primary">
             <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-1 w-[88px] border-r border-white text-primary-foreground">
               <Clock className="w-6 h-6" />
-              <p className="w-full truncate text-xs text-center">Min:</p>
+              <p className="w-full truncate text-xs text-center">
+                Min: {getDuration(minBookingTime)}
+              </p>
             </div>
             <div className="flex items-center px-10 py-3 gap-x-10">
               {facilityConfig.daysOfWeek.map((day) => (
@@ -87,4 +92,4 @@ const ScheduleCreateCardFrame: React.FC<IScheduleCreateCardFrame> = ({
   );
 };
 
-export default ScheduleCreateCardFrame;
+export default ScheduleCreatePreviewFrame;

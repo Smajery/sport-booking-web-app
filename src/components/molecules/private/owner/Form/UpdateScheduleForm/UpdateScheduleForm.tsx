@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import UpdateScheduleFormContent from "@/components/molecules/private/owner/Contents/UpdateScheduleFormContent/UpdateScheduleFormContent";
 import { TFacilitySchedule } from "@/types/private/owner/facilityTypes";
-import ScheduleUpdateCardFrame from "@/components/molecules/private/owner/Frames/ScheduleUpdateCardFrame/ScheduleUpdateCardFrame";
+import ScheduleUpdatePreviewFrame from "@/components/molecules/private/owner/Frames/ScheduleUpdatePreviewFrame/ScheduleUpdatePreviewFrame";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { TTimeSlot } from "@/types/commonTypes";
 import { Separator } from "@/components/ui/separator";
@@ -133,7 +133,7 @@ const UpdateScheduleForm: React.FC<IUpdateScheduleForm> = ({
         </div>
         <div className="flex flex-col gap-y-5">
           <p className="text-4xl text-primary font-semibold">Preview</p>
-          <ScheduleUpdateCardFrame
+          <ScheduleUpdatePreviewFrame
             timeSlots={initTimeSlots}
             selectedSlotIds={selectedSlotIds}
             setSelectedSlotIds={handleSelectSlotIds}
@@ -143,6 +143,7 @@ const UpdateScheduleForm: React.FC<IUpdateScheduleForm> = ({
             handleCancel={handleCancel}
             isRequestLoading={loading}
             facilityId={id}
+            minBookingTime={minBookingTime}
           />
         </div>
       </form>

@@ -25,9 +25,7 @@ const ImageAvatarField: React.FC<IImageAvatarField> = ({
   const { control } = form as UseFormReturn;
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const [selectedFile, setSelectedFile] = React.useState<File | undefined>(
-    undefined,
-  );
+  const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
 
   const handleFile = (file: File) => {
     setSelectedFile(file);
@@ -42,8 +40,8 @@ const ImageAvatarField: React.FC<IImageAvatarField> = ({
   };
 
   const handleRemoveFile = () => {
-    setSelectedFile(undefined);
-    form.setValue(name, undefined);
+    setSelectedFile(null);
+    form.setValue(name, null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }

@@ -34,14 +34,13 @@ const InputField: React.FC<IInputField> = ({
   const {
     control,
     formState: { isSubmitted },
-    register,
   } = form as UseFormReturn;
 
   return (
     <FormField
       control={control}
       name={name}
-      render={({ field: { value }, fieldState: { invalid } }) => (
+      render={({ field: { value, onChange }, fieldState: { invalid } }) => (
         <FormItem className="space-y-1">
           <div className="flex items-center pr-[50px]">
             {labelText && (

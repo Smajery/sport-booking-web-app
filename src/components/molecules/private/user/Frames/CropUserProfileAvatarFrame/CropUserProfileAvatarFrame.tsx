@@ -3,7 +3,7 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getAbbreviation } from "@/utils/helpers/text.helpers";
-import { ImagePlus, User2 } from "lucide-react";
+import { ImagePlus, User2, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   ACCEPTED_IMAGE_TYPES,
@@ -30,9 +30,9 @@ const CropUserProfileAvatarFrame: React.FC<ICropUserProfileAvatarFrame> = ({
   form,
 }) => {
   const { fullname, avatar } = user;
-  const [selectedAvatar, setSelectedAvatar] = React.useState<string | null>(
-    `${process.env.NEXT_PUBLIC_IMG_URL}/${avatar}`,
-  );
+  const [selectedAvatar, setSelectedAvatar] = React.useState<
+    string | undefined
+  >(`${process.env.NEXT_PUBLIC_IMG_URL}/${avatar}`);
 
   const [isCropping, setIsCropping] = React.useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -61,6 +61,14 @@ const CropUserProfileAvatarFrame: React.FC<ICropUserProfileAvatarFrame> = ({
     }
   };
 
+  const handleRemoveFile = () => {
+    setSelectedAvatar(undefined);
+    form.setValue("avatar", null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const handleCancel = () => {
     setIsCropping(false);
   };
@@ -81,9 +89,7 @@ const CropUserProfileAvatarFrame: React.FC<ICropUserProfileAvatarFrame> = ({
     <div className="shrink-0 flex justify-center w-[310px] mb-auto">
       <div className="relative">
         <Avatar className="h-[150px] w-[150px]">
-          {selectedAvatar && (
-            <AvatarImage src={selectedAvatar} alt="User Avatar" />
-          )}
+          <AvatarImage src={selectedAvatar} alt="User Avatar" />
           <AvatarFallback className="text-5xl">
             {fullname ? (
               getAbbreviation(fullname)
@@ -93,26 +99,42 @@ const CropUserProfileAvatarFrame: React.FC<ICropUserProfileAvatarFrame> = ({
           </AvatarFallback>
         </Avatar>
         {isEdit && (
-          <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2">
-            <Input
-              type="file"
-              onChange={handleFileInput}
-              accept={ACCEPTED_IMAGE_TYPES.join(", ")}
-              className="hidden"
-              ref={fileInputRef}
-            />
-            <Button
-              variant="none"
-              type="button"
-              className="bg-background shadow-lg gap-x-2 border-transparent"
-              onClick={() =>
-                fileInputRef.current ? fileInputRef.current.click() : null
-              }
-            >
-              <ImagePlus />{" "}
-              <p className="mt-1">{selectedAvatar ? "Change" : "Add"}</p>
-            </Button>
-          </div>
+          <>
+            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2">
+              <Input
+                type="file"
+                onChange={handleFileInput}
+                accept={ACCEPTED_IMAGE_TYPES.join(", ")}
+                className="hidden"
+                ref={fileInputRef}
+              />
+              <Button
+                variant="none"
+                type="button"
+                className="bg-background shadow-lg gap-x-2 border-transparent"
+                onClick={() =>
+                  fileInputRef.current ? fileInputRef.current.click() : null
+                }
+              >
+                <ImagePlus />{" "}
+                <p className="mt-1">{selectedAvatar ? "Change" : "Add"}</p>
+              </Button>
+            </div>
+            {selectedAvatar && (
+              <Button
+                variant="none"
+                size="none"
+                type="button"
+                onClick={handleRemoveFile}
+                asChild
+                className="absolute -top-2 -right-2 cursor-pointer ml-auto"
+              >
+                <div className="flex rounded-md bg-background items-center justify-center w-8 h-8">
+                  <X />
+                </div>
+              </Button>
+            )}
+          </>
         )}
       </div>
       {isCropping && (

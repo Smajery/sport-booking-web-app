@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { names, routes } from "@/utils/constants/routes.constants";
 import UserHeaderAvatar from "@/components/atoms/private/user/Avatars/UserHeaderAvatar/UserHeaderAvatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import SwitchThemeButton from "@/components/atoms/public/Buttons/SwitchThemeButton/SwitchThemeButton";
 
 interface IHeaderContent {
   isScrolled: boolean;
@@ -75,6 +76,7 @@ const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
             >
               {names.PROFILE}
             </Button>
+            <SwitchThemeButton />
             <UserHeaderAvatar />
             <Button
               variant="none"

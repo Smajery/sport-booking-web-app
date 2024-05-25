@@ -17,8 +17,9 @@ import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
+import { getDuration } from "@/utils/helpers/text.helpers";
 
-interface IScheduleUpdateCardFrame {
+interface IScheduleUpdatePreviewFrame {
   timeSlots: TTimeSlot[];
   selectedSlotIds: number[];
   setSelectedSlotIds: (value: number[]) => void;
@@ -28,9 +29,10 @@ interface IScheduleUpdateCardFrame {
   handleCancel: () => void;
   isRequestLoading: boolean;
   facilityId: number;
+  minBookingTime: number;
 }
 
-const ScheduleUpdateCardFrame: React.FC<IScheduleUpdateCardFrame> = ({
+const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
   timeSlots,
   selectedSlotIds,
   setSelectedSlotIds,
@@ -40,6 +42,7 @@ const ScheduleUpdateCardFrame: React.FC<IScheduleUpdateCardFrame> = ({
   handleCancel,
   isRequestLoading,
   facilityId,
+  minBookingTime,
 }) => {
   const { push } = useRouter();
 
@@ -103,7 +106,9 @@ const ScheduleUpdateCardFrame: React.FC<IScheduleUpdateCardFrame> = ({
             <div className="flex bg-primary">
               <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-1 w-[88px] border-r border-white text-primary-foreground">
                 <Clock className="w-6 h-6" />
-                <p className="w-full truncate text-xs text-center">Min:</p>
+                <p className="w-full truncate text-xs text-center">
+                  Min: {getDuration(minBookingTime)}
+                </p>
               </div>
               <div className="flex items-center px-10 py-3 gap-x-10">
                 {facilityConfig.daysOfWeek.map((day) => (
@@ -192,4 +197,4 @@ const ScheduleUpdateCardFrame: React.FC<IScheduleUpdateCardFrame> = ({
   );
 };
 
-export default ScheduleUpdateCardFrame;
+export default ScheduleUpdatePreviewFrame;

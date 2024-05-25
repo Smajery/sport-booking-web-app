@@ -20,13 +20,13 @@ const UpdateScheduleFormContent: React.FC<IUpdateScheduleFormContent> = ({
       <div className="flex justify-between">
         <div className="flex items-center gap-x-2">
           <Checkbox
-            id="allSlotsCheckbox"
+            id="all-slotts-check"
             checked={isAllSlots}
             onCheckedChange={setIsAllSlots}
             className="rounded-full w-5 h-5"
           />
           <label
-            htmlFor="allSlotsCheckbox"
+            htmlFor="all-slotts-check"
             className="-mb-[2px] text-lg font-light text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             All slots
@@ -34,13 +34,13 @@ const UpdateScheduleFormContent: React.FC<IUpdateScheduleFormContent> = ({
         </div>
         <div className="flex items-center gap-x-2">
           <Checkbox
-            id="selectedSlotsCheckbox"
+            id="selected-slots-check"
             checked={!isAllSlots}
             onCheckedChange={(e) => setIsAllSlots(!e)}
             className="rounded-full w-5 h-5"
           />
           <label
-            htmlFor="selectedSlotsCheckbox"
+            htmlFor="selected-slots-check"
             className="-mb-[2px] text-lg font-light text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             Selected slots

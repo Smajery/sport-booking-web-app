@@ -6,7 +6,7 @@ import getCroppedImg from "@/utils/helpers/image.helpers";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 
 interface ICropAvatarModal {
-  selectedAvatar: string | null;
+  selectedAvatar: string | undefined;
   handleSetCroppedAvatar: (file: File, url: string) => void;
   handleCancel: () => void;
 }

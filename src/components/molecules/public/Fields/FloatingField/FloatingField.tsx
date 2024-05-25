@@ -11,10 +11,11 @@ import { Input, InputProps } from "@/components/ui/input";
 
 import { clsx } from "clsx";
 import { UseFormReturn } from "react-hook-form";
+import { LucideIcon } from "lucide-react";
 
 interface IFloatingField extends InputProps {
   form: any;
-  IconComponent?: any;
+  IconComponent?: LucideIcon;
   name: string;
   labelText?: string;
   noValidate?: boolean;

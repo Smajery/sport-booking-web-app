@@ -82,7 +82,7 @@ const UpdateFacilityFormContent: React.FC<IUpdateFacilityFormContent> = ({
             form={form}
             labelText="Facility status"
             name="isWorking"
-            checkboxId="isWorkingCheckbox"
+            checkboxId="working-status-check"
             checkboxLabelText="Working"
           />
           <ErrorMessageField form={form} name="photos" />

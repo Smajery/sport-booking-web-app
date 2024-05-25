@@ -10,13 +10,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { routes } from "@/utils/constants/routes.constants";
 import { facilityConfig } from "@/config/public/facility";
+import { facilityConfig as ownerFacilityConfig } from "@/config/private/owner/facility";
 import MultiSelectField from "@/components/molecules/private/owner/Fields/MultiSelectField/MultiSelectField";
 import InputField from "@/components/molecules/private/owner/Fields/InputField/InputField";
-import ScheduleCreateCardFrame from "@/components/molecules/private/owner/Frames/ScheduleCreateCardFrame/ScheduleCreateCardFrame";
+import ScheduleCreatePreviewFrame from "@/components/molecules/private/owner/Frames/ScheduleCreatePreviewFrame/ScheduleCreatePreviewFrame";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { TTimeSlot } from "@/types/commonTypes";
 import { getTimeSlots, getTimeUtc } from "@/utils/helpers/time.helpers";
+import SelectorField from "@/components/molecules/private/owner/Fields/SelectorField/SelectorField";
 
 const createScheduleFormSchema = z.object({
   facilityId: z.number().min(1),
@@ -31,6 +33,7 @@ const createScheduleFormSchema = z.object({
   startTime: z.string().min(1, "Required"),
   endTime: z.string().min(1, "Required"),
   price: z.string().min(1, "Required"),
+  minBookingTime: z.string().min(1, "Required"),
 });
 
 const CreateScheduleForm = () => {
@@ -52,13 +55,21 @@ const CreateScheduleForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof createScheduleFormSchema>) => {
-    const { price, daysOfWeek, startTime, endTime, ...otherValues } = values;
+    const {
+      price,
+      daysOfWeek,
+      startTime,
+      endTime,
+      minBookingTime,
+      ...otherValues
+    } = values;
     const modifiedOtherValues = {
       ...otherValues,
       price: Number(price),
       daysOfWeek: daysOfWeek.map((dayOfWeek) => dayOfWeek.key),
       startTime: getTimeUtc(startTime), //Temporary solution
       endTime: getTimeUtc(endTime), //Temporary solution
+      minBookingTime: Number(minBookingTime),
     };
     try {
       await createSchedule({
@@ -83,6 +94,7 @@ const CreateScheduleForm = () => {
   const startTimeWatch = form.watch("startTime");
   const endTimeWatch = form.watch("endTime");
   const priceWatch = form.watch("price");
+  const minBookingTimeWatch = form.watch("minBookingTime");
 
   //Temporary solution
   React.useEffect(() => {
@@ -140,6 +152,13 @@ const CreateScheduleForm = () => {
               className="input__no-time-select"
             />
           </div>
+          <SelectorField
+            form={form}
+            name="minBookingTime"
+            selectableItems={ownerFacilityConfig.minBookingTime}
+            labelText="Min booking time"
+            placeholder="Select"
+          />
           <InputField
             form={form}
             name="price"
@@ -166,7 +185,10 @@ const CreateScheduleForm = () => {
         </div>
         <div className="flex flex-col gap-y-5">
           <p className="text-4xl text-primary font-semibold">Preview</p>
-          <ScheduleCreateCardFrame timeSlots={generatedTimeSlots} />
+          <ScheduleCreatePreviewFrame
+            minBookingTime={Number(minBookingTimeWatch)}
+            timeSlots={generatedTimeSlots}
+          />
         </div>
       </form>
     </FormProvider>
