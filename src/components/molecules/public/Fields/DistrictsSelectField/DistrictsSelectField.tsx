@@ -30,7 +30,7 @@ const DistrictsSelectField: React.FC<IDistrictsSelectField> = ({
     onCompleted: (data) => {
       const districtsToSelectableItems = data.findAllDistricts.map(
         (district: TDistrict) => ({
-          key: String(district.id),
+          key: district.id,
           name: district.name,
         }),
       );

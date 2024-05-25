@@ -48,13 +48,13 @@ const filterFormSchema = z.object({
   ),
   districts: z.array(
     z.object({
-      key: z.string(),
+      key: z.number(),
       name: z.string(),
     }),
   ),
   cityId: z
     .object({
-      key: z.string(),
+      key: z.number(),
       name: z.string(),
     })
     .nullable(),
