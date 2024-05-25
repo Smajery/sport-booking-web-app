@@ -142,7 +142,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
       } = {
         "apollo-require-preflight": true,
       };
-      if (photos.length) {
+      if (photos && photos.length) {
         headers["Content-Type"] = "multipart/form-data";
       }
       if (Object.keys(otherChangedValues).length !== 0) {

@@ -11,13 +11,17 @@ import { routes } from "@/utils/constants/routes.constants";
 import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
 import SelectFavoriteOnItemButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnItemButton/SelectFavoriteOnItemButton";
 import { clsx } from "clsx";
-import { TIME_PER_SLOT } from "@/utils/constants/titles.constants";
+import { MIN_PER_SLOT } from "@/utils/constants/titles.constants";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IFacilitiesItem {
   facility: TFacilityItem;
 }
 
 const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { push } = useRouter();
   const {
     id,
@@ -61,7 +65,9 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           </div>
           <div className="flex justify-start gap-x-1">
             <Badge variant="background">
-              {avgPrice ? `${avgPrice} ₴/${TIME_PER_SLOT}` : "No schedule"}
+              {avgPrice
+                ? `${avgPrice} ₴/${MIN_PER_SLOT} ${tTtl("min")}`
+                : tTtl("noSchedule")}
             </Badge>
           </div>
         </div>
@@ -72,7 +78,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
             <p className="truncate text-xl">{name} </p>
             {!isWorking && (
               <p className="text-xl italic text-muted-foreground">
-                (Temporarily not working)
+                {tTtl("temporarilyNotWorking")}
               </p>
             )}
           </div>
@@ -83,7 +89,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
             <Badge variant="outline" Icon={MapPin}>
               {address}
             </Badge>
-            <Badge variant="outline">{district.name}</Badge>
+            <Badge variant="outline">{tTtl(district.name)}</Badge>
           </div>
           <Badge
             variant="outline"
@@ -96,17 +102,17 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
             {sportType.map((sport) => (
               <div key={sport}>
                 <Badge variant="primary" Icon={Hash}>
-                  {getTitle(sport)}
+                  {tTtl(sport)}
                 </Badge>
               </div>
             ))}
           </div>
           <div className="flex gap-x-1">
             <Badge variant="accent" Icon={Hash}>
-              {getFormattedText(facilityType)}
+              {tTtl(facilityType)}
             </Badge>
             <Badge variant="accent" Icon={Hash}>
-              {getFormattedText(coveringType)}
+              {tTtl(coveringType)}
             </Badge>
           </div>
         </div>

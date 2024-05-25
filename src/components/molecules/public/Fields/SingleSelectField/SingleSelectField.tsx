@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { TSelectedItem } from "@/types/commonTypes";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface ISingleSelectField {
   form: any;
@@ -25,6 +27,9 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
   selectableItems,
   className = "",
 }) => {
+  const tSlct = useTranslations(namespaces.COMPONENTS_SELECTS);
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+
   const { control, setValue } = form as UseFormReturn;
   const handleSelectItem = (
     newSelectedItem: TSelectedItem,
@@ -45,7 +50,7 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
         <FormItem className="flex flex-col space-y-1">
           {labelText && (
             <FormLabel className="text-base text-primary font-semibold">
-              {labelText}
+              {tLbl(labelText)}
             </FormLabel>
           )}
           <FormControl>
@@ -73,7 +78,7 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
                         : "outline"
                     }
                   >
-                    {selectableItem.name}
+                    {tSlct(selectableItem.name)}
                   </Badge>
                 </div>
               ))}

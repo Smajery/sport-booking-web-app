@@ -43,6 +43,7 @@ export default async function LocaleLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${roboto.className}`}>
+        <link rel="icon" href="/icons/logo.ico" sizes="any" />
         <ApolloProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <IntlClientProvider>

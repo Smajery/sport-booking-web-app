@@ -186,7 +186,9 @@ const CreateScheduleForm = () => {
         <div className="flex flex-col gap-y-5">
           <p className="text-4xl text-primary font-semibold">Preview</p>
           <ScheduleCreatePreviewFrame
-            minBookingTime={Number(minBookingTimeWatch)}
+            minBookingTime={
+              minBookingTimeWatch ? Number(minBookingTimeWatch) : 0
+            }
             timeSlots={generatedTimeSlots}
           />
         </div>

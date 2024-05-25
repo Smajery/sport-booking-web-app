@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { locales, TLocale } from "@/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,8 +13,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { useHeaderContext } from "@/layouts/Header/Header";
 import { clsx } from "clsx";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 const SelectLanguageButton = () => {
+  const t = useTranslations(namespaces.LAYOUTS_HEADER_TITLES);
+
   const locale = useLocale() as TLocale;
   const pathname = usePathname();
   const { push } = useRouter();
@@ -36,7 +39,7 @@ const SelectLanguageButton = () => {
             "text-primary-foreground": isHeaderScrolled,
           })}
         >
-          {locale.toLocaleUpperCase()}
+          {t(locale).toUpperCase()}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-min">
@@ -45,7 +48,7 @@ const SelectLanguageButton = () => {
             key={lang}
             onClick={() => handleLanguageRedirect(lang)}
           >
-            <p>{lang.toLocaleUpperCase()}</p>
+            <p>{t(lang).toUpperCase()}</p>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

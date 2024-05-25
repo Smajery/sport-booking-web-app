@@ -12,6 +12,8 @@ import { Input, InputProps } from "@/components/ui/input";
 import { clsx } from "clsx";
 import { UseFormReturn } from "react-hook-form";
 import { LucideIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IFloatingField extends InputProps {
   form: any;
@@ -33,6 +35,9 @@ const FloatingField: React.FC<IFloatingField> = ({
   placeholder = "",
   ...props
 }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+  const tPlh = useTranslations(namespaces.COMPONENTS_PLACEHOLDERS);
+
   const {
     formState: { isSubmitted },
   } = form as UseFormReturn;
@@ -63,7 +68,7 @@ const FloatingField: React.FC<IFloatingField> = ({
                     (invalid && isSubmitted && !noValidate) || isRequestError,
                 })}
               >
-                {labelText}
+                {tLbl(labelText)}
               </FormLabel>
             )}
             <FormControl>
@@ -71,7 +76,7 @@ const FloatingField: React.FC<IFloatingField> = ({
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 autoComplete="off"
-                placeholder={isFocused || value ? placeholder : ""}
+                placeholder={isFocused || value ? tPlh(placeholder) : ""}
                 value={value ?? ""}
                 onChange={(e) => {
                   onChange(e.target.value);

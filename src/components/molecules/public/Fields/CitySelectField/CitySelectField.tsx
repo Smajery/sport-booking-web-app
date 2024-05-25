@@ -19,7 +19,7 @@ const CitySelectField: React.FC<ICitySelectField> = ({
   const {} = useQuery(GET_ALL_CITIES_QUERY, {
     onCompleted: (data) => {
       const citiesToSelectableItems = data.findAllCities.map((city: TCity) => ({
-        key: String(city.id),
+        key: city.id,
         name: city.name,
       }));
       setCities(citiesToSelectableItems);

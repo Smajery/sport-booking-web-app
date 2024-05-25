@@ -131,7 +131,6 @@
 
   .variant-gradient {
     background: linear-gradient(to right, #ff8749, #ff9398);
-    @apply text-primary-foreground;
   }
 
   /* CSS Tricks */

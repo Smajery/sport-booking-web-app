@@ -1,1 +1,34 @@
-{}
+{
+  "meta": {
+    "pages": {
+      "home": {
+        "title": "",
+        "description": ""
+      }
+    }
+  },
+  "components": {
+    "select": {
+      "price_asc": "Price up",
+      "price_desc": "Price down",
+      "artificial_lawn": "Artificial lawn",
+      "parquet": "Parquet",
+      "natural_lawn": "Natural lawn",
+      "rubber": "Rubber",
+      "sand": "Sand",
+      "basketball": "Basketball",
+      "soccer": "Soccer",
+      "tennis": "Tennis",
+      "volleyball": "Volleyball",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "1": "Mon",
+      "2": "Tue",
+      "3": "Wed",
+      "4": "Thu",
+      "5": "Fri",
+      "6": "Sat",
+      "7": "Sun"
+    }
+  }
+}

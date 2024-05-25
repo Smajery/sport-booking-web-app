@@ -10,7 +10,7 @@ import { routes } from "@/utils/constants/routes.constants";
 import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
 import { clsx } from "clsx";
 import CompactRatingFrame from "@/components/molecules/public/Frames/CompactRatingFrame/CompactRatingFrame";
-import { TIME_PER_SLOT } from "@/utils/constants/titles.constants";
+import { MIN_PER_SLOT } from "@/utils/constants/titles.constants";
 
 interface IFacilitiesItem {
   facility: TFacility;
@@ -63,7 +63,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           </div>
           <div className="flex justify-start gap-x-1">
             <Badge variant="background">
-              {avgPrice ? `${avgPrice} ₴/${TIME_PER_SLOT}` : "No schedule"}
+              {avgPrice ? `${avgPrice} ₴/${MIN_PER_SLOT} min` : "No schedule"}
             </Badge>
           </div>
         </div>

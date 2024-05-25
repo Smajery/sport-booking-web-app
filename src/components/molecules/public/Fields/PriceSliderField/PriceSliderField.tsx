@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/form";
 import { TPriceRange } from "@/types/commonTypes";
 import { Slider } from "@/components/ui/slider";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IPriceSliderField {
   form: any;
@@ -22,6 +24,8 @@ const PriceSliderField: React.FC<IPriceSliderField> = ({
   name,
   priceRange,
 }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+
   const { control } = form as UseFormReturn;
 
   const { min, max } = priceRange;
@@ -34,7 +38,7 @@ const PriceSliderField: React.FC<IPriceSliderField> = ({
         <FormItem className="flex flex-col space-y-7">
           {labelText && (
             <FormLabel className="text-base text-primary font-semibold">
-              {labelText}
+              {tLbl(labelText)}
             </FormLabel>
           )}
           <FormControl>

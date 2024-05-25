@@ -17,6 +17,8 @@ import DistrictsSelectField from "@/components/molecules/public/Fields/Districts
 import { TPriceRange } from "@/types/commonTypes";
 import PriceSliderField from "@/components/molecules/public/Fields/PriceSliderField/PriceSliderField";
 import { Separator } from "@/components/ui/separator";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface ISearchForm {
   handleSetFilterValues: (value: TFacilityFilter | null) => void;
@@ -75,6 +77,8 @@ const FilterForm: React.FC<ISearchForm> = ({
   handleSetFilterValues,
   priceRange,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const form = useForm<z.infer<typeof filterFormSchema>>({
     resolver: zodResolver(filterFormSchema),
     defaultValues: {
@@ -164,8 +168,8 @@ const FilterForm: React.FC<ISearchForm> = ({
         <FloatingField
           form={form}
           name="search"
-          placeholder="Search..."
-          labelText="Facilities search"
+          placeholder="search"
+          labelText="facilitiesSearch"
           type="text"
           IconComponent={Search}
           noValidate
@@ -173,38 +177,38 @@ const FilterForm: React.FC<ISearchForm> = ({
         <MultiSelectField
           form={form}
           name="sportType"
-          labelText="Sport"
+          labelText="sport"
           selectableItems={facilityConfig.sportType}
         />
         <SingleSelectField
           form={form}
           name="coveringType"
-          labelText="Covering"
+          labelText="covering"
           selectableItems={facilityConfig.coveringType}
         />
         <SingleSelectField
           form={form}
           name="facilityType"
-          labelText="Facility"
+          labelText="facility"
           selectableItems={facilityConfig.facilityType}
         />
-        <CitySelectField form={form} name="cityId" labelText="City" />
+        <CitySelectField form={form} name="cityId" labelText="city" />
         <DistrictsSelectField
           form={form}
           name="districts"
-          labelText="Districts"
+          labelText="district"
           cityId={cityIdWatch ? Number(cityIdWatch.key) : null}
         />
         <SingleSelectField
           form={form}
           name="sortBy"
-          labelText="Sort by"
+          labelText="sortBy"
           selectableItems={facilityConfig.sortBy}
         />
         <PriceSliderField
           form={form}
           name="priceRange"
-          labelText="Price"
+          labelText="price"
           priceRange={priceRange}
         />
         <Separator className="mt-5" />
@@ -216,7 +220,7 @@ const FilterForm: React.FC<ISearchForm> = ({
           onClick={handleReset}
           disabled={isFetchLoading}
         >
-          {!isFetchLoading ? "Reset all" : "Loading..."}
+          {!isFetchLoading ? tTtl("resetAll") : tTtl("loading")}
         </Button>
       </form>
     </FormProvider>

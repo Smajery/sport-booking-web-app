@@ -36,6 +36,8 @@ const InputField: React.FC<IInputField> = ({
     formState: { isSubmitted },
   } = form as UseFormReturn;
 
+  console.log(form.watch(name));
+
   return (
     <FormField
       control={control}

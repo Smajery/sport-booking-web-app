@@ -12,6 +12,7 @@ const buttonVariants = cva(
         none: "",
         default:
           "bg-primary border-transparent text-primary-foreground hover:bg-primary/90",
+        gradient: "variant-gradient border-transparent text-primary-foreground",
         secondary:
           "bg-secondary border-transparent text-secondary-foreground hover:bg-secondary/80",
         primary:

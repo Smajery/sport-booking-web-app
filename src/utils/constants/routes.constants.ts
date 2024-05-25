@@ -19,16 +19,16 @@ export const routes = {
 export const names = {
   HOME: "Home",
   FACILITY: "Facility",
-  PROFILE: "Profile",
+  PROFILE: "profile",
   ME: "Profile",
   NOTIFICATION: "Notification",
   PRIVACY: "Privacy",
   ABOUT: "About",
   HELP: "Help",
   USER_FACILITIES: "Facilities",
-  FAVORITES: "Favorites",
-  RESERVATIONS: "Reservations",
-  DASHBOARD: "Dashboard",
+  FAVORITES: "favorites",
+  RESERVATIONS: "reservations",
+  DASHBOARD: "dashboard",
 };
 
 export default { routes, names };

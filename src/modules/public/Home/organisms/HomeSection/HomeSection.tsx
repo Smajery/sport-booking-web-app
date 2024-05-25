@@ -12,10 +12,14 @@ import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { TFacilityFilter } from "@/types/public/facilityTypes";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import { TPriceRange } from "@/types/commonTypes";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 const limit = 10;
 
 const HomeSection = () => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const [isShowMap, setIsShowMap] = React.useState<boolean>(false);
   const [selectedLocationId, setSelectedLocationId] = React.useState<
     number | null
@@ -98,20 +102,19 @@ const HomeSection = () => {
               className="fixed top-108 w-[1000px] h-[56px] border-2 border-border bg-background/50 z-10 hover:bg-background"
             >
               <div className="flex items-start gap-x-1">
-                Show map <Map className="w-5 h-5" />
+                {tTtl("showMap")} <Map className="w-5 h-5" />
               </div>
             </Button>
             <div className="h-[56px]"></div>
             {loading ? (
-              <div>Loading...</div>
+              <div>{tTtl("loading")}</div>
             ) : error ? (
               <div>{getApolloErrorMessage(error)}</div>
             ) : data.findAll.facilities.length === 0 && filterValues ? (
-              <div>No facilities for this filter</div>
+              <div>{tTtl("noFacilitiesForThisFilter")}</div>
             ) : data.findAll.facilities.length === 0 && !filterValues ? (
               <div className="flex justify-center p-5 ">
-                We don't have any facility yet, try to come back after few
-                minutes!
+                {tTtl("weDontHaveFacility")}
               </div>
             ) : (
               <FacilitiesList
@@ -130,7 +133,8 @@ const HomeSection = () => {
               className="h-[56px] bg-primary text-primary-foreground border-2 border-primary shrink-0"
             >
               <div className="flex items-start gap-x-1">
-                Show list <List className="w-5 h-5" strokeWidth={2.5} />
+                {tTtl("showList")}{" "}
+                <List className="w-5 h-5" strokeWidth={2.5} />
               </div>
             </Button>
             <ClustererMap

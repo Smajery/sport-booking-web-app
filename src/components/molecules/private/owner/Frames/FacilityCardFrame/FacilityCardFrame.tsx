@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { TFacility } from "@/types/private/owner/facilityTypes";
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
-import { TIME_PER_SLOT } from "@/utils/constants/titles.constants";
+import { MIN_PER_SLOT } from "@/utils/constants/titles.constants";
 
 interface IFacilityCardFrame {
   facility: TFacility;
@@ -89,13 +89,12 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
               <p className="text-xl font-light">
                 {avgPrice ?? 0} UAH{" "}
                 <span className="text-muted-foreground text-lg">
-                  /{TIME_PER_SLOT}
+                  /{MIN_PER_SLOT}
                 </span>
               </p>
               <Button
-                variant="none"
+                variant="gradient"
                 size="lg"
-                className="variant-gradient"
                 onClick={() =>
                   push(`${routes.USER_FACILITIES}/${id}/${routes.SCHEDULE}`)
                 }
@@ -106,9 +105,8 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
           ) : (
             <>
               <Button
-                variant="none"
+                variant="gradient"
                 size="lg"
-                className="variant-gradient"
                 onClick={() =>
                   push(
                     `${routes.USER_FACILITIES}/${id}/${routes.SCHEDULE_CREATE}`,

@@ -8,11 +8,12 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 type TNavLink = {
   href: string;
-  key: string;
-  text: string;
+  title: string;
 };
 
 interface INavbarLinksList {
@@ -20,20 +21,23 @@ interface INavbarLinksList {
 }
 
 const NavbarLinksList: React.FC<INavbarLinksList> = ({ navItems }) => {
+  const t = useTranslations(namespaces.LAYOUTS_HEADER_TITLES);
   const pathname = usePathname();
   const rootHref = "/" + pathname.split("/")[1];
   return (
-    <NavigationMenuList className="flex items-center py-[20px]">
-      {navItems.map((link) => (
+    <NavigationMenuList className="flex items-center space-x-4">
+      {navItems.map((link, index) => (
         <NavigationMenuItem
-          key={link.key}
+          key={index}
           className={clsx("hover:underline", {
             underline: link.href === rootHref,
             "": link.href !== rootHref,
           })}
         >
           <Link href={link.href} legacyBehavior passHref>
-            <NavigationMenuLink className="">{link.text}</NavigationMenuLink>
+            <NavigationMenuLink className="">
+              {t(link.title)}
+            </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
       ))}

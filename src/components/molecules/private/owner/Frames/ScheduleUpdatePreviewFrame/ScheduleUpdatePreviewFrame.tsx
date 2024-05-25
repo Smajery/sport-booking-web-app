@@ -155,7 +155,7 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
                       Cancel
                     </Button>
                     <Button
-                      className="variant-gradient"
+                      variant="gradient"
                       size="lg"
                       disabled={isRequestLoading}
                     >

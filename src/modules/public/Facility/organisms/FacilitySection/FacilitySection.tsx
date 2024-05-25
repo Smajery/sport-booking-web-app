@@ -12,7 +12,7 @@ import RatingFrame from "@/components/molecules/public/Frames/RatingFrame/Rating
 import BookButton from "@/components/atoms/public/Buttons/BookButton/BookButton";
 import SelectFavoriteOnPageButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnPageButton/SelectFavoriteOnPageButton";
 import ShareOnPageButton from "@/components/atoms/private/user/Buttons/ShareOnPageButton/ShareOnPageButton";
-import { TIME_PER_SLOT } from "@/utils/constants/titles.constants";
+import { MIN_PER_SLOT } from "@/utils/constants/titles.constants";
 import ContactOrganizationFrame from "@/components/molecules/public/Frames/ContactOrganizationFrame/ContactOrganizationFrame";
 import UserRatingFrame from "@/components/molecules/public/Frames/UserRatingFrame/UserRatingFrame";
 import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
@@ -133,7 +133,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
             <p className="text-xl font-light">
               {avgPrice} UAH{" "}
               <span className="text-muted-foreground text-lg">
-                /{TIME_PER_SLOT}
+                /{MIN_PER_SLOT}
               </span>
             </p>
             <BookButton facilityId={id} disabled={!isWorking} />

@@ -6,13 +6,11 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
 
 interface IBecameOwnerButton extends ButtonProps {
-  className?: string;
   isBecameOwner: boolean;
   setIsBecameOwner: (value: boolean) => void;
 }
 
 const BecameOwnerButton: React.FC<IBecameOwnerButton> = ({
-  className = "",
   isBecameOwner,
   setIsBecameOwner,
   ...props
@@ -25,9 +23,8 @@ const BecameOwnerButton: React.FC<IBecameOwnerButton> = ({
   };
   return (
     <Button
-      variant="none"
+      variant="gradient"
       size="sm"
-      className={`variant-gradient ${className}`}
       onClick={handleBecameOwner}
       disabled={isBecameOwner}
       {...props}

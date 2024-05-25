@@ -243,9 +243,8 @@ const BookSchedule: React.FC<IBookSchedule> = ({
                 Cancel
               </Button>
               <Button
-                variant="none"
+                variant="gradient"
                 size="md"
-                className="variant-gradient"
                 disabled={isMinBookingTime || isBookLoading || isPaymentLoading}
               >
                 Pay

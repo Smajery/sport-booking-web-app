@@ -24,11 +24,11 @@ const HeaderContent = () => {
     return user && user.roles.some((userRole) => userRole.value === role);
   };
 
-  const renderLeftNavContent = () => {
-    if (isAuth) {
-      return <NavLinksList navItems={siteConfig.privateNavItems} />;
-    }
-  };
+  // const renderLeftNavContent = () => {
+  //   if (isAuth) {
+  //     return <NavLinksList navItems={siteConfig.privateNavItems} />;
+  //   }
+  // };
 
   const renderRightNavContent = () => {
     if (isAuthLoading) {
@@ -43,36 +43,11 @@ const HeaderContent = () => {
       if (isHasUserCurrentRole("USER")) {
         return (
           <div className="flex items-center gap-x-4">
-            {isHasUserCurrentRole("OWNER") && (
-              <Button
-                variant="none"
-                size="none"
-                onClick={() => push(routes.DASHBOARD)}
-              >
-                {names.DASHBOARD}
-              </Button>
+            {isHasUserCurrentRole("OWNER") ? (
+              <NavLinksList navItems={siteConfig.privateNavItems.owner} />
+            ) : (
+              <NavLinksList navItems={siteConfig.privateNavItems.user} />
             )}
-            <Button
-              variant="none"
-              size="none"
-              onClick={() => push(routes.RESERVATIONS)}
-            >
-              {names.RESERVATIONS}
-            </Button>
-            <Button
-              variant="none"
-              size="none"
-              onClick={() => push(routes.FAVORITES)}
-            >
-              {names.FAVORITES}
-            </Button>
-            <Button
-              variant="none"
-              size="none"
-              onClick={() => push(routes.PROFILE)}
-            >
-              {names.PROFILE}
-            </Button>
             <UserHeaderAvatar />
             <Button
               variant="none"
@@ -99,7 +74,7 @@ const HeaderContent = () => {
           <NavLinksList navItems={siteConfig.publicNavItems} />
           <SwitchThemeButton />
           <SelectLanguageButton />
-          {renderLeftNavContent()}
+          {/*{renderLeftNavContent()}*/}
         </div>
         <div className="flex items-center gap-x-4">
           {renderRightNavContent()}
