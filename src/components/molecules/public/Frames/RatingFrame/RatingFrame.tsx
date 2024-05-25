@@ -17,7 +17,7 @@ const RatingFrame: React.FC<IRatingFrame> = ({
   ratingCount,
   className = "",
 }) => {
-  const { systemTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <div className={`flex flex-col items-center ${className}`}>
@@ -31,7 +31,7 @@ const RatingFrame: React.FC<IRatingFrame> = ({
         {[1, 2, 3, 4, 5].map((rating) => (
           <Image
             key={rating}
-            src={`/${getThemeIconsPath(systemTheme)}/${getAvgRatingImagePath(rating, avgRating)}`}
+            src={`/${getThemeIconsPath(theme)}/${getAvgRatingImagePath(rating, avgRating)}`}
             alt={`Rating ${rating}`}
             width={12}
             height={12}

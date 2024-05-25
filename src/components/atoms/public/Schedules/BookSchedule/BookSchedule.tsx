@@ -20,6 +20,9 @@ import { getDuration } from "@/utils/helpers/text.helpers";
 import { CREATE_PAYMENT_MUTATION } from "@/apollo/mutations/private/user/payment";
 import { v4 as uuidv4 } from "uuid";
 import { usePathname } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import { useLocale } from "next-intl";
+import { TLocale } from "@/navigation";
 
 const createBookingFormSchema = z.object({
   timeSlotIds: z.array(z.number()).min(1, "At least one booking"),
@@ -37,6 +40,8 @@ const BookSchedule: React.FC<IBookSchedule> = ({
   handleCloseModal,
 }) => {
   const pathname = usePathname();
+  const { toast } = useToast();
+  const locale = useLocale() as TLocale;
   const { minBookingTime, timeSlots } = facilitySchedule;
 
   const [createBooking, { loading: isBookLoading, error: errorBooking }] =
@@ -79,6 +84,7 @@ const BookSchedule: React.FC<IBookSchedule> = ({
             id: number;
             price: number;
           };
+
           await createPayment({
             context: {
               authRequired: true,

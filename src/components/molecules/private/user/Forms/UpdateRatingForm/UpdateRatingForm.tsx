@@ -40,7 +40,7 @@ const UpdateRatingForm: React.FC<IUpdateRatingForm> = ({
   facilityId,
   className = "",
 }) => {
-  const { systemTheme } = useTheme();
+  const { theme } = useTheme();
 
   const ratings = Array.from({ length: ratingsCount }, (_, i) => i + 1);
   const [currentUserRating, setCurrentUserRating] =
@@ -117,7 +117,7 @@ const UpdateRatingForm: React.FC<IUpdateRatingForm> = ({
                 >
                   <div className="pr-1 pl-1 last-of-type:pr-0 first-of-type:pl-0">
                     <Image
-                      src={`/${getThemeIconsPath(systemTheme)}/${getRatingImagePath(rating, currentUserRating)}`}
+                      src={`/${getThemeIconsPath(theme)}/${getRatingImagePath(rating, currentUserRating)}`}
                       alt={`Rating ${rating}`}
                       width={20}
                       height={20}

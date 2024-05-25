@@ -14,12 +14,9 @@ import { names, routes } from "@/utils/constants/routes.constants";
 import UserHeaderAvatar from "@/components/atoms/private/user/Avatars/UserHeaderAvatar/UserHeaderAvatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import SwitchThemeButton from "@/components/atoms/public/Buttons/SwitchThemeButton/SwitchThemeButton";
+import SelectLanguageButton from "@/components/atoms/public/Buttons/SelectLanguageButton/SelectLanguageButton";
 
-interface IHeaderContent {
-  isScrolled: boolean;
-}
-
-const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
+const HeaderContent = () => {
   const { push } = useRouter();
   const { user, isAuth, isAuthLoading, handleLogout } = useAuthContext();
 
@@ -90,7 +87,7 @@ const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
         );
       }
     } else {
-      return <NavAuthButtonsList isScrolled={isScrolled} />;
+      return <NavAuthButtonsList />;
     }
   };
 
@@ -98,13 +95,13 @@ const HeaderContent: React.FC<IHeaderContent> = ({ isScrolled }) => {
     <div className="py-5 container mx-auto">
       <NavigationMenu className="max-w-full justify-between hidden md:flex">
         <div className="flex items-center gap-x-4">
-          <SportBookingLogo isScrolledHeader={isScrolled} className="mr-5" />
+          <SportBookingLogo className="mr-5" />
           <NavLinksList navItems={siteConfig.publicNavItems} />
           <SwitchThemeButton />
+          <SelectLanguageButton />
           {renderLeftNavContent()}
         </div>
         <div className="flex items-center gap-x-4">
-          {/*<LanguageSelect />*/}
           {renderRightNavContent()}
         </div>
       </NavigationMenu>

@@ -24,7 +24,7 @@ const ReservationsItem: React.FC<IBookingItem> = ({ booking }) => {
   } = booking;
 
   return (
-    <div className="h-[260px] rounded-xl shadow-md flex">
+    <div className="h-[260px] rounded-xl shadow-md flex border border-border">
       <div className="px-5 pt-5 pb-10 w-[300px] flex flex-col gap-y-4">
         <Badge variant={getBookingStatusVariant(status)} size="sm">
           {status}
