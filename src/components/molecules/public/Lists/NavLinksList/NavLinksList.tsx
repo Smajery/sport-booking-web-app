@@ -10,9 +10,10 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
 import { useHeaderContext } from "@/layouts/Header/Header";
+import { TLocale } from "@/navigation";
 
 type TNavLink = {
   href: string;
@@ -25,18 +26,20 @@ interface INavbarLinksList {
 
 const NavbarLinksList: React.FC<INavbarLinksList> = ({ navItems }) => {
   const t = useTranslations(namespaces.LAYOUTS_HEADER_TITLES);
+
+  const locale = useLocale() as TLocale;
+  const pathname = usePathname();
   const { isHeaderScrolled } = useHeaderContext();
 
-  const pathname = usePathname();
-  const rootHref = "/" + pathname.split("/")[1];
   return (
     <NavigationMenuList className="flex items-center space-x-4">
       {navItems.map((link, index) => (
         <NavigationMenuItem
           key={index}
           className={clsx("hover:underline", {
-            underline: link.href === rootHref,
-            "": link.href !== rootHref,
+            underline: pathname.startsWith(
+              `/${locale}/${link.href.split("/")[1]}`,
+            ),
             "text-primary-foreground": isHeaderScrolled,
           })}
         >

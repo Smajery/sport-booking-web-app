@@ -17,7 +17,7 @@ export async function generateMetadata({
 }
 
 const DashboardPage = () => {
-  return redirect(routes.USER_FACILITIES);
+  return redirect(routes.OWNER_FACILITIES);
 };
 
 export default DashboardPage;

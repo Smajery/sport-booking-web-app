@@ -72,7 +72,7 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
           facilityId,
         },
       });
-      push(`${routes.USER_FACILITIES}/${facilityId}`);
+      push(`${routes.OWNER_FACILITIES}/${facilityId}`);
     } catch (e) {
       setRequestError(e as ApolloError);
       ErrorHandler.handle(e, {

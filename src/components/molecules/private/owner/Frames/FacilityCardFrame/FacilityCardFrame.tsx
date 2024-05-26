@@ -100,7 +100,7 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
                 variant="gradient"
                 size="lg"
                 onClick={() =>
-                  push(`${routes.USER_FACILITIES}/${id}/${routes.SCHEDULE}`)
+                  push(`${routes.OWNER_FACILITIES}/${id}/${routes.SCHEDULE}`)
                 }
               >
                 {tTtl("showSchedule")}
@@ -113,7 +113,7 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
                 size="lg"
                 onClick={() =>
                   push(
-                    `${routes.USER_FACILITIES}/${id}/${routes.SCHEDULE_CREATE}`,
+                    `${routes.OWNER_FACILITIES}/${id}/${routes.SCHEDULE_CREATE}`,
                   )
                 }
               >

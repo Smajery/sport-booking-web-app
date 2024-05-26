@@ -44,7 +44,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           "bg-border": !isWorking,
         },
       )}
-      onClick={() => push(`${routes.USER_FACILITIES}/${id}`)}
+      onClick={() => push(`${routes.OWNER_FACILITIES}/${id}`)}
     >
       <div className="relative">
         <ImageAvatar

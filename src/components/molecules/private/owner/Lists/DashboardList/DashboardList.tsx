@@ -8,16 +8,22 @@ import {
 import { usePathname } from "next/navigation";
 import { dashboardConfig } from "@/config/private/owner/dashboard";
 import DashboardItem from "@/components/molecules/private/owner/Items/DashboardItem/DashboardItem";
+import { useLocale } from "next-intl";
+import { TLocale } from "@/navigation";
 
 const DashboardList = () => {
   const pathname = usePathname();
+  const locale = useLocale() as TLocale;
+
   return (
     <NavigationMenu className="max-w-full hidden items-start justify-start md:flex">
       <NavigationMenuList className="flex flex-col gap-y-5 items-start justify-start space-x-0">
         {dashboardConfig.dashboardItems.map((item) => (
           <DashboardItem
             item={item}
-            isCurrent={pathname.endsWith(item.href.slice(1))}
+            isCurrent={pathname.startsWith(
+              `/${locale}/${item.href.split("/")[1]}`,
+            )}
             key={item.name}
           />
         ))}

@@ -207,7 +207,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
           id,
         },
       });
-      push(routes.USER_FACILITIES);
+      push(routes.OWNER_FACILITIES);
     } catch (e) {
       setRequestError(e as ApolloError);
       ErrorHandler.handle(e, {

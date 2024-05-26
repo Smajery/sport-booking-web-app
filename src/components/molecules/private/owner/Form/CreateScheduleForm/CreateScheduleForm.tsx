@@ -91,7 +91,7 @@ const CreateScheduleForm = () => {
   };
 
   const handleCancel = () => {
-    push(`${routes.USER_FACILITIES}/${myFacilityId}`);
+    push(`${routes.OWNER_FACILITIES}/${myFacilityId}`);
   };
 
   const daysOfWeekWatch = form.watch("daysOfWeek");

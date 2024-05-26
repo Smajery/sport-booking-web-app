@@ -100,7 +100,7 @@ const CreateFacilityForm = () => {
   };
 
   const handleCancel = () => {
-    push(routes.USER_FACILITIES);
+    push(routes.OWNER_FACILITIES);
   };
 
   return (

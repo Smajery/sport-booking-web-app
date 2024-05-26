@@ -8,7 +8,7 @@ export const routes = {
   ABOUT: "/about",
   HELP: "/help",
   DASHBOARD: "/dashboard/facilities",
-  USER_FACILITIES: "/dashboard/facilities",
+  OWNER_FACILITIES: "/dashboard/facilities",
   FACILITY_CREATE: "/dashboard/facilities/facility-create",
   SCHEDULE_CREATE: "/schedule-create",
   SCHEDULE: "/schedule",
