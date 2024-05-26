@@ -20,6 +20,8 @@ import { UseFormReturn } from "react-hook-form";
 import { clsx } from "clsx";
 import { Check, X } from "lucide-react";
 import { TSelectedItem } from "@/types/commonTypes";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface ISelectorField {
   form: any;
@@ -35,9 +37,13 @@ const SelectorField: React.FC<ISelectorField> = ({
   name,
   labelText,
   noValidate = false,
-  placeholder,
+  placeholder = "",
   selectableItems,
 }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+  const tPlh = useTranslations(namespaces.COMPONENTS_PLACEHOLDERS);
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const {
     control,
     formState: { isSubmitted },
@@ -56,7 +62,7 @@ const SelectorField: React.FC<ISelectorField> = ({
                 "text-destructive": invalid && isSubmitted && !noValidate,
               })}
             >
-              {labelText}
+              {tLbl(labelText)}
             </FormLabel>
           )}
           <div className="flex justify-between items-center gap-x-5">
@@ -64,7 +70,7 @@ const SelectorField: React.FC<ISelectorField> = ({
               <FormControl>
                 <SelectTrigger className="h-[56px] border border-input rounded-md text-lg text-muted-foreground font-light">
                   <SelectValue
-                    placeholder={placeholder ?? ""}
+                    placeholder={tPlh(placeholder)}
                     className="text-lg text-muted-foreground"
                   />
                 </SelectTrigger>
@@ -76,7 +82,7 @@ const SelectorField: React.FC<ISelectorField> = ({
                       key={selectableItem.key}
                       value={String(selectableItem.key)}
                     >
-                      {selectableItem.name}
+                      {tTtl(selectableItem.name)}
                     </SelectItem>
                   ))}
                 </SelectGroup>

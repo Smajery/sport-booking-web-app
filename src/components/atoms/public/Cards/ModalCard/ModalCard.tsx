@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IModalCard {
   handleCloseModal: () => void;
@@ -17,6 +19,8 @@ const ModalCard: React.FC<IModalCard> = ({
   children,
   title,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   React.useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -35,7 +39,7 @@ const ModalCard: React.FC<IModalCard> = ({
         onClick={(e) => e.stopPropagation()}
       >
         <CardHeader className="relative flex flex-row items-center justify-center">
-          <CardTitle>{title}</CardTitle>
+          <CardTitle>{tTtl(title)}</CardTitle>
           <Button
             size="none"
             variant="none"

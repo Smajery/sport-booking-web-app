@@ -7,7 +7,6 @@ import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import { TFacility } from "@/types/public/facilityTypes";
 import { Separator } from "@/components/ui/separator";
 import MultiImageAvatar from "@/components/atoms/public/Avatars/MultiImageAvatar/MultiImageAvatar";
-import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
 import RatingFrame from "@/components/molecules/public/Frames/RatingFrame/RatingFrame";
 import BookButton from "@/components/atoms/public/Buttons/BookButton/BookButton";
 import SelectFavoriteOnPageButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnPageButton/SelectFavoriteOnPageButton";
@@ -16,12 +15,18 @@ import { MIN_PER_SLOT } from "@/utils/constants/titles.constants";
 import ContactOrganizationFrame from "@/components/molecules/public/Frames/ContactOrganizationFrame/ContactOrganizationFrame";
 import UserRatingFrame from "@/components/molecules/public/Frames/UserRatingFrame/UserRatingFrame";
 import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IFacilitySection {
   facilityId: number;
 }
 
 const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+  const tSlct = useTranslations(namespaces.COMPONENTS_SELECTS);
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { user } = useAuthContext();
 
   const { data, loading, error } = useQuery(GET_ONE_FACILITY_QUERY, {
@@ -86,7 +91,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
                 <p className="text-3xl">{name}</p>
               </div>
               <p className="text-lg font-light">
-                {address}, {district.name} district
+                {address}, {tSlct(district.name)}
               </p>
             </div>
             <RatingFrame avgRating={avgRating} ratingCount={ratingCount} />
@@ -94,23 +99,23 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
           <Separator />
           <div className="flex gap-x-4">
             <div className="flex flex-col text-muted-foreground text-lg font-light">
-              <p>Sport:</p>
-              <p>Facility:</p>
-              <p>Covering:</p>
+              <p>{tLbl("sport")}:</p>
+              <p>{tLbl("facility")}:</p>
+              <p>{tLbl("covering")}:</p>
             </div>
             <div className="flex flex-col text-lg">
               <div className="flex gap-x-1">
                 {sportType.map((sport, index) => (
                   <div key={sport}>
                     <p>
-                      {getTitle(sport)}
+                      {tSlct(sport)}
                       {isComma(index, sportType.length) && ","}
                     </p>
                   </div>
                 ))}
               </div>
-              <p>{getTitle(facilityType)}</p>
-              <p>{getFormattedText(coveringType)}</p>
+              <p>{tSlct(facilityType)}</p>
+              <p>{tSlct(coveringType)}</p>
             </div>
           </div>
           <Separator />
@@ -131,15 +136,15 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
         {avgPrice && (
           <div className="flex items-end flex-col gap-y-2 shrink-0">
             <p className="text-xl font-light">
-              {avgPrice} UAH{" "}
+              {avgPrice} {tTtl("uah")}
               <span className="text-muted-foreground text-lg">
-                /{MIN_PER_SLOT}
+                {`/${MIN_PER_SLOT} ${tTtl("min")}`}
               </span>
             </p>
             <BookButton facilityId={id} disabled={!isWorking} />
             {!isWorking && (
               <p className="text-sm italic text-muted-foreground">
-                Temporarily not working
+                {tTtl("temporarilyNotWorking")}
               </p>
             )}
           </div>

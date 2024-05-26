@@ -24,6 +24,8 @@ import {
 import { UseFormReturn } from "react-hook-form";
 import { clsx } from "clsx";
 import { Check, X } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 type TCity = {
   id: number;
@@ -50,6 +52,10 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
   labelText,
   noValidate = false,
 }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+  const tPlh = useTranslations(namespaces.COMPONENTS_PLACEHOLDERS);
+  const tSlct = useTranslations(namespaces.COMPONENTS_SELECTS);
+
   const {
     control,
     formState: { isSubmitted },
@@ -93,7 +99,7 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
                 "text-destructive": invalid && isSubmitted && !noValidate,
               })}
             >
-              {labelText}
+              {tLbl(labelText)}
             </FormLabel>
           )}
           <div className="flex justify-between items-center gap-x-5">
@@ -105,13 +111,13 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
               >
                 <SelectTrigger className="h-[56px] border border-input rounded-md text-lg text-muted-foreground font-light">
                   <SelectValue
-                    placeholder={
+                    placeholder={tPlh(
                       citiesLoading
-                        ? "Loading..."
+                        ? "loading"
                         : citiesError
-                          ? "Something went wrong"
-                          : "Select city first"
-                    }
+                          ? "somethingWentWrong"
+                          : "selectCityFirst",
+                    )}
                     className="text-lg text-muted-foreground"
                   />
                 </SelectTrigger>
@@ -119,7 +125,7 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
                   <SelectGroup>
                     {cities.map((city: TCity) => (
                       <SelectItem key={city.id} value={String(city.id)}>
-                        {city.name}
+                        {tSlct(city.name)}
                       </SelectItem>
                     ))}
                   </SelectGroup>
@@ -133,13 +139,13 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
                 <FormControl>
                   <SelectTrigger className="h-[56px] border border-input rounded-md text-lg text-muted-foreground font-light">
                     <SelectValue
-                      placeholder={
-                        districtsLoading
-                          ? "Loading..."
-                          : districtsError
-                            ? "Something went wrong"
-                            : "Select district second"
-                      }
+                      placeholder={tPlh(
+                        citiesLoading
+                          ? "loading"
+                          : citiesError
+                            ? "somethingWentWrong"
+                            : "selectDistrictSecond",
+                      )}
                       className="text-lg text-muted-foreground"
                     />
                   </SelectTrigger>
@@ -148,7 +154,7 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
                   <SelectGroup>
                     {districts.map((district: TDistrict) => (
                       <SelectItem key={district.id} value={String(district.id)}>
-                        {district.name}
+                        {tSlct(district.name)}
                       </SelectItem>
                     ))}
                   </SelectGroup>

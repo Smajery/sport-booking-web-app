@@ -2,6 +2,8 @@ import React from "react";
 import { clsx } from "clsx";
 import { Dot } from "lucide-react";
 import { TTimeSlot } from "@/types/commonTypes";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IPriceSlotsList {
   filteredTimeSlots: TTimeSlot[];
@@ -14,6 +16,8 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
   setSelectedSlotIds,
   selectedSlotIds,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const handleSelectSlot = (slotId: number) => {
     if (selectedSlotIds.find((slot) => slot === slotId)) {
       const filteredSlotIds = selectedSlotIds.filter((slot) => slot !== slotId);
@@ -26,7 +30,7 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
   if (!filteredTimeSlots.length)
     return (
       <div className="p-5 text-lg italic text-muted-foreground">
-        No time slots for current day of week
+        {tTtl("noTimeSlotsForCurrentDayOfWeek")}
       </div>
     );
 
@@ -51,7 +55,7 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
           {selectedSlotIds.find(
             (selectedSlotId) => selectedSlotId === slot.id,
           ) && <Dot className="w-6 h-6 mr-auto" color="#ff8749" />}
-          {slot.price} UAH
+          {slot.price} {tTtl("uah")}
         </div>
       ))}
     </div>

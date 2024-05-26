@@ -12,11 +12,14 @@ import { Input, InputProps } from "@/components/ui/input";
 import { clsx } from "clsx";
 import { UseFormReturn } from "react-hook-form";
 import { Check, X } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IInputField extends InputProps {
   form: any;
   name: string;
   labelText?: string;
+  placeholder?: string;
   noValidate?: boolean;
   className?: string;
 }
@@ -26,9 +29,13 @@ const InputField: React.FC<IInputField> = ({
   name,
   labelText,
   noValidate = false,
+  placeholder = "",
   className = "",
   ...props
 }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+  const tPlh = useTranslations(namespaces.COMPONENTS_PLACEHOLDERS);
+
   const {
     control,
     formState: { isSubmitted },
@@ -48,7 +55,7 @@ const InputField: React.FC<IInputField> = ({
                   "text-destructive": invalid && isSubmitted && !noValidate,
                 })}
               >
-                {labelText}
+                {tLbl(labelText)}
               </FormLabel>
             )}
             {props.maxLength && (
@@ -62,6 +69,9 @@ const InputField: React.FC<IInputField> = ({
               <Input
                 autoComplete="off"
                 value={value ?? ""}
+                placeholder={
+                  placeholder.length ? tPlh(placeholder) : placeholder
+                }
                 onChange={(e) => {
                   onChange(e.target.value);
                 }}

@@ -3,7 +3,7 @@ import NotFoundSection from "@/modules/public/NotFound/organisms/NotFoundSection
 const NotFound = () => {
   return (
     <main className="min-h-screen flex">
-      <div className="container mx-auto flex items-center justify-center">
+      <div className="container mx-auto flex flex-col">
         <NotFoundSection />
       </div>
     </main>

@@ -6,6 +6,8 @@ import { useQuery } from "@apollo/client";
 import { GET_FACILITY_SCHEDULE_QUERY } from "@/apollo/query/public/facility";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import BookSchedule from "@/components/atoms/public/Schedules/BookSchedule/BookSchedule";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IBookModal {
   facilityId: number;
@@ -13,6 +15,8 @@ interface IBookModal {
 }
 
 const BookModal: React.FC<IBookModal> = ({ setIsModal, facilityId }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { data, loading, error } = useQuery(GET_FACILITY_SCHEDULE_QUERY, {
     variables: {
       id: facilityId,
@@ -26,7 +30,7 @@ const BookModal: React.FC<IBookModal> = ({ setIsModal, facilityId }) => {
   return (
     <BookModalCard handleCloseModal={handleCloseModal}>
       {loading ? (
-        <div>Loading...</div>
+        <div>{tTtl("loading")}</div>
       ) : error ? (
         <div>{getApolloErrorMessage(error)}</div>
       ) : (

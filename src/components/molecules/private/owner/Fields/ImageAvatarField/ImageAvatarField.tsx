@@ -8,6 +8,8 @@ import { ACCEPTED_IMAGE_TYPES } from "@/utils/constants/files.constants";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import SelectedImageCard from "@/components/atoms/private/owner/Cards/SelectedImageCard/SelectedImageCard";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IImageAvatarField {
   form: any;
@@ -22,6 +24,8 @@ const ImageAvatarField: React.FC<IImageAvatarField> = ({
   imagesName,
   className = "",
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { control } = form as UseFormReturn;
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -100,7 +104,7 @@ const ImageAvatarField: React.FC<IImageAvatarField> = ({
               fileInputRef.current ? fileInputRef.current.click() : null
             }
           >
-            {selectedFile ? "Change Image" : "Add Image"}
+            {selectedFile ? tTtl("change") : tTtl("add")}
             <ImagePlus />
           </Button>
         </FormItem>

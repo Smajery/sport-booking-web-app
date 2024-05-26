@@ -5,12 +5,16 @@ import BookModal from "@/components/molecules/public/Modals/BookModal/BookModal"
 import { Button, ButtonProps } from "@/components/ui/button";
 import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 import { useModalContext } from "@/providers/ModalProvider/ModalProvider";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IBookButton extends ButtonProps {
   facilityId: number;
 }
 
 const BookButton: React.FC<IBookButton> = ({ facilityId, ...props }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { isAuth } = useAuthContext();
   const { setIsLoginModal } = useModalContext();
   const [isBookModal, setIsBookModal] = React.useState(false);
@@ -25,7 +29,7 @@ const BookButton: React.FC<IBookButton> = ({ facilityId, ...props }) => {
   return (
     <>
       <Button size="md" variant="gradient" onClick={handleBook} {...props}>
-        Book
+        {tTtl("book")}
       </Button>
       {isBookModal && (
         <BookModal setIsModal={setIsBookModal} facilityId={facilityId} />

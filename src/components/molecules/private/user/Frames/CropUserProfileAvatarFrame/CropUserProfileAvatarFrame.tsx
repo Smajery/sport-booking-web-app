@@ -17,6 +17,8 @@ import Cropper from "react-easy-crop";
 import { Area } from "react-easy-crop/types";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import CropAvatarModal from "@/components/molecules/private/user/Modals/CropAvatarModal/CropAvatarModal";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface ICropUserProfileAvatarFrame {
   isEdit: boolean;
@@ -29,6 +31,8 @@ const CropUserProfileAvatarFrame: React.FC<ICropUserProfileAvatarFrame> = ({
   user,
   form,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { fullname, avatar } = user;
   const [selectedAvatar, setSelectedAvatar] = React.useState<
     string | undefined
@@ -117,7 +121,9 @@ const CropUserProfileAvatarFrame: React.FC<ICropUserProfileAvatarFrame> = ({
                 }
               >
                 <ImagePlus />{" "}
-                <p className="mt-1">{selectedAvatar ? "Change" : "Add"}</p>
+                <p className="mt-1">
+                  {selectedAvatar ? tTtl("change") : tTtl("add")}
+                </p>
               </Button>
             </div>
             {selectedAvatar && (

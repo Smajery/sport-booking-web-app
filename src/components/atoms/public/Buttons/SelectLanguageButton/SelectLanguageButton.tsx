@@ -35,11 +35,11 @@ const SelectLanguageButton = () => {
         <Button
           variant="none"
           size="none"
-          className={clsx("mt-[2px]", {
+          className={clsx("mt-[2px] uppercase", {
             "text-primary-foreground": isHeaderScrolled,
           })}
         >
-          {t(locale).toUpperCase()}
+          {t(locale)}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-min">
@@ -47,6 +47,7 @@ const SelectLanguageButton = () => {
           <DropdownMenuItem
             key={lang}
             onClick={() => handleLanguageRedirect(lang)}
+            className="uppercase"
           >
             <p>{t(lang).toUpperCase()}</p>
           </DropdownMenuItem>

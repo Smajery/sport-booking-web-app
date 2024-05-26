@@ -6,14 +6,17 @@ import { parseISO } from "date-fns";
 import Link from "next/link";
 import { routes } from "@/utils/constants/routes.constants";
 import { getBookingStatusVariant } from "@/utils/helpers/variant.helpers";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { TLocale } from "@/navigation";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IBookingItem {
   booking: TBooking;
 }
 
 const ReservationsItem: React.FC<IBookingItem> = ({ booking }) => {
+  const tSts = useTranslations(namespaces.COMPONENTS_STATUSES);
+
   const locale = useLocale() as TLocale;
 
   const {
@@ -27,7 +30,7 @@ const ReservationsItem: React.FC<IBookingItem> = ({ booking }) => {
     <div className="h-[260px] rounded-xl shadow-md flex border border-border">
       <div className="px-5 pt-5 pb-10 w-[300px] flex flex-col gap-y-4">
         <Badge variant={getBookingStatusVariant(status)} size="sm">
-          {status}
+          {tSts(status)}
         </Badge>
         <Link
           href={`${routes.FACILITY}/${id}`}

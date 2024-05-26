@@ -7,10 +7,11 @@ import { Hash, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
-import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
 import { clsx } from "clsx";
 import CompactRatingFrame from "@/components/molecules/public/Frames/CompactRatingFrame/CompactRatingFrame";
 import { MIN_PER_SLOT } from "@/utils/constants/titles.constants";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IFavoriteFacilitiesItem {
   facility: TFacility;
@@ -19,6 +20,8 @@ interface IFavoriteFacilitiesItem {
 const FavoriteFacilitiesItem: React.FC<IFavoriteFacilitiesItem> = ({
   facility,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { push } = useRouter();
   const {
     id,
@@ -65,7 +68,9 @@ const FavoriteFacilitiesItem: React.FC<IFavoriteFacilitiesItem> = ({
           </div>
           <div className="flex gap-x-1">
             <Badge variant="background">
-              {avgPrice ? `${avgPrice} ₴/${MIN_PER_SLOT} min` : "No schedule"}
+              {avgPrice
+                ? `${avgPrice} ₴/${MIN_PER_SLOT} ${tTtl("min")}`
+                : tTtl("noSchedule")}
             </Badge>
           </div>
         </div>
@@ -75,23 +80,23 @@ const FavoriteFacilitiesItem: React.FC<IFavoriteFacilitiesItem> = ({
           <Badge variant="outline" Icon={MapPin}>
             {address}
           </Badge>
-          <Badge variant="outline">{district.name}</Badge>
+          <Badge variant="outline">{tTtl(district.name)}</Badge>
         </div>
         <div className="flex gap-x-1">
           {sportType.map((sport) => (
             <div key={sport}>
               <Badge variant="primary" Icon={Hash}>
-                {getTitle(sport)}
+                {tTtl(sport)}
               </Badge>
             </div>
           ))}
         </div>
         <div className="flex gap-x-1">
           <Badge variant="accent" Icon={Hash}>
-            {getFormattedText(facilityType)}
+            {tTtl(facilityType)}
           </Badge>
           <Badge variant="accent" Icon={Hash}>
-            {getFormattedText(coveringType)}
+            {tTtl(coveringType)}
           </Badge>
         </div>
       </div>

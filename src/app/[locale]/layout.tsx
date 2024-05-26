@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: "%s | SportBooking",
     default: "SportBooking",
   },
-  description: "SportBooking App",
+  description: "SportBooking",
 };
 
 const roboto = Roboto({

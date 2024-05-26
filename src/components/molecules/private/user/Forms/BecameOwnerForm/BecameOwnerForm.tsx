@@ -21,6 +21,8 @@ import { routes } from "@/utils/constants/routes.constants";
 import { jwtDecode } from "jwt-decode";
 import { getCookie, setCookie } from "@/utils/helpers/cookie.helpers";
 import { REFRESH_TOKEN_MUTATION } from "@/apollo/mutations/auth";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 const becameOwnerSchema = z.object({
   phone: z.string().min(1).max(20),
@@ -32,6 +34,8 @@ interface IBecameOwnerForm {
 }
 
 const BecameOwnerForm: React.FC<IBecameOwnerForm> = ({ setIsBecameOwner }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const [requestError, setRequestError] = React.useState<
     ApolloError | undefined
   >(undefined);
@@ -97,15 +101,15 @@ const BecameOwnerForm: React.FC<IBecameOwnerForm> = ({ setIsBecameOwner }) => {
               form={form}
               name="phone"
               type="text"
-              labelText="Phone"
-              placeholder="Organization phone number..."
+              labelText="phone"
+              placeholder="orgPhoneNumber"
             />
             <UserInputField
               form={form}
               name="organizationName"
               type="text"
-              labelText="Organization name"
-              placeholder="Organization name.."
+              labelText="organizationName"
+              placeholder="organizationName"
             />
           </div>
           <Separator />
@@ -117,10 +121,10 @@ const BecameOwnerForm: React.FC<IBecameOwnerForm> = ({ setIsBecameOwner }) => {
               disabled={becameOwnerLoading}
               onClick={handleCancel}
             >
-              Cancel
+              {tTtl("cancel")}
             </Button>{" "}
             <Button variant="primary" size="md" disabled={becameOwnerLoading}>
-              {!becameOwnerLoading ? "Save" : "Loading..."}
+              {!becameOwnerLoading ? tTtl("save") : tTtl("loading")}
             </Button>
           </div>
         </form>

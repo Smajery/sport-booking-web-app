@@ -32,16 +32,16 @@ const UpdateFacilityFormContent: React.FC<IUpdateFacilityFormContent> = ({
               form={form}
               name="name"
               type="text"
-              labelText="Name"
-              placeholder="Facility name..."
+              labelText="name"
+              placeholder="facilityName"
               maxLength={100}
             />
             <InputField
               form={form}
               name="address"
               type="text"
-              labelText="Address"
-              placeholder="Facility address..."
+              labelText="address"
+              placeholder="facilityAddress"
               maxLength={100}
             />
           </div>
@@ -50,21 +50,21 @@ const UpdateFacilityFormContent: React.FC<IUpdateFacilityFormContent> = ({
             <MultiSelectField
               form={form}
               name="sportType"
-              labelText="Sport"
+              labelText="sport"
               selectableItems={facilityConfig.sportType}
               className="w-full"
             />
             <SingleSelectField
               form={form}
               name="facilityType"
-              labelText="Facility"
+              labelText="facility"
               selectableItems={facilityConfig.facilityType}
               className="w-full"
             />
             <SingleSelectField
               form={form}
               name="coveringType"
-              labelText="Covering"
+              labelText="covering"
               selectableItems={facilityConfig.coveringType}
               className="w-full"
             />
@@ -73,17 +73,17 @@ const UpdateFacilityFormContent: React.FC<IUpdateFacilityFormContent> = ({
           <TextareaField
             form={form}
             name="description"
-            labelText="Description"
+            labelText="description"
             className="text-lg max-h-[200px] min-h-[98px]"
-            placeholder="Facility description..."
+            placeholder="facilityDescription"
             maxLength={400}
           />
           <CheckboxField
             form={form}
-            labelText="Facility status"
+            labelText="facilityStatus"
             name="isWorking"
             checkboxId="working-status-check"
-            checkboxLabelText="Working"
+            checkboxLabelText="working"
           />
           <ErrorMessageField form={form} name="photos" />
         </div>

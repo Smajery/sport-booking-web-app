@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Area } from "react-easy-crop/types";
 import getCroppedImg from "@/utils/helpers/image.helpers";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface ICropAvatarModal {
   selectedAvatar: string | undefined;
@@ -16,6 +18,8 @@ const CropAvatarModal: React.FC<ICropAvatarModal> = ({
   handleSetCroppedAvatar,
   handleCancel,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const [crop, setCrop] = React.useState({ x: 0, y: 0 });
   const [zoom, setZoom] = React.useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = React.useState<Area | null>(
@@ -71,7 +75,7 @@ const CropAvatarModal: React.FC<ICropAvatarModal> = ({
             size="lg"
             onClick={handleCancel}
           >
-            Cancel
+            {tTtl("cancel")}
           </Button>
           <Button
             variant="primary"
@@ -79,7 +83,7 @@ const CropAvatarModal: React.FC<ICropAvatarModal> = ({
             size="lg"
             onClick={handleSetCroppedImage}
           >
-            Crop Image
+            {tTtl("cropImage")}
           </Button>
         </div>
       </div>

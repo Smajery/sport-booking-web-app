@@ -17,6 +17,8 @@ import { useMutation } from "@apollo/client";
 import { CREATE_FACILITY_MUTATION } from "@/apollo/mutations/private/owner/facility";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import ImageAvatarField from "@/components/molecules/private/owner/Fields/ImageAvatarField/ImageAvatarField";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 const createFacilityFormSchema = z.object({
   name: z.string().min(1),
@@ -45,6 +47,8 @@ const createFacilityFormSchema = z.object({
 });
 
 const CreateFacilityForm = () => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { push } = useRouter();
   const [createFacility, { loading }] = useMutation(CREATE_FACILITY_MUTATION);
 
@@ -119,28 +123,28 @@ const CreateFacilityForm = () => {
                 form={form}
                 name="name"
                 type="text"
-                labelText="Name"
-                placeholder="Facility name..."
+                labelText="name"
+                placeholder="facilityName"
                 maxLength={100}
               />
               <SelectCityAndDistrictField
                 form={form}
                 name="districtId"
                 cityName="cityId"
-                labelText="City/District"
+                labelText="cityDistrict"
               />
               <InputField
                 form={form}
                 name="address"
                 type="text"
-                labelText="Address"
-                placeholder="Facility address..."
+                labelText="address"
+                placeholder="facilityAddress"
                 maxLength={100}
               />
               <SelectLocationField
                 form={form}
                 name="location"
-                labelText="Location"
+                labelText="location"
                 className="bg-border rounded-xl h-[400px]"
               />
             </div>
@@ -149,21 +153,21 @@ const CreateFacilityForm = () => {
               <MultiSelectField
                 form={form}
                 name="sportType"
-                labelText="Sport"
+                labelText="sport"
                 selectableItems={facilityConfig.sportType}
                 className="w-full"
               />
               <SingleSelectField
                 form={form}
                 name="facilityType"
-                labelText="Facility"
+                labelText="facility"
                 selectableItems={facilityConfig.facilityType}
                 className="w-full"
               />
               <SingleSelectField
                 form={form}
                 name="coveringType"
-                labelText="Covering"
+                labelText="covering"
                 selectableItems={facilityConfig.coveringType}
                 className="w-full"
               />
@@ -172,7 +176,7 @@ const CreateFacilityForm = () => {
             <TextareaField
               form={form}
               name="description"
-              labelText="Description"
+              labelText="description"
               className="max-h-[200px] min-h-[98px]"
               placeholder="Facility description..."
               maxLength={400}
@@ -188,10 +192,10 @@ const CreateFacilityForm = () => {
             onClick={handleCancel}
             disabled={loading}
           >
-            Cancel
+            {tTtl("cancel")}
           </Button>
           <Button variant="primary" size="lg" disabled={loading}>
-            {!loading ? "Save" : "Loading..."}
+            {!loading ? tTtl("save") : tTtl("loading")}
           </Button>
         </div>
       </form>

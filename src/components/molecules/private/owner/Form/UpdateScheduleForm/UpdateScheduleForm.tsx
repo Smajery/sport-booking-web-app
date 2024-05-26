@@ -13,6 +13,8 @@ import ScheduleUpdatePreviewFrame from "@/components/molecules/private/owner/Fra
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { TTimeSlot } from "@/types/commonTypes";
 import { Separator } from "@/components/ui/separator";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IUpdateScheduleForm {
   facilitySchedule: TFacilitySchedule;
@@ -26,6 +28,8 @@ const updateScheduleFormSchema = z.object({
 const UpdateScheduleForm: React.FC<IUpdateScheduleForm> = ({
   facilitySchedule,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { timeSlots, minBookingTime, id } = facilitySchedule;
   const [updateSchedule, { loading }] = useMutation(UPDATE_SCHEDULE_MUTATION);
 
@@ -132,7 +136,9 @@ const UpdateScheduleForm: React.FC<IUpdateScheduleForm> = ({
           )}
         </div>
         <div className="flex flex-col gap-y-5">
-          <p className="text-4xl text-primary font-semibold">Preview</p>
+          <p className="text-4xl text-primary font-semibold">
+            {tTtl("preview")}
+          </p>
           <ScheduleUpdatePreviewFrame
             timeSlots={initTimeSlots}
             selectedSlotIds={selectedSlotIds}

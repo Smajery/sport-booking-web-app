@@ -12,7 +12,7 @@ interface ITimeSlotsList {
 const TimeSlotsList: React.FC<ITimeSlotsList> = ({ filteredTimeSlots }) => {
   const locale = useLocale() as TLocale;
   return (
-    <div className="flex flex-col p-5 w-[88px] gap-y-5 border-r border-border">
+    <div className="flex flex-col p-5 w-[98px] gap-y-5 border-r border-border">
       {filteredTimeSlots.map((slot, index) =>
         index === 0 ? (
           <React.Fragment key={`${slot.id}-fragment`}>

@@ -16,10 +16,10 @@ const UserCardFrame: React.FC<IUserCardFrame> = ({ user }) => {
 
   return (
     <div className="w-full flex flex-col gap-5">
-      <UserInfoFrame title={"Full Name"} info={fullname} />
-      <UserInfoFrame title={"Email"} info={email} />
+      <UserInfoFrame title={"fullName"} info={fullname} />
+      <UserInfoFrame title={"email"} info={email} />
       <UserInfoFrame
-        title={"Date of birth"}
+        title={"dateOfBirth"}
         info={
           dateOfBirth
             ? format(new Date(dateOfBirth), "dd.MM.yyyy", locale)

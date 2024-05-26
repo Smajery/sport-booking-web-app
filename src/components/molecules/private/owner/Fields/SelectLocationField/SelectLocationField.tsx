@@ -13,10 +13,11 @@ import { clsx } from "clsx";
 import { UseFormReturn } from "react-hook-form";
 import { Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { TLocale } from "@/navigation";
 import { Loader } from "@googlemaps/js-api-loader";
 import { Input } from "@/components/ui/input";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface ISearchAndSelectLocationField {
   form: any;
@@ -33,6 +34,8 @@ const SelectLocationField: React.FC<ISearchAndSelectLocationField> = ({
   noValidate = false,
   className = "",
 }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+
   const {
     control,
     formState: { isSubmitted },
@@ -148,7 +151,7 @@ const SelectLocationField: React.FC<ISearchAndSelectLocationField> = ({
                   "text-destructive": invalid && isSubmitted && !noValidate,
                 })}
               >
-                {labelText}
+                {tLbl(labelText)}
               </FormLabel>
             )}
           </div>

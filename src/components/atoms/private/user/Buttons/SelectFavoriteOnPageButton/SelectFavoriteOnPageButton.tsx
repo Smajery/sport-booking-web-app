@@ -13,6 +13,8 @@ import {
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/ShowErrorModal";
 import { clsx } from "clsx";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface ISelectFavoriteOnPageButton {
   currentUserIsFavorite: boolean;
@@ -23,6 +25,8 @@ const SelectFavoriteOnPageButton: React.FC<ISelectFavoriteOnPageButton> = ({
   currentUserIsFavorite,
   facilityId,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { isAuth } = useAuthContext();
   const { setIsLoginModal } = useModalContext();
 
@@ -103,7 +107,7 @@ const SelectFavoriteOnPageButton: React.FC<ISelectFavoriteOnPageButton> = ({
       >
         {isFavorite ? (
           <>
-            In Favorite
+            {tTtl("inFavorite")}
             <Image
               width="20"
               height="20"
@@ -113,7 +117,7 @@ const SelectFavoriteOnPageButton: React.FC<ISelectFavoriteOnPageButton> = ({
           </>
         ) : (
           <>
-            Add to Favorite
+            {tTtl("addToFavorite")}
             <Image
               width="20"
               height="20"

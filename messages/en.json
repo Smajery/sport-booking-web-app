@@ -1,16 +1,255 @@
 {
   "meta": {
     "pages": {
+      "notFound": {
+        "title": "Not found",
+        "description": "Not found"
+      },
       "home": {
-        "title": "",
-        "description": ""
+        "title": "Home",
+        "description": "Home page"
+      },
+      "facility": {
+        "title": "Facility",
+        "description": "Facility page"
+      },
+      "profile": {
+        "title": "Profile",
+        "description": "Profile page"
+      },
+      "me": {
+        "title": "Profile",
+        "description": "Profile page"
+      },
+      "reservations": {
+        "title": "Reservations",
+        "description": "Reservations page"
+      },
+      "favorites": {
+        "title": "Favorites",
+        "description": "Favorites page"
+      },
+      "dashboard": {
+        "title": "Dashboard",
+        "description": "Dashboard page"
+      },
+      "dashboardFacilities": {
+        "title": "Facilities",
+        "description": "Facilities page"
+      },
+      "dashboardFacilityCreate": {
+        "title": "Facility Create",
+        "description": "Facility Create page"
+      },
+      "dashboardFacility": {
+        "title": "Facility",
+        "description": "Facility page"
+      },
+      "dashboardScheduleCreate": {
+        "title": "Schedule Create",
+        "description": "Schedule Create page"
+      },
+      "dashboardSchedule": {
+        "title": "Schedule",
+        "description": "Schedule page"
+      }
+    }
+  },
+  "layouts": {
+    "header": {
+      "titles": {
+        "uk": "укр",
+        "en": "en",
+        "profile": "Profile",
+        "favorites": "Favorites",
+        "reservations": "Reservations",
+        "dashboard": "Dashboard",
+        "login": "Login",
+        "signUp": "Sign Up"
+      }
+    }
+  },
+  "dashboards": {
+    "profile": {
+      "titles": {
+        "profile": "Profile",
+        "notification": "Notifications",
+        "privacy": "Privacy",
+        "about": "About us",
+        "help": "Help"
+      }
+    },
+    "owner": {
+      "titles": {
+        "facilities": "Facilities"
       }
     }
   },
   "components": {
-    "select": {
-      "price_asc": "Price up",
-      "price_desc": "Price down",
+    "statuses": {
+      "failed": "Failed",
+      "pending": "Pending",
+      "completed": "Completed"
+    },
+    "labels": {
+      "sport": "Sport",
+      "covering": "Covering",
+      "facility": "Facility",
+      "city": "City",
+      "district": "District",
+      "sortBy": "Sort by",
+      "price": "Price",
+      "facilitiesSearch": "Facilities search",
+      "phoneNumber": "Phone number",
+      "total": "Total",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "organizationName": "Organization name",
+      "phone": "Phone",
+      "fullName": "Full name",
+      "dateOfBirth": "Date of birth",
+      "name": "Name",
+      "address": "Address",
+      "description": "Description",
+      "facilityStatus": "Facility status",
+      "daysOfWeek": "Days of the week",
+      "startTime": "Start time",
+      "minBookingTime": "Min booking time",
+      "endTime": "End Time",
+      "pricePerSlot": "Price per slot (30 min)",
+      "cityDistrict": "City/District",
+      "location": "Location"
+    },
+    "placeholders": {
+      "search": "Search...",
+      "email": "example@gmail.com",
+      "password": "At least 6 characters",
+      "fullName": "Full name...",
+      "orgPhoneNumber": "Organization's phone number...",
+      "organizationName": "Organization name...",
+      "facilityName": "Facility name...",
+      "facilityAddress": "Facility address...",
+      "facilityDescription": "Facility description...",
+      "select": "Select",
+      "price": "Price",
+      "loading": "Loading...",
+      "somethingWentWrong": "Something went wrong",
+      "selectCityFirst": "Select city first",
+      "selectDistrictSecond": "Then select district"
+    },
+    "titles": {
+      "cancel": "Cancel",
+      "deleteSchedule": "Delete schedule",
+      "updateSchedule": "Update schedule",
+      "editSchedule": "Edit schedule",
+      "deleteScheduleCannotBeUndone": "This action cannot be undone. This will permanently delete your schedule and remove its data from our servers.",
+      "allSlots": "All slots",
+      "selectedSlots": "Selected slots",
+      "close": "Close",
+      "favorites": "Favorites",
+      "preview": "Preview",
+      "working": "Working",
+      "thirtyMinutes": "30 min",
+      "oneHour": "1 hour",
+      "oneHourThirtyMinutes": "1 hour 30 min",
+      "twoHours": "2 hours",
+      "twoHoursThirtyMinutes": "2 hours 30 min",
+      "threeHours": "3 hours",
+      "showSchedule": "Show schedule",
+      "facilityWithoutScheduleIsNotPublic": "Facility without schedule is not public",
+      "createSchedule": "Create schedule",
+      "deleteFacility": "Delete facility",
+      "editFacility": "Edit facility",
+      "deleteFacilityCannotBeUndone": "This action cannot be undone. This will permanently delete your facility and its data from our servers.",
+      "approve": "Approve",
+      "youHaveNotCreatedAnyReservationsYet": "You have not created any reservations yet",
+      "becomeOwner": "Become owner",
+      "youHaveNotAddedAnyFacilityToFavoritesYet": "You haven't added any facility to favorites yet",
+      "reservations": "Reservations",
+      "pay": "Pay",
+      "pickBirthDate": "Pick your birth date",
+      "or": "Or",
+      "year": "Year",
+      "notFound": "Not found",
+      "save": "Save",
+      "back": "Back",
+      "edit": "Edit",
+      "home": "Home",
+      "change": "Change",
+      "changePassword": "Change password",
+      "add": "Add",
+      "yourEmailIsNotActivated": "Your email is not activated, we sent a confirmation to your email",
+      "noInformation": "No information",
+      "cropImage": "Crop image",
+      "personalInformation": "Personal information",
+      "couldNotFindRequestedResource": "Could not find requested resource",
+      "login": "Login",
+      "signUp": "Sign up",
+      "welcome": "Welcome",
+      "loginWithGoogle": "Login with Google",
+      "signUpWithGoogle": "Sign up with Google",
+      "facilityBooking": "Facility booking",
+      "noTimeSlotsForCurrentDayOfWeek": "No slots for the current day of the week",
+      "inFavorite": "In favorites",
+      "cMinimum": "Min",
+      "book": "Book",
+      "addToFavorite": "Add to favorites",
+      "copyLink": "Copy link",
+      "copied": "Copied",
+      "uah": "UAH",
+      "contactTheOrganization": "Contact the organization",
+      "resetAll": "Reset all",
+      "loading": "Loading...",
+      "showMap": "Show map",
+      "showList": "Show list",
+      "noFacilitiesForThisFilter": "No facilities for this filter",
+      "weDontHaveFacility": "We don't have any facility yet, please check back in a few minutes",
+      "min": "min",
+      "noSchedule": "No Schedule",
+      "temporarilyNotWorking": "Temporarily not working",
+      "artificial_lawn": "Artificial Lawn",
+      "parquet": "Parquet",
+      "natural_lawn": "Natural Lawn",
+      "rubber": "Rubber",
+      "sand": "Sand",
+      "basketball": "Basketball",
+      "soccer": "Soccer",
+      "tennis": "Tennis",
+      "volleyball": "Volleyball",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "Приморський": "Primorsky",
+      "Малиновський": "Malynovskyi",
+      "Суворовський": "Suvorovskyi",
+      "Київський": "Kyivskyi",
+      "Голосіївський": "Holosiivskyi",
+      "Оболонський": "Obolonskyi",
+      "Печерський": "Pecherskyi",
+      "Подільський": "Podilskyi",
+      "Святошинський": "Sviatoshynskyi",
+      "Солом'янський": "Solomianskyi",
+      "Шевченківський": "Shevchenkivskyi",
+      "Дарницький": "Darnytskyi",
+      "Деснянський": "Desnianskyi",
+      "Дніпровський": "Dniprovs'kyi",
+      "Амур-Нижньодніпровський": "Amur-Nyzhno-Dniprovs'kyi",
+      "Індустріальний": "Industrialnyi",
+      "Новокодацький": "Novokodats'kyi",
+      "Самарський": "Samars'kyi",
+      "Соборний": "Sobornyi",
+      "Центральний": "Centralnyi",
+      "Чечелівський": "Chechelivskyi",
+      "Личаківський": "Lychakivskyi",
+      "Сихівський": "Sykhivskyi",
+      "Франківський": "Frankivskyi",
+      "Залізничний": "Zaliznychnyi",
+      "Галицький": "Halytskyi",
+      "Холодногірський": "Kholodnohirskyi"
+    },
+    "selects": {
+      "price_asc": "Price ascending",
+      "price_desc": "Price descending",
       "artificial_lawn": "Artificial lawn",
       "parquet": "Parquet",
       "natural_lawn": "Natural lawn",
@@ -22,13 +261,45 @@
       "volleyball": "Volleyball",
       "indoor": "Indoor",
       "outdoor": "Outdoor",
-      "1": "Mon",
-      "2": "Tue",
-      "3": "Wed",
-      "4": "Thu",
-      "5": "Fri",
-      "6": "Sat",
-      "7": "Sun"
+      "Одеса": "Odesa",
+      "Київ": "Kyiv",
+      "Дніпро": "Dnipro",
+      "Львів": "Lviv",
+      "Харків": "Kharkiv",
+      "Приморський": "Primorsky",
+      "Малиновський": "Malynovskyi",
+      "Суворовський": "Suvorovskyi",
+      "Київський": "Kyivskyi",
+      "Голосіївський": "Holosiivskyi",
+      "Оболонський": "Obolonskyi",
+      "Печерський": "Pecherskyi",
+      "Подільський": "Podilskyi",
+      "Святошинський": "Sviatoshynskyi",
+      "Солом'янський": "Solomianskyi",
+      "Шевченківський": "Shevchenkivskyi",
+      "Дарницький": "Darnytskyi",
+      "Деснянський": "Desnianskyi",
+      "Дніпровський": "Dniprovs'kyi",
+      "Амур-Нижньодніпровський": "Amur-Nyzhno-Dniprovs'kyi",
+      "Індустріальний": "Industrialnyi",
+      "Новокодацький": "Novokodats'kyi",
+      "Самарський": "Samars'kyi",
+      "Соборний": "Sobornyi",
+      "Центральний": "Centralnyi",
+      "Чечелівський": "Chechelivskyi",
+      "Личаківський": "Lychakivskyi",
+      "Сихівський": "Sykhivskyi",
+      "Франківський": "Frankivskyi",
+      "Залізничний": "Zaliznychnyi",
+      "Галицький": "Halytskyi",
+      "Холодногірський": "Kholodnohirskyi",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
     }
   }
 }

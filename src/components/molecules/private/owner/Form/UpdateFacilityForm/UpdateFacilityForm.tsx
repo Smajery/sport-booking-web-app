@@ -21,6 +21,8 @@ import ApproveActionCard from "@/components/atoms/private/user/Cards/ApproveActi
 import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/ShowErrorModal";
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 type TItem = {
   key: string;
@@ -60,6 +62,8 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
   facility,
   refetchFacility,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { push } = useRouter();
   const {
     id,
@@ -243,7 +247,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
                     updateFacilityLoading || updateFacilityPhotosLoading
                   }
                 >
-                  Cancel
+                  {tTtl("cancel")}
                 </Button>
                 <Button
                   variant="primary"
@@ -253,8 +257,8 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
                   }
                 >
                   {!updateFacilityLoading && !updateFacilityPhotosLoading
-                    ? "Save"
-                    : "Loading..."}
+                    ? tTtl("save")
+                    : tTtl("loading")}
                 </Button>
               </>
             ) : (
@@ -264,13 +268,12 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
                 type="button"
                 onClick={() => setIsEditFacility(true)}
               >
-                Edit Facility
+                {tTtl("editFacility")}
               </Button>
             )}
             <ApproveActionCard
               handleApprove={handleDeleteFacility}
-              alertDescription="This action cannot be undone. This will permanently delete your
-            facility and remove its data from our servers."
+              alertDescription="deleteFacilityCannotBeUndone"
             >
               <Button
                 type="button"
@@ -279,7 +282,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
                 className="ml-auto"
                 disabled={isEditFacility || true}
               >
-                Delete Facility
+                {tTtl("deleteFacility")}
               </Button>
             </ApproveActionCard>
           </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import ProfileDashboardList from "@/components/molecules/private/user/Lists/ProfileDashboardList/ProfileDashboardList";
-import BecameOwnerButton from "@/components/atoms/private/user/Buttons/BecameOwnerButton/BecameOwnerButton";
 
 const DashboardSection = () => {
   return (

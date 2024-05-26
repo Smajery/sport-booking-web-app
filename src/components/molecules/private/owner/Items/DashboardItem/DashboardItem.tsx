@@ -5,6 +5,8 @@ import {
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 type TItem = {
   href: string;
@@ -17,6 +19,8 @@ interface IDashboardItem {
 }
 
 const DashboardItem: React.FC<IDashboardItem> = ({ item, isCurrent }) => {
+  const tDTtl = useTranslations(namespaces.DASHBOARDS_OWNER_TITLES);
+
   const { name, href } = item;
 
   return (
@@ -27,7 +31,7 @@ const DashboardItem: React.FC<IDashboardItem> = ({ item, isCurrent }) => {
             "font-semibold text-primary": isCurrent,
           })}
         >
-          {name}
+          {tDTtl(name)}
         </NavigationMenuLink>
       </Link>
     </NavigationMenuItem>

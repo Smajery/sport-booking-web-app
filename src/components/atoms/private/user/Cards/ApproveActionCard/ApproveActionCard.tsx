@@ -9,6 +9,8 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IAcceptActionModal {
   handleApprove: () => void;
@@ -21,16 +23,21 @@ const ApproveActionCard: React.FC<IAcceptActionModal> = ({
   children,
   alertDescription,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogDescription>{alertDescription}</AlertDialogDescription>
+          <AlertDialogDescription>
+            {tTtl(alertDescription)}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Close</AlertDialogCancel>
-          <AlertDialogAction onClick={handleApprove}>Approve</AlertDialogAction>
+          <AlertDialogCancel>{tTtl("close")}</AlertDialogCancel>
+          <AlertDialogAction onClick={handleApprove}>
+            {tTtl("approve")}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

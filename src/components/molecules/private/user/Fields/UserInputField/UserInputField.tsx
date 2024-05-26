@@ -12,6 +12,8 @@ import { Input, InputProps } from "@/components/ui/input";
 import { clsx } from "clsx";
 import { UseFormReturn } from "react-hook-form";
 import { Check, X } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IUserInputField extends InputProps {
   form: any;
@@ -27,6 +29,8 @@ const UserInputField: React.FC<IUserInputField> = ({
   noValidate = false,
   ...props
 }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+
   const {
     formState: { isSubmitted },
   } = form as UseFormReturn;
@@ -43,7 +47,7 @@ const UserInputField: React.FC<IUserInputField> = ({
                 "text-success": !invalid && isSubmitted && !noValidate,
               })}
             >
-              {labelText}
+              {tLbl(labelText)}
             </FormLabel>
           )}
           <FormControl>

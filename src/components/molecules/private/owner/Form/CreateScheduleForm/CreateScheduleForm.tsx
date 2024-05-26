@@ -19,6 +19,8 @@ import { Button } from "@/components/ui/button";
 import { TTimeSlot } from "@/types/commonTypes";
 import { getTimeSlots, getTimeUtc } from "@/utils/helpers/time.helpers";
 import SelectorField from "@/components/molecules/private/owner/Fields/SelectorField/SelectorField";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 const createScheduleFormSchema = z.object({
   facilityId: z.number().min(1),
@@ -37,6 +39,8 @@ const createScheduleFormSchema = z.object({
 });
 
 const CreateScheduleForm = () => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { myFacilityId } = useParams();
   const { push } = useRouter();
 
@@ -127,11 +131,13 @@ const CreateScheduleForm = () => {
         className="flex justify-between gap-x-5"
       >
         <div className="flex flex-col gap-y-5 grow">
-          <p className="text-4xl text-primary font-semibold">Create Schedule</p>
+          <p className="text-4xl text-primary font-semibold">
+            {tTtl("createSchedule")}
+          </p>
           <MultiSelectField
             form={form}
             name="daysOfWeek"
-            labelText="Days of week"
+            labelText="daysOfWeek"
             selectableItems={facilityConfig.daysOfWeek}
           />
           <div className="flex justify-between gap-x-5">
@@ -139,7 +145,7 @@ const CreateScheduleForm = () => {
               form={form}
               name="startTime"
               type="time"
-              labelText="Start time"
+              labelText="startTime"
               step={3600}
               className="input__no-time-select"
             />
@@ -147,7 +153,7 @@ const CreateScheduleForm = () => {
               form={form}
               name="endTime"
               type="time"
-              labelText="End time"
+              labelText="endTime"
               step={3600}
               className="input__no-time-select"
             />
@@ -156,15 +162,15 @@ const CreateScheduleForm = () => {
             form={form}
             name="minBookingTime"
             selectableItems={ownerFacilityConfig.minBookingTime}
-            labelText="Min booking time"
-            placeholder="Select"
+            labelText="minBookingTime"
+            placeholder="select"
           />
           <InputField
             form={form}
             name="price"
             type="number"
-            placeholder="Price..."
-            labelText="Price per slot (30 min)"
+            labelText="pricePerSlot"
+            placeholder="price"
             min={1}
           />
           <Separator />
@@ -176,15 +182,17 @@ const CreateScheduleForm = () => {
               onClick={handleCancel}
               disabled={loading}
             >
-              Cancel
+              {tTtl("cancel")}
             </Button>
             <Button variant="primary" size="lg" disabled={loading}>
-              {!loading ? "Save" : "Loading..."}
+              {!loading ? tTtl("save") : tTtl("loading")}
             </Button>
           </div>
         </div>
         <div className="flex flex-col gap-y-5">
-          <p className="text-4xl text-primary font-semibold">Preview</p>
+          <p className="text-4xl text-primary font-semibold">
+            {tTtl("preview")}
+          </p>
           <ScheduleCreatePreviewFrame
             minBookingTime={
               minBookingTimeWatch ? Number(minBookingTimeWatch) : 0

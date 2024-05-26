@@ -20,9 +20,9 @@ import { getDuration } from "@/utils/helpers/text.helpers";
 import { CREATE_PAYMENT_MUTATION } from "@/apollo/mutations/private/user/payment";
 import { v4 as uuidv4 } from "uuid";
 import { usePathname } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { TLocale } from "@/navigation";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 const createBookingFormSchema = z.object({
   timeSlotIds: z.array(z.number()).min(1, "At least one booking"),
@@ -39,8 +39,10 @@ const BookSchedule: React.FC<IBookSchedule> = ({
   facilitySchedule,
   handleCloseModal,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+
   const pathname = usePathname();
-  const { toast } = useToast();
   const locale = useLocale() as TLocale;
   const { minBookingTime, timeSlots } = facilitySchedule;
 
@@ -125,9 +127,9 @@ const BookSchedule: React.FC<IBookSchedule> = ({
       action: "pay",
       amount: amount,
       currency: "UAH",
-      description: "Facility booking",
+      description: tTtl("facilityBooking"),
       order_id: orderId,
-      language: "UK",
+      language: locale,
       result_url: pathname,
       // expired_date: new Date(new Date().getTime() + 5 * 60000).toISOString(), //5 min to pay
     };
@@ -204,10 +206,10 @@ const BookSchedule: React.FC<IBookSchedule> = ({
       <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col">
           <div className="flex bg-primary">
-            <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-1 w-[88px] border-r border-white text-primary-foreground">
+            <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-1 w-[98px] border-r border-white text-primary-foreground">
               <Clock className="w-6 h-6" />
               <p className="w-full truncate text-xs text-center">
-                Min: {getDuration(minBookingTime)}
+                {tTtl("cMinimum")}: {getDuration(minBookingTime, locale)}
               </p>
             </div>
             <DaysOfWeekList
@@ -228,8 +230,12 @@ const BookSchedule: React.FC<IBookSchedule> = ({
           </ScrollArea>
           <div className="flex flex-col py-5 border-t border-border gap-y-5">
             <div className="flex text-xl">
-              <div className="px-5 w-[88px] flex items-center">Total:</div>
-              <div className="font-light text-primary">{amount} UAH</div>
+              <div className="px-5 w-[98px] flex items-center">
+                {tLbl("total")}:
+              </div>
+              <div className="font-light text-primary">
+                {amount} {tTtl("uah")}
+              </div>
             </div>
             <ApolloErrorFrame error={errorBooking} />
             <div className="flex justify-end gap-x-4 px-5">
@@ -240,14 +246,14 @@ const BookSchedule: React.FC<IBookSchedule> = ({
                 onClick={handleCancel}
                 disabled={isBookLoading || isPaymentLoading}
               >
-                Cancel
+                {tTtl("cancel")}
               </Button>
               <Button
                 variant="gradient"
                 size="md"
                 disabled={isMinBookingTime || isBookLoading || isPaymentLoading}
               >
-                Pay
+                {tTtl("pay")}
               </Button>
             </div>
           </div>

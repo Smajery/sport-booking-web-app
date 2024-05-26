@@ -10,6 +10,8 @@ import {
 import ApolloErrorFrame from "@/components/molecules/public/Frames/ApolloErrorFrame/ApolloErrorFrame";
 import { ApolloError } from "@apollo/client";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IShowErrorModal {
   error: ApolloError | undefined;
@@ -17,6 +19,7 @@ interface IShowErrorModal {
 }
 
 const ShowErrorModal: React.FC<IShowErrorModal> = ({ error, setError }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
   return (
     <AlertDialog open={!!error}>
       <AlertDialogContent>
@@ -27,7 +30,7 @@ const ShowErrorModal: React.FC<IShowErrorModal> = ({ error, setError }) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setError(undefined)}>
-            Close
+            {tTtl("close")}
           </AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -16,6 +16,8 @@ import ModalCard from "@/components/atoms/public/Cards/ModalCard/ModalCard";
 import { useMutation } from "@apollo/client";
 import { Mail, Lock } from "lucide-react";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface ISignUpModal {
   setIsSignUpModal: (value: boolean) => void;
@@ -37,6 +39,8 @@ const SignUpModal: React.FC<ISignUpModal> = ({
   setIsSignUpModal,
   setIsLoginModal,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const [registerUserMutation, { loading, error }] = useMutation(
     REGISTER_USER_MUTATION,
   );
@@ -78,7 +82,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({
   const { isSubmitted, isValid, isSubmitting } = form.formState;
 
   return (
-    <ModalCard handleCloseModal={handleCloseModal} title="Sign up">
+    <ModalCard handleCloseModal={handleCloseModal} title="signUp">
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -90,24 +94,24 @@ const SignUpModal: React.FC<ISignUpModal> = ({
               form={form}
               type="email"
               name="email"
-              labelText="Email"
-              placeholder="Ex: example@gmail.com"
+              labelText="email"
+              placeholder="email"
               IconComponent={Mail}
             />
             <FloatingField
               form={form}
               type="password"
               name="password"
-              placeholder="Minimum 6 characters"
-              labelText="Password"
+              placeholder="password"
+              labelText="password"
               IconComponent={Lock}
             />
             <FloatingField
               form={form}
               type="password"
               name="confirmPassword"
-              placeholder="Minimum 6 characters"
-              labelText="Confirm password"
+              placeholder="password"
+              labelText="confirmPassword"
               IconComponent={Lock}
             />
           </div>
@@ -121,13 +125,15 @@ const SignUpModal: React.FC<ISignUpModal> = ({
             disabled={isSubmitting || (isSubmitted && !isValid)}
             className="auth-btn-gradient text-white"
           >
-            {!loading ? "Sign up" : "Loading..."}
+            {!loading ? tTtl("signUp") : tTtl("loading")}
           </Button>
         </form>
       </FormProvider>
-      <div className="text-with-separators lowercase my-[16px]">Or</div>
+      <div className="text-with-separators lowercase my-[16px]">
+        {tTtl("or")}
+      </div>
       <div className="flex flex-col gap-y-[16px]">
-        <GoogleAuthButton>Sign up with Google</GoogleAuthButton>
+        <GoogleAuthButton>{tTtl("signUpWithGoogle")}</GoogleAuthButton>
       </div>
     </ModalCard>
   );

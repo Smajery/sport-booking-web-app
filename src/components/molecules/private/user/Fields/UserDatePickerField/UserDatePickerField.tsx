@@ -17,13 +17,14 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import format from "@/lib/format";
+import format, { locales } from "@/lib/format";
 import { Calendar } from "@/components/ui/calendar";
 import { InputProps } from "@/components/ui/input";
 import { formatISO, getYear, parseISO, subYears } from "date-fns";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { TLocale } from "@/navigation";
 import YearSelect from "@/components/atoms/private/user/Selects/YearSelect/YearSelect";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IUserDatePickerField extends InputProps {
   form: any;
@@ -38,6 +39,9 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
   labelText,
   noValidate = false,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+
   const locale = useLocale() as TLocale;
   const {
     formState: { isSubmitted },
@@ -75,7 +79,7 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
                 "text-success": !invalid && isSubmitted && !noValidate,
               })}
             >
-              {labelText}
+              {tLbl(labelText)}
             </FormLabel>
           )}
           <FormControl>
@@ -93,7 +97,9 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
                     {value ? (
                       format(value, "dd.MM.yyyy", locale)
                     ) : (
-                      <span className="font-light">Pick a date</span>
+                      <span className="font-light">
+                        {tTtl("pickBirthDate")}
+                      </span>
                     )}
                     <CalendarIcon className="-mt-1" />
                   </Button>
@@ -103,7 +109,7 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
                     <div className="px-3 flex items-center border-b border-border">
                       <div className="shrink-0 w-[36px] flex items-center justify-center">
                         <p className="text-[0.8rem] text-muted-foreground">
-                          Year:
+                          {tTtl("year")}:
                         </p>
                       </div>
                       <YearSelect
@@ -116,6 +122,7 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
                     <Calendar
                       key={getYear(dateWatch)}
                       showOutsideDays={false}
+                      locale={locales[locale]}
                       mode="single"
                       selected={dateWatch}
                       onSelect={handleDateSelect}

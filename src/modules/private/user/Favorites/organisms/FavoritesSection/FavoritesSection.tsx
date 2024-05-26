@@ -7,10 +7,14 @@ import { GET_USER_FAVORITES_QUERY } from "@/apollo/query/private/user/user";
 import FavoriteFacilitiesList from "@/components/molecules/private/user/Lists/FavoriteFacilitiesList/FavoriteFacilitiesList";
 import PaginationFrame from "@/components/molecules/public/Frames/PaginationFrame/PaginationFrame";
 import { usePagination } from "@/hooks/usePagination/usePagination";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 const limit = 10;
 
 const FavoritesSection = () => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { pagination, setPagination, handlePageChange } = usePagination();
   const { currentPage, totalPages, totalItems } = pagination;
 
@@ -39,15 +43,17 @@ const FavoritesSection = () => {
   return (
     <section className="flex flex-col gap-y-5">
       <div className="flex mt-5">
-        <p className="text-primary text-4xl font-semibold">Favorites</p>
+        <p className="text-primary text-4xl font-semibold">
+          {tTtl("favorites")}
+        </p>
       </div>
       {loading ? (
-        <div>Loading...</div>
+        <div>{tTtl("loading")}</div>
       ) : error ? (
         <div>{getApolloErrorMessage(error)}</div>
       ) : data.getUserFavorites.facilities.length === 0 ? (
         <div className="flex justify-center py-5 ">
-          You haven't added any facility to favorites yet
+          {tTtl("youHaveNotAddedAnyFacilityToFavoritesYet")}
         </div>
       ) : (
         <FavoriteFacilitiesList facilities={data.getUserFavorites.facilities} />

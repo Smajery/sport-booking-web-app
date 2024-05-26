@@ -2,15 +2,15 @@
 
 import React from "react";
 import { CardContent, Card } from "@/components/ui/card";
-import { facilityConfig } from "@/config/public/facility";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import TimeSlotsList from "@/components/molecules/public/Lists/TimeSlotsList/TimeSlotsList";
-import { Button } from "@/components/ui/button";
-import { clsx } from "clsx";
 import { TTimeSlot } from "@/types/commonTypes";
 import { Clock } from "lucide-react";
 import PreviewPriceSlotsList from "@/components/molecules/private/owner/Lists/PreviewPriceSlotsList/PreviewPriceSlotsList";
 import { getDuration } from "@/utils/helpers/text.helpers";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
+import DaysOfWeekList from "@/components/molecules/public/Lists/DaysOfWeekList/DaysOfWeekList";
 
 interface IScheduleCreatePreviewFrame {
   timeSlots: TTimeSlot[];
@@ -21,22 +21,12 @@ const ScheduleCreatePreviewFrame: React.FC<IScheduleCreatePreviewFrame> = ({
   timeSlots,
   minBookingTime,
 }) => {
-  const dayAvailability = facilityConfig.daysOfWeek.reduce(
-    (acc, day) => {
-      acc[day.key] = timeSlots.some((slot) => slot.dayOfWeek === day.key);
-      return acc;
-    },
-    {} as {
-      [key: number]: boolean;
-    },
-  );
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
 
   const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<number>(0);
 
   const filteredTimeSlots = timeSlots.filter(
-    (timeSlot) =>
-      timeSlot.dayOfWeek === selectedDayOfWeek &&
-      timeSlot.status === "available",
+    (timeSlot) => timeSlot.dayOfWeek === selectedDayOfWeek,
   );
 
   React.useEffect(() => {
@@ -53,31 +43,17 @@ const ScheduleCreatePreviewFrame: React.FC<IScheduleCreatePreviewFrame> = ({
       <CardContent className="p-0">
         <div className="flex flex-col">
           <div className="flex bg-primary">
-            <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-1 w-[88px] border-r border-white text-primary-foreground">
+            <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-1 w-[98px] border-r border-white text-primary-foreground">
               <Clock className="w-6 h-6" />
               <p className="w-full truncate text-xs text-center">
-                Min: {getDuration(minBookingTime)}
+                {tTtl("cMinimum")}: {getDuration(minBookingTime)}
               </p>
             </div>
-            <div className="flex items-center px-10 py-3 gap-x-10">
-              {facilityConfig.daysOfWeek.map((day) => (
-                <div
-                  key={day.key}
-                  className={clsx(
-                    "text-primary-foreground flex justify-center cursor-pointer font-hover-high",
-                    {
-                      "text-2xl leading-7": selectedDayOfWeek === day.key,
-                      "opacity-50 pointer-events-none":
-                        !dayAvailability[day.key],
-                    },
-                  )}
-                  data-content={day.name}
-                  onClick={() => setSelectedDayOfWeek(day.key)}
-                >
-                  {day.name}
-                </div>
-              ))}
-            </div>
+            <DaysOfWeekList
+              selectedDayOfWeek={selectedDayOfWeek}
+              setSelectedDayOfWeek={setSelectedDayOfWeek}
+              timeSlots={timeSlots}
+            />
           </div>
           <ScrollArea className="h-[500px]">
             <div className="min-h-[500px] flex">

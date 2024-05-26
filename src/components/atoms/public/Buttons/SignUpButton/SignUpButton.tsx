@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useModalContext } from "@/providers/ModalProvider/ModalProvider";
 import { useHeaderContext } from "@/layouts/Header/Header";
+import { clsx } from "clsx";
 
 interface ISignUpButton {
   children: string;
@@ -15,8 +16,10 @@ const SignUpButton: React.FC<ISignUpButton> = ({ children }) => {
 
   return (
     <Button
-      variant={isHeaderScrolled ? "primary" : "outlinePrimary"}
-      className={isHeaderScrolled ? "border-primary-foreground" : ""}
+      variant="outlinePrimary"
+      className={clsx("bg-background", {
+        "hover:border-primary-foreground": isHeaderScrolled,
+      })}
       onClick={() => setIsSignUpModal(true)}
     >
       {children}

@@ -1,9 +1,57 @@
 {
   "meta": {
     "pages": {
+      "notFound": {
+        "title": "Не знайдено",
+        "description": "Не знайдено"
+      },
       "home": {
-        "title": "",
-        "description": ""
+        "title": "Головна",
+        "description": "Головна сторінка"
+      },
+      "facility": {
+        "title": "Спортивне поле",
+        "description": "Сторінка спортивного поля"
+      },
+      "profile": {
+        "title": "Профіль",
+        "description": "Сторінка профілю"
+      },
+      "me": {
+        "title": "Профіль",
+        "description": "Сторінка профілю"
+      },
+      "reservations": {
+        "title": "Бронювання",
+        "description": "Сторінка бронювань"
+      },
+      "favorites": {
+        "title": "Улюблені",
+        "description": "Сторінка улюблених"
+      },
+      "dashboard": {
+        "title": "Панель керування",
+        "description": "Сторінка панелі керування"
+      },
+      "dashboardFacilities": {
+        "title": "Спортивні поля",
+        "description": "Сторінка спортивних полей"
+      },
+      "dashboardFacilityCreate": {
+        "title": "Створення спортивного поля",
+        "description": "Сторінка для створення спортивного поля"
+      },
+      "dashboardFacility": {
+        "title": "Спортивне поле",
+        "description": "Сторінка спортивного поля"
+      },
+      "dashboardScheduleCreate": {
+        "title": "Створення розкладу",
+        "description": "Сторінка для створення розкладу"
+      },
+      "dashboardSchedule": {
+        "title": "Розкладу",
+        "description": "Сторінка розкладу"
       }
     }
   },
@@ -13,13 +61,36 @@
         "uk": "укр",
         "en": "en",
         "profile": "Профіль",
-        "favorites": "Найулюбленіши",
+        "favorites": "Улюблені",
         "reservations": "Бронювання",
-        "dashboard": "Панель керування"
+        "dashboard": "Панель керування",
+        "login": "Увійти",
+        "signUp": "Зареєструватися"
+      }
+    }
+  },
+  "dashboards": {
+    "profile": {
+      "titles": {
+        "profile": "Профіль",
+        "notification": "Повідомлення",
+        "privacy": "Конфіденційність",
+        "about": "Про нас",
+        "help": "Підтримка"
+      }
+    },
+    "owner": {
+      "titles": {
+        "facilities": "Спортивні поля"
       }
     }
   },
   "components": {
+    "statuses": {
+      "failed": "Не вдалося",
+      "pending": "В очікуванні",
+      "completed": "Виконано"
+    },
     "labels": {
       "sport": "Спорт",
       "covering": "Покриття",
@@ -28,12 +99,106 @@
       "district": "Район",
       "sortBy": "Сортувати за",
       "price": "Ціна",
-      "facilitiesSearch": "Пошук спортивніх полів"
+      "facilitiesSearch": "Пошук спортивніх полів",
+      "phoneNumber": "Номер телефону",
+      "total": "Всього",
+      "email": "Е-пошта",
+      "password": "Пароль",
+      "confirmPassword": "Підтвердити пароль",
+      "organizationName": "Назва організації",
+      "phone": "Телефон",
+      "fullName": "Повне імʼя",
+      "dateOfBirth": "Дата народження",
+      "name": "Назва",
+      "address": "Адреса",
+      "description": "Опис",
+      "facilityStatus": "Статус спортивного поля",
+      "daysOfWeek": "Дні тижня",
+      "startTime": "Час початку",
+      "minBookingTime": "Мінімальний час бронювання",
+      "endTime": "Час закінчення",
+      "pricePerSlot": "Ціна за слот (30 хв)",
+      "cityDistrict": "Місто/Район",
+      "location": "Місцезнаходження"
     },
     "placeholders": {
-      "search": "Пошук..."
+      "search": "Пошук...",
+      "email": "example@gmail.com",
+      "password": "Мінімум 6 символів",
+      "fullName": "ПІБ...",
+      "orgPhoneNumber": "Номер телефону організації...",
+      "organizationName": "Назва організації...",
+      "facilityName": "Назва спортивного поля...",
+      "facilityAddress": "Адреса спортивного поля...",
+      "facilityDescription": "Опис спортивного поля...",
+      "select": "Вибрати",
+      "price": "Ціна",
+      "loading": "Завантаження...",
+      "somethingWentWrong": "Щось пішло не так",
+      "selectCityFirst": "Спочатку виберіть місто",
+      "selectDistrictSecond": "Потім виберіть район"
     },
     "titles": {
+      "cancel": "Скасувати",
+      "deleteSchedule": "Видалити розклад",
+      "updateSchedule": "Оновити розклад",
+      "editSchedule": "Редагувати розклад",
+      "deleteScheduleCannotBeUndone": "Цю дію не можна скасувати. Це назавжди видалить ваш розклад і видалить його дані з наших серверів.",
+      "allSlots": "Всі слоти",
+      "selectedSlots": "Вибрані слоти",
+      "close": "Закрити",
+      "favorites": "Улюблені",
+      "preview": "Попередній перегляд",
+      "working": "Працює",
+      "thirtyMinutes": "30 хв",
+      "oneHour": "1 год",
+      "oneHourThirtyMinutes": "1 год 30 хв",
+      "twoHours": "2 год",
+      "twoHoursThirtyMinutes": "2 год 30 хв",
+      "threeHours": "3 год",
+      "showSchedule": "Показати розклад",
+      "facilityWithoutScheduleIsNotPublic": "Спортивне поле без розкладу не є загальнодоступним",
+      "createSchedule": "Створити розклад",
+      "deleteFacility": "Видалити спортивне поле",
+      "editFacility": "Редагувати спортивне поле",
+      "deleteFacilityCannotBeUndone": "Цю дію не можна скасувати. Це назавжди видалить ваш спортивне поле і його дані з наших серверів.",
+      "approve": "Підтвердити",
+      "youHaveNotCreatedAnyReservationsYet": "Ви ще не створили жодного бронювання",
+      "becomeOwner": "Стати власником",
+      "youHaveNotAddedAnyFacilityToFavoritesYet": "You haven't added any facility to favorites yet",
+      "reservations": "Бронювання",
+      "pay": "Оплатити",
+      "pickBirthDate": "Виберіть дату свого народження",
+      "or": "Або",
+      "year": "Рік",
+      "notFound": "Не знайдено",
+      "save": "Зберегти",
+      "back": "Назад",
+      "edit": "Редагувати",
+      "home": "Головна",
+      "change": "Змінити",
+      "changePassword": "Редагувати пароль",
+      "add": "Додати",
+      "yourEmailIsNotActivated": "Ваша електронна пошта не активована, ми надіслали підтвердження на вашу електронну пошту",
+      "noInformation": "Немає інформації",
+      "cropImage": "Обрізати зображення",
+      "personalInformation": "Персональна інформація",
+      "couldNotFindRequestedResource": "Не вдалося знайти запитуваний ресурс",
+      "login": "Увійти",
+      "signUp": "Зареєструватися",
+      "welcome": "Ласкаво просимо",
+      "loginWithGoogle": "Увійти через Google",
+      "signUpWithGoogle": "Зареєструватися через Google",
+      "facilityBooking": "Бронювання спортивного поля",
+      "noTimeSlotsForCurrentDayOfWeek": "Немає слотів для поточного дня тижня",
+      "inFavorite": "В улюблених",
+      "cMinimum": "Мін",
+      "book": "Забронювати",
+      "addToFavorite": "Додати в улюблені",
+      "copyLink": "Копіювати посилання",
+      "copied": "Скопійовано",
+      "uah": "ГРН",
+      "contactTheOrganization": "Зв’язатися з організацією",
       "resetAll": "Скинути все",
       "loading": "Завантаження...",
       "showMap": "Показати карту",
@@ -42,7 +207,7 @@
       "weDontHaveFacility": "У нас ще немає жодного закладу, спробуйте повернутися через кілька хвилин",
       "min": "хв",
       "noSchedule": "Немає розкладу",
-      "temporarilyNotWorking": "(Тимчасово не працює)",
+      "temporarilyNotWorking": "Тимчасово не працює",
       "artificial_lawn": "Штучний газон",
       "parquet": "Паркет",
       "natural_lawn": "Природний газон",

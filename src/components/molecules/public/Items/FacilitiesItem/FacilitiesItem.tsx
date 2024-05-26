@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import CompactRatingFrame from "@/components/molecules/public/Frames/CompactRatingFrame/CompactRatingFrame";
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
-import { getFormattedText, getTitle } from "@/utils/helpers/text.helpers";
 import SelectFavoriteOnItemButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnItemButton/SelectFavoriteOnItemButton";
 import { clsx } from "clsx";
 import { MIN_PER_SLOT } from "@/utils/constants/titles.constants";
@@ -78,7 +77,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
             <p className="truncate text-xl">{name} </p>
             {!isWorking && (
               <p className="text-xl italic text-muted-foreground">
-                {tTtl("temporarilyNotWorking")}
+                ({tTtl("temporarilyNotWorking")})
               </p>
             )}
           </div>

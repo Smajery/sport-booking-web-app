@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 import { clsx } from "clsx";
 import { Check, X } from "lucide-react";
 import { TSelectedItem } from "@/types/commonTypes";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IMultiSelectField {
   form: any;
@@ -30,6 +32,9 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
   noValidate = false,
   className = "",
 }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+  const tSlct = useTranslations(namespaces.COMPONENTS_SELECTS);
+
   const {
     control,
     setValue,
@@ -63,14 +68,14 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
                 "text-destructive": invalid && isSubmitted && !noValidate,
               })}
             >
-              {labelText}
+              {tLbl(labelText)}
             </FormLabel>
           )}
           <div className="flex justify-between items-center gap-x-5">
             <FormControl>
               <div
                 className={cn(
-                  "bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4 text-lg",
+                  "w-full bg-background rounded-lg border border-border p-2 shadow-xs flex flex-wrap gap-x-2 gap-y-4 text-lg",
                   className,
                 )}
               >
@@ -100,7 +105,7 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
                           : "outline"
                       }
                     >
-                      {selectableItem.name}
+                      {tSlct(selectableItem.name)}
                     </Badge>
                   </div>
                 ))}

@@ -7,8 +7,12 @@ import { GET_FACILITY_SCHEDULE_QUERY } from "@/apollo/query/private/owner/facili
 import { useParams } from "next/navigation";
 import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import { TFacilitySchedule } from "@/types/private/owner/facilityTypes";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 const ScheduleSection = () => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { myFacilityId } = useParams();
 
   const { data, loading, error } = useQuery(GET_FACILITY_SCHEDULE_QUERY, {
@@ -17,7 +21,7 @@ const ScheduleSection = () => {
     },
   });
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>{tTtl("loading")}</div>;
   if (error) return <div>{getApolloErrorMessage(error)}</div>;
 
   const facilitySchedule = data.facility as TFacilitySchedule;

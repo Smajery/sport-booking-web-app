@@ -1,3 +1,5 @@
+import { TLocale } from "@/navigation";
+
 export const getTitle = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
@@ -12,18 +14,43 @@ export const getFormattedText = (text: string) => {
   return getTitle(formattedText);
 };
 
-export const getDuration = (minutes: number) => {
+export const getDuration = (minutes: number, locale?: TLocale) => {
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
 
-  if (hours === 0) {
-    return `${remainingMinutes} m`;
-  } else if (hours === 1) {
-    return remainingMinutes === 0 ? "1 h" : `1 h ${remainingMinutes} m`;
-  } else {
-    return remainingMinutes === 0
-      ? `${hours} h`
-      : `${hours} h ${remainingMinutes} m`;
+  switch (locale) {
+    case "en":
+      if (hours === 0) {
+        return `${remainingMinutes} m`;
+      } else if (hours === 1) {
+        return remainingMinutes === 0 ? "1 h" : `1 h ${remainingMinutes} m`;
+      } else {
+        return remainingMinutes === 0
+          ? `${hours} h`
+          : `${hours} h ${remainingMinutes} m`;
+      }
+    case "uk":
+      if (hours === 0) {
+        return `${remainingMinutes} хв`;
+      } else if (hours === 1) {
+        return remainingMinutes === 0
+          ? "1 год"
+          : `1 год ${remainingMinutes} хв`;
+      } else {
+        return remainingMinutes === 0
+          ? `${hours} год`
+          : `${hours} год ${remainingMinutes} хв`;
+      }
+    default:
+      if (hours === 0) {
+        return `${remainingMinutes} хв`;
+      } else if (hours === 1) {
+        return remainingMinutes === 0 ? "1 год" : `1 год ${remainingMinutes} m`;
+      } else {
+        return remainingMinutes === 0
+          ? `${hours} год`
+          : `${hours} год ${remainingMinutes} хв`;
+      }
   }
 };
 

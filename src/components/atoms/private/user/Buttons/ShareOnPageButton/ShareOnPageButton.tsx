@@ -4,8 +4,12 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { Copy } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 const ShareOnPageButton = () => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const [isCopied, setIsCoped] = React.useState<boolean>(false);
   const handleCopyUrlToClipboard = async () => {
     try {
@@ -32,7 +36,7 @@ const ShareOnPageButton = () => {
       className="gap-x-1 underline"
       onClick={handleCopyUrlToClipboard}
     >
-      {isCopied ? "Copied!" : "Copy link"}
+      {!isCopied ? tTtl("copyLink") : `${tTtl("copied")}!`}
       <Copy className="w-5 h-5" strokeWidth={1.5} />
     </Button>
   );

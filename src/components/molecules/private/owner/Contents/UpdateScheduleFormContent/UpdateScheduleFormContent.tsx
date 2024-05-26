@@ -2,6 +2,8 @@ import React from "react";
 import InputField from "@/components/molecules/private/owner/Fields/InputField/InputField";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IUpdateScheduleFormContent {
   form: any;
@@ -14,9 +16,13 @@ const UpdateScheduleFormContent: React.FC<IUpdateScheduleFormContent> = ({
   isAllSlots,
   setIsAllSlots,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   return (
     <div className="flex flex-col gap-y-5">
-      <p className="text-4xl text-primary font-semibold">Update Schedule</p>
+      <p className="text-4xl text-primary font-semibold">
+        {tTtl("updateSchedule")}
+      </p>
       <div className="flex justify-between">
         <div className="flex items-center gap-x-2">
           <Checkbox
@@ -29,7 +35,7 @@ const UpdateScheduleFormContent: React.FC<IUpdateScheduleFormContent> = ({
             htmlFor="all-slotts-check"
             className="-mb-[2px] text-lg font-light text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            All slots
+            {tTtl("allSlots")}
           </label>
         </div>
         <div className="flex items-center gap-x-2">
@@ -43,7 +49,7 @@ const UpdateScheduleFormContent: React.FC<IUpdateScheduleFormContent> = ({
             htmlFor="selected-slots-check"
             className="-mb-[2px] text-lg font-light text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            Selected slots
+            {tTtl("selectedSlots")}
           </label>
         </div>
       </div>
@@ -51,8 +57,8 @@ const UpdateScheduleFormContent: React.FC<IUpdateScheduleFormContent> = ({
         form={form}
         name="price"
         type="number"
-        placeholder="Price..."
-        labelText="Price per slot (30 min)"
+        placeholder="price"
+        labelText="pricePerSlot"
         min={1}
       />
     </div>

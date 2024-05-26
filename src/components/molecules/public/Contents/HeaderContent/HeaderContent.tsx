@@ -15,9 +15,12 @@ import UserHeaderAvatar from "@/components/atoms/private/user/Avatars/UserHeader
 import { Skeleton } from "@/components/ui/skeleton";
 import SwitchThemeButton from "@/components/atoms/public/Buttons/SwitchThemeButton/SwitchThemeButton";
 import SelectLanguageButton from "@/components/atoms/public/Buttons/SelectLanguageButton/SelectLanguageButton";
+import { useHeaderContext } from "@/layouts/Header/Header";
+import { clsx } from "clsx";
 
 const HeaderContent = () => {
-  const { push } = useRouter();
+  const { isHeaderScrolled } = useHeaderContext();
+
   const { user, isAuth, isAuthLoading, handleLogout } = useAuthContext();
 
   const isHasUserCurrentRole = (role: string) => {
@@ -52,7 +55,9 @@ const HeaderContent = () => {
             <Button
               variant="none"
               size="none"
-              className="cursor-pointer"
+              className={clsx("cursor-pointer", {
+                "text-primary-foreground": isHeaderScrolled,
+              })}
               asChild
               onClick={handleLogout}
             >

@@ -17,6 +17,8 @@ import { GET_USER_QUERY } from "@/apollo/query/private/user/profile";
 import UserInfoFrame from "@/components/molecules/private/user/Frames/UserInfoFrame/UserInfoFrame";
 import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/ShowErrorModal";
 import CropUserProfileAvatarFrame from "@/components/molecules/private/user/Frames/CropUserProfileAvatarFrame/CropUserProfileAvatarFrame";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IUpdateUserForm {
   user: TUser;
@@ -33,6 +35,8 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
   user,
   isBecameOwner,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const [isEdit, setIsEdit] = React.useState<boolean>(false);
   const [requestError, setRequestError] = React.useState<
     ApolloError | undefined
@@ -128,12 +132,12 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
           {userOwner && (
             <div className="ml-[310px] flex gap-10">
               <UserInfoFrame
-                title={"Phone"}
+                title="phone"
                 info={userOwner.phone}
                 isCheck={false}
               />
               <UserInfoFrame
-                title={"Organization name"}
+                title="organizationName"
                 info={userOwner.organizationName}
                 className="w-full"
               />
@@ -144,10 +148,7 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
           ) : (
             <>
               <div className="flex gap-x-1 pl-[80px] italic text-sm text-muted-foreground">
-                <p>
-                  Your email is not activated, we sent the confirmation to your
-                  email
-                </p>
+                <p>{tTtl("yourEmailIsNotActivated")}</p>
               </div>
               <Separator />
             </>
@@ -163,10 +164,10 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
                     disabled={loading}
                     onClick={handleCancel}
                   >
-                    Cancel
+                    {tTtl("cancel")}
                   </Button>{" "}
                   <Button variant="primary" size="md" disabled={loading}>
-                    {!loading ? "Save" : "Loading..."}
+                    {!loading ? tTtl("save") : tTtl("loading")}
                   </Button>
                 </div>
               ) : (
@@ -176,7 +177,7 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
                   type="button"
                   onClick={() => setIsEdit(true)}
                 >
-                  Edit
+                  {tTtl("edit")}
                 </Button>
               )}
               <Button
@@ -185,7 +186,7 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
                 type="button"
                 disabled
               >
-                Change password
+                {tTtl("changePassword")}
               </Button>
             </div>
           )}

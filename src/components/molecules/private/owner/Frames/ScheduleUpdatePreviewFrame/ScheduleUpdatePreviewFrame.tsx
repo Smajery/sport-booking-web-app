@@ -18,6 +18,9 @@ import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
 import { getDuration } from "@/utils/helpers/text.helpers";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
+import DaysOfWeekList from "@/components/molecules/public/Lists/DaysOfWeekList/DaysOfWeekList";
 
 interface IScheduleUpdatePreviewFrame {
   timeSlots: TTimeSlot[];
@@ -44,25 +47,15 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
   facilityId,
   minBookingTime,
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { push } = useRouter();
 
-  const [deleteSchedule, { loading: deleteScheduleLoading }] = useMutation(
-    DELETE_SCHEDULE_MUTATION,
-  );
+  const [deleteSchedule] = useMutation(DELETE_SCHEDULE_MUTATION);
 
   const [requestError, setRequestError] = React.useState<
     ApolloError | undefined
   >(undefined);
-
-  const dayAvailability = facilityConfig.daysOfWeek.reduce(
-    (acc, day) => {
-      acc[day.key] = timeSlots.some((slot) => slot.dayOfWeek === day.key);
-      return acc;
-    },
-    {} as {
-      [key: number]: boolean;
-    },
-  );
 
   const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<number>(0);
 
@@ -104,31 +97,17 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
         <CardContent className="p-0">
           <div className="flex flex-col">
             <div className="flex bg-primary">
-              <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-1 w-[88px] border-r border-white text-primary-foreground">
+              <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-1 w-[98px] border-r border-white text-primary-foreground">
                 <Clock className="w-6 h-6" />
                 <p className="w-full truncate text-xs text-center">
-                  Min: {getDuration(minBookingTime)}
+                  {tTtl("cMinimum")}: {getDuration(minBookingTime)}
                 </p>
               </div>
-              <div className="flex items-center px-10 py-3 gap-x-10">
-                {facilityConfig.daysOfWeek.map((day) => (
-                  <div
-                    key={day.key}
-                    className={clsx(
-                      "text-primary-foreground flex justify-center cursor-pointer font-hover-high",
-                      {
-                        "text-2xl leading-7": selectedDayOfWeek === day.key,
-                        "opacity-50 pointer-events-none":
-                          !dayAvailability[day.key],
-                      },
-                    )}
-                    data-content={day.name}
-                    onClick={() => setSelectedDayOfWeek(day.key)}
-                  >
-                    {day.name}
-                  </div>
-                ))}
-              </div>
+              <DaysOfWeekList
+                selectedDayOfWeek={selectedDayOfWeek}
+                setSelectedDayOfWeek={setSelectedDayOfWeek}
+                timeSlots={timeSlots}
+              />
             </div>
             <ScrollArea className="h-[500px]">
               <div className="min-h-[500px] flex">
@@ -152,14 +131,14 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
                       onClick={handleCancel}
                       disabled={isRequestLoading}
                     >
-                      Cancel
+                      {tTtl("cancel")}
                     </Button>
                     <Button
                       variant="gradient"
                       size="lg"
                       disabled={isRequestLoading}
                     >
-                      {!isRequestLoading ? "Save" : "Loading..."}
+                      {!isRequestLoading ? tTtl("save") : tTtl("loading")}
                     </Button>
                   </>
                 ) : (
@@ -169,13 +148,12 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
                     onClick={() => setIsEditSchedule(true)}
                     type="button"
                   >
-                    Edit Schedule
+                    {tTtl("editSchedule")}
                   </Button>
                 )}
                 <ApproveActionCard
                   handleApprove={handleDeleteSchedule}
-                  alertDescription="This action cannot be undone. This will permanently delete your
-            schedule and remove its data from our servers."
+                  alertDescription="deleteScheduleCannotBeUndone"
                 >
                   <Button
                     type="button"
@@ -184,7 +162,7 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
                     className="ml-auto"
                     disabled={isEditSchedule}
                   >
-                    Delete Schedule
+                    {tTtl("deleteSchedule")}
                   </Button>
                 </ApproveActionCard>
               </div>

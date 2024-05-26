@@ -4,17 +4,21 @@ import React from "react";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
-interface IBecameOwnerButton extends ButtonProps {
+interface IBecomeOwnerButton extends ButtonProps {
   isBecameOwner: boolean;
   setIsBecameOwner: (value: boolean) => void;
 }
 
-const BecameOwnerButton: React.FC<IBecameOwnerButton> = ({
+const BecomeOwnerButton: React.FC<IBecomeOwnerButton> = ({
   isBecameOwner,
   setIsBecameOwner,
   ...props
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { push } = useRouter();
 
   const handleBecameOwner = () => {
@@ -29,9 +33,9 @@ const BecameOwnerButton: React.FC<IBecameOwnerButton> = ({
       disabled={isBecameOwner}
       {...props}
     >
-      Became Owner
+      {tTtl("becomeOwner")}
     </Button>
   );
 };
 
-export default BecameOwnerButton;
+export default BecomeOwnerButton;

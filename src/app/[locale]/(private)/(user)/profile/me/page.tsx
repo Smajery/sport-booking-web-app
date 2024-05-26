@@ -1,9 +1,20 @@
 import Profile from "@/modules/private/user/Profile/pages/Profile";
+import { TLocale } from "@/navigation";
+import { getTranslations } from "next-intl/server";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
-export const metadata = {
-  title: "Profile",
-  description: "Profile page",
-};
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: TLocale };
+}) {
+  const t = await getTranslations({ locale, namespace: namespaces.META_PAGES });
+
+  return {
+    title: t("me.title"),
+    description: t("me.description"),
+  };
+}
 
 const ProfilePage = () => {
   return <Profile />;

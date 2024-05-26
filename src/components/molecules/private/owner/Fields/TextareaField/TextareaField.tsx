@@ -11,6 +11,8 @@ import { clsx } from "clsx";
 import { UseFormReturn } from "react-hook-form";
 import { Textarea, TextareaProps } from "@/components/ui/textarea";
 import { Check, X } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface ITextArea extends TextareaProps {
   form: any;
@@ -30,9 +32,10 @@ const TextareaField: React.FC<ITextArea> = ({
   className = "",
   ...props
 }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+
   const {
     formState: { isSubmitted },
-    register,
   } = form as UseFormReturn;
 
   return (
@@ -51,7 +54,7 @@ const TextareaField: React.FC<ITextArea> = ({
                     (invalid && isSubmitted && !noValidate) || isRequestError,
                 })}
               >
-                {labelText}
+                {tLbl(labelText)}
               </FormLabel>
             )}
             {props.maxLength && (

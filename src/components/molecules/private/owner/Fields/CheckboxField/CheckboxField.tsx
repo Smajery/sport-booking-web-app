@@ -12,6 +12,8 @@ import { UseFormReturn } from "react-hook-form";
 import { Check, X } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckboxProps } from "@radix-ui/react-checkbox";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IInputField extends CheckboxProps {
   form: any;
@@ -31,12 +33,13 @@ const InputField: React.FC<IInputField> = ({
   noValidate = false,
   ...props
 }) => {
+  const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const {
     control,
     formState: { isSubmitted },
   } = form as UseFormReturn;
-
-  console.log(form.watch(name));
 
   return (
     <FormField
@@ -52,7 +55,7 @@ const InputField: React.FC<IInputField> = ({
                   "text-destructive": invalid && isSubmitted && !noValidate,
                 })}
               >
-                {labelText}
+                {tLbl(labelText)}
               </FormLabel>
             )}
           </div>
@@ -70,7 +73,7 @@ const InputField: React.FC<IInputField> = ({
                   htmlFor={checkboxId}
                   className="-mb-[2px] text-lg leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  {checkboxLabelText}
+                  {tTtl(checkboxLabelText)}
                 </label>
               </div>
             </FormControl>

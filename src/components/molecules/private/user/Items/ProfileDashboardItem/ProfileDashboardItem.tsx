@@ -6,6 +6,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { names } from "@/utils/constants/routes.constants";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 type TItem = {
   href: string;
@@ -21,6 +23,7 @@ const ProfileDashboardItem: React.FC<IProfileDashboardItem> = ({
   item,
   isCurrent,
 }) => {
+  const tDTtl = useTranslations(namespaces.DASHBOARDS_PROFILE_TITLES);
   const { name, href } = item;
 
   const isDisabled =
@@ -41,7 +44,7 @@ const ProfileDashboardItem: React.FC<IProfileDashboardItem> = ({
             "font-semibold text-primary": isCurrent,
           })}
         >
-          {name}
+          {tDTtl(name)}
         </NavigationMenuLink>
       </Link>
     </NavigationMenuItem>

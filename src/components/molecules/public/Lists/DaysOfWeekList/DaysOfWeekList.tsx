@@ -2,6 +2,8 @@ import React from "react";
 import { clsx } from "clsx";
 import { TTimeSlot } from "@/types/commonTypes";
 import { facilityConfig } from "@/config/public/facility";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IDaysOfWeekList {
   selectedDayOfWeek: number;
@@ -14,6 +16,8 @@ const DaysOfWeekList: React.FC<IDaysOfWeekList> = ({
   setSelectedDayOfWeek,
   timeSlots,
 }) => {
+  const tSlct = useTranslations(namespaces.COMPONENTS_SELECTS);
+
   const dayAvailability = facilityConfig.daysOfWeek.reduce(
     (acc, day) => {
       acc[day.key] = timeSlots.some((slot) => slot.dayOfWeek === day.key);
@@ -32,12 +36,12 @@ const DaysOfWeekList: React.FC<IDaysOfWeekList> = ({
             "px-5 py-1 rounded-xl flex justify-center cursor-pointer text-2xl",
             {
               "bg-black/10": selectedDayOfWeek === day.key,
-              "opacity-50": !dayAvailability[day.key],
+              "opacity-50 ": !dayAvailability[day.key],
             },
           )}
           onClick={() => setSelectedDayOfWeek(day.key)}
         >
-          {day.name}
+          {tSlct(day.name)}
         </div>
       ))}
     </div>

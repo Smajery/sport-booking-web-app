@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,6 +12,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
+import { useHeaderContext } from "@/layouts/Header/Header";
 
 type TNavLink = {
   href: string;
@@ -22,6 +25,8 @@ interface INavbarLinksList {
 
 const NavbarLinksList: React.FC<INavbarLinksList> = ({ navItems }) => {
   const t = useTranslations(namespaces.LAYOUTS_HEADER_TITLES);
+  const { isHeaderScrolled } = useHeaderContext();
+
   const pathname = usePathname();
   const rootHref = "/" + pathname.split("/")[1];
   return (
@@ -32,6 +37,7 @@ const NavbarLinksList: React.FC<INavbarLinksList> = ({ navItems }) => {
           className={clsx("hover:underline", {
             underline: link.href === rootHref,
             "": link.href !== rootHref,
+            "text-primary-foreground": isHeaderScrolled,
           })}
         >
           <Link href={link.href} legacyBehavior passHref>

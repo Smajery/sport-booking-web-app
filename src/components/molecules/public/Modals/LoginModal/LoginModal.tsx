@@ -19,6 +19,8 @@ import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import { jwtDecode } from "jwt-decode";
 import { setCookie } from "@/utils/helpers/cookie.helpers";
 import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface ILoginModal {
   setIsLoginModal: (value: boolean) => void;
@@ -30,6 +32,8 @@ const loginFormSchema = z.object({
 });
 
 const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { setIsAuth } = useAuthContext();
 
   const [loginUserMutation, { loading, error }] =
@@ -78,7 +82,7 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
   const { isSubmitted, isValid, isSubmitting } = form.formState;
 
   return (
-    <ModalCard handleCloseModal={handleCloseModal} title="Welcome">
+    <ModalCard handleCloseModal={handleCloseModal} title="welcome">
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -90,8 +94,8 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
               form={form}
               type="email"
               name="email"
-              labelText="Email"
-              placeholder="Ex: example@gmail.com"
+              labelText="email"
+              placeholder="email"
               IconComponent={Mail}
               isRequestError={!!error}
             />
@@ -99,8 +103,8 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
               form={form}
               type="password"
               name="password"
-              placeholder="Minimum 6 characters"
-              labelText="Password"
+              placeholder="password"
+              labelText="password"
               IconComponent={Lock}
               isRequestError={!!error}
             />
@@ -116,13 +120,15 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
             disabled={isSubmitting || (isSubmitted && !isValid)}
             className="auth-btn-gradient text-white"
           >
-            {!loading ? "Login" : "Loading..."}
+            {!loading ? tTtl("login") : tTtl("loading")}
           </Button>
         </form>
       </FormProvider>
-      <div className="text-with-separators lowercase my-[16px]">Or</div>
+      <div className="text-with-separators lowercase my-[16px]">
+        {tTtl("or")}
+      </div>
       <div className="flex flex-col gap-y-[16px]">
-        <GoogleAuthButton>Login with Google</GoogleAuthButton>
+        <GoogleAuthButton>{tTtl("loginWithGoogle")}</GoogleAuthButton>
       </div>
     </ModalCard>
   );
