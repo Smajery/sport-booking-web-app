@@ -179,7 +179,7 @@ const CreateFacilityForm = () => {
               name="description"
               labelText="description"
               className="max-h-[200px] min-h-[98px]"
-              placeholder="Facility description..."
+              placeholder="facilityDescription"
               maxLength={400}
             />
           </div>
