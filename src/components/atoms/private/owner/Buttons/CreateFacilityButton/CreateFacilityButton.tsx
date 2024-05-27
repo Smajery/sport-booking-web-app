@@ -17,7 +17,7 @@ const CreateFacilityButton = () => {
       asChild
       onClick={() => push(routes.FACILITY_CREATE)}
     >
-      <div className="w-10 h-10 rounded-md bg-border hover:bg-primary hover:text-primary-foreground">
+      <div className="w-10 h-10 rounded-md bg-accent border border-secondary text-primary-foreground-300 hover:bg-secondary hover:text-secondary-foreground">
         <Plus />
       </div>
     </Button>

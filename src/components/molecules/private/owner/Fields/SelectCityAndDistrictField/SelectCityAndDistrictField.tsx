@@ -59,12 +59,12 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
   const {
     control,
     formState: { isSubmitted },
+    setValue,
     watch,
   } = form as UseFormReturn;
 
   const cityIdWatch = watch(cityName) ?? null;
 
-  const [cityId, setCityId] = React.useState<string | null>(cityIdWatch);
   const [cities, setCities] = React.useState<TCity[]>([]);
   const [districts, setDistricts] = React.useState<TDistrict[]>([]);
 
@@ -78,9 +78,9 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
   const { loading: districtsLoading, error: districtsError } = useQuery(
     GET_ALL_CITY_DISTRICTS_QUERY,
     {
-      skip: !cityId,
+      skip: !cityIdWatch,
       variables: {
-        cityId: Number(cityId),
+        cityId: Number(cityIdWatch),
       },
       onCompleted: (data) => setDistricts(data.findAllDistricts),
     },
@@ -105,8 +105,10 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
           <div className="flex justify-between items-center gap-x-5">
             <div className="w-full flex justify-between gap-x-2">
               <Select
-                onValueChange={(e) => setCityId(e)}
-                defaultValue={cityId ?? ""}
+                onValueChange={(e) => {
+                  setValue(cityName, e);
+                }}
+                defaultValue={cityIdWatch ?? ""}
                 disabled={citiesLoading || !!citiesError}
               >
                 <SelectTrigger className="h-[56px] border border-input rounded-md text-lg text-muted-foreground font-light">
@@ -132,7 +134,7 @@ const SelectCityAndDistrictField: React.FC<ISelectCityAndDistrictField> = ({
                 </SelectContent>
               </Select>
               <Select
-                disabled={districtsLoading || !!districtsError || !cityId}
+                disabled={districtsLoading || !!districtsError || !cityIdWatch}
                 defaultValue={value}
                 onValueChange={onChange}
               >

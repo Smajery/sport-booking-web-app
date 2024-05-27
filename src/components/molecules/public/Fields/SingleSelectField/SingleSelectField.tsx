@@ -74,8 +74,8 @@ const SingleSelectField: React.FC<ISingleSelectField> = ({
                   <Badge
                     variant={
                       value && value.key === selectableItem.key
-                        ? "primary"
-                        : "outline"
+                        ? "secondary"
+                        : "outlineSecondary"
                     }
                   >
                     {tSlct(selectableItem.name)}

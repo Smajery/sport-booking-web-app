@@ -7,6 +7,7 @@ import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
 import { GET_ALL_OWNER_FACILITIES_QUERY } from "@/apollo/query/private/owner/facility";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
+import CreateFacilityButton from "@/components/atoms/private/owner/Buttons/CreateFacilityButton/CreateFacilityButton";
 
 const limit = 10;
 
@@ -32,7 +33,12 @@ const FacilitiesSection = () => {
       ) : error ? (
         <div>{getApolloErrorMessage(error)}</div>
       ) : (
-        <FacilitiesList facilities={data.findOwnerFacilities.facilities} />
+        <>
+          <FacilitiesList facilities={data.findOwnerFacilities.facilities} />
+          <div className="mx-auto flex items-center justify-center w-[340px] h-[288px]">
+            <CreateFacilityButton />
+          </div>
+        </>
       )}
     </section>
   );

@@ -93,10 +93,10 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
 
   return (
     <>
-      <Card className="bg-background overflow-hidden">
+      <Card className="bg-background overflow-hidden border-secondary shadow-md">
         <CardContent className="p-0">
           <div className="flex flex-col">
-            <div className="flex bg-primary">
+            <div className="flex bg-secondary">
               <div className="p-1 flex flex-col justify-center items-center gap-y-1 px-1 w-[98px] border-r border-white text-primary-foreground">
                 <Clock className="w-6 h-6" />
                 <p className="w-full truncate text-xs text-center">
@@ -134,7 +134,7 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
                       {tTtl("cancel")}
                     </Button>
                     <Button
-                      variant="gradient"
+                      variant="outlineSecondary"
                       size="lg"
                       disabled={isRequestLoading}
                     >

@@ -53,7 +53,7 @@ const PreviewUpdatePriceSlotsList: React.FC<IPreviewUpdatePriceSlotsList> = ({
         >
           {selectedSlotIds.find(
             (selectedSlotId) => selectedSlotId === slot.id,
-          ) && <Dot className="w-6 h-6 mr-auto" color="#ff8749" />}
+          ) && <Dot className="w-6 h-6 mr-auto" />}
           {slot.price} {tTtl("uah")}
         </div>
       ))}

@@ -101,8 +101,8 @@ const MultiSelectField: React.FC<IMultiSelectField> = ({
                           (item: TSelectedItem) =>
                             item.key === selectableItem.key,
                         )
-                          ? "primary"
-                          : "outline"
+                          ? "secondary"
+                          : "outlineSecondary"
                       }
                     >
                       {tSlct(selectableItem.name)}

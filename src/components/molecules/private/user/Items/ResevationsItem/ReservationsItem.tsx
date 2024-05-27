@@ -28,16 +28,16 @@ const ReservationsItem: React.FC<IBookingItem> = ({ booking }) => {
 
   return (
     <div className="h-[260px] rounded-xl shadow-md flex border border-border">
-      <div className="px-5 pt-5 pb-10 w-[300px] flex flex-col gap-y-4">
-        <Badge variant={getBookingStatusVariant(status)} size="sm">
-          {tSts(status)}
-        </Badge>
+      <div className="px-5 pt-5 pb-10 w-[300px] flex flex-col justify-center items-center gap-y-4">
         <Link
           href={`${routes.FACILITY}/${id}`}
-          className="text-2xl hover:underline"
+          className="w-full truncate text-center mt-2 text-2xl hover:underline"
         >
           {name}
         </Link>
+        <Badge variant={getBookingStatusVariant(status)} size="sm">
+          {tSts(status)}
+        </Badge>
       </div>
       <div className="flex py-10">
         <div className="px-5 flex flex-col justify-center items-center border-l border-border">

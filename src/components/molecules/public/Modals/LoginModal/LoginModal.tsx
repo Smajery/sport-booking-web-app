@@ -109,16 +109,14 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
               isRequestError={!!error}
             />
           </div>
-
           {error && (
             <p className="text-danger">{getApolloErrorMessage(error)}</p>
           )}
           <Button
-            variant="none"
+            variant="outlineSecondary"
             size="lg"
             type="submit"
             disabled={isSubmitting || (isSubmitted && !isValid)}
-            className="auth-btn-gradient text-white"
           >
             {!loading ? tTtl("login") : tTtl("loading")}
           </Button>

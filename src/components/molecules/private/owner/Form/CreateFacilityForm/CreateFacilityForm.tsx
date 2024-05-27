@@ -19,6 +19,7 @@ import ErrorHandler from "@/utils/handlers/ErrorHandler";
 import ImageAvatarField from "@/components/molecules/private/owner/Fields/ImageAvatarField/ImageAvatarField";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
+import FormErrorsFrame from "@/components/molecules/public/Frames/FormErrorsFrame/FormErrorsFrame";
 
 const createFacilityFormSchema = z.object({
   name: z.string().min(1),

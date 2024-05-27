@@ -57,11 +57,7 @@ const ImageAvatarField: React.FC<IImageAvatarField> = ({
         <div
           className={`w-full flex items-center justify-center border border-primary border-dashed ${className}`}
         >
-          <ImageIcon
-            className="w-[60px] h-[60px]"
-            color="#ff8749"
-            strokeWidth={0.5}
-          />
+          <ImageIcon className="w-[60px] h-[60px]" strokeWidth={0.5} />
         </div>
       );
     } else {
@@ -96,7 +92,7 @@ const ImageAvatarField: React.FC<IImageAvatarField> = ({
             {renderImagesContent()}
           </div>
           <Button
-            variant="outlinePrimary"
+            variant="outlineSecondary"
             size="md"
             type="button"
             className="gap-x-2"

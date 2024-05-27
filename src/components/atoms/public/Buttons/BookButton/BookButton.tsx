@@ -28,7 +28,12 @@ const BookButton: React.FC<IBookButton> = ({ facilityId, ...props }) => {
   };
   return (
     <>
-      <Button size="md" variant="gradient" onClick={handleBook} {...props}>
+      <Button
+        size="md"
+        variant="outlineSecondary"
+        onClick={handleBook}
+        {...props}
+      >
         {tTtl("book")}
       </Button>
       {isBookModal && (

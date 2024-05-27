@@ -16,9 +16,9 @@ import _ from "lodash";
 import { GET_USER_QUERY } from "@/apollo/query/private/user/profile";
 import UserInfoFrame from "@/components/molecules/private/user/Frames/UserInfoFrame/UserInfoFrame";
 import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/ShowErrorModal";
-import CropUserProfileAvatarFrame from "@/components/molecules/private/user/Frames/CropUserProfileAvatarFrame/CropUserProfileAvatarFrame";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
+import UserProfileAvatarFrame from "@/components/molecules/private/user/Frames/UserProfileAvatarFrame/UserProfileAvatarFrame";
 
 interface IUpdateUserForm {
   user: TUser;
@@ -118,11 +118,7 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
           encType="multipart/form-data"
         >
           <div className="flex justify-between">
-            <CropUserProfileAvatarFrame
-              isEdit={isEdit}
-              user={user}
-              form={form}
-            />
+            <UserProfileAvatarFrame isEdit={isEdit} user={user} form={form} />
             {isEdit ? (
               <UpdateUserFormContent form={form} user={user} />
             ) : (

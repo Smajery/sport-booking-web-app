@@ -69,11 +69,7 @@ const MultiImageAvatarField: React.FC<IMultiImageAvatar> = ({
         <div
           className={`w-full flex items-center justify-center border border-primary border-dashed ${className}`}
         >
-          <ImageIcon
-            className="w-[60px] h-[60px]"
-            color="#ff8749"
-            strokeWidth={0.5}
-          />
+          <ImageIcon className="w-[60px] h-[60px]" strokeWidth={0.5} />
         </div>
       );
     }

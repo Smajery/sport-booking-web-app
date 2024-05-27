@@ -2,13 +2,13 @@
 
 import React from "react";
 import Link from "next/link";
-import { Anton } from "next/font/google";
+import { Comic_Neue } from "next/font/google";
 import { clsx } from "clsx";
 import { routes } from "@/utils/constants/routes.constants";
 import { useHeaderContext } from "@/layouts/Header/Header";
 
-const anton = Anton({
-  weight: ["400"],
+const anton = Comic_Neue({
+  weight: ["700"],
   subsets: ["latin"],
 });
 
@@ -16,7 +16,9 @@ interface ISportBookingLogo {
   className?: string;
 }
 
-const SportBookingLogo: React.FC<ISportBookingLogo> = ({ className = "" }) => {
+const FacilityBookingLogo: React.FC<ISportBookingLogo> = ({
+  className = "",
+}) => {
   const { isHeaderScrolled } = useHeaderContext();
 
   return (
@@ -31,10 +33,10 @@ const SportBookingLogo: React.FC<ISportBookingLogo> = ({ className = "" }) => {
           },
         )}
       >
-        Sport <br /> Booking
+        Facility <br /> <span className="ml-5">Booking</span>
       </Link>
     </div>
   );
 };
 
-export default SportBookingLogo;
+export default FacilityBookingLogo;

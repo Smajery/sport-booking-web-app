@@ -12,6 +12,8 @@ import CompactRatingFrame from "@/components/molecules/public/Frames/CompactRati
 import { MIN_PER_SLOT } from "@/utils/constants/titles.constants";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
+import SelectFavoriteOnItemButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnItemButton/SelectFavoriteOnItemButton";
+import FavoritesRatingFrame from "@/components/molecules/public/Frames/FavoritesRatingFrame/FavoritesRatingFrame";
 
 interface IFacilitiesItem {
   facility: TFacility;
@@ -26,78 +28,49 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
     name,
     images,
     address,
-    sportType,
     avgPrice,
-    coveringType,
     isWorking,
     avgRating,
     ratingCount,
     district,
-    facilityType,
   } = facility;
 
   return (
     <div
       className={clsx(
-        "p-2 rounded-xl w-[340px] flex flex-col gap-y-4 cursor-pointer",
+        "w-[560px] flex flex-col gap-y-4 p-4 overflow-hidden shadow-md border border-border rounded-xl cursor-pointer",
         {
-          "bg-border": !isWorking,
+          "bg-black/10": !isWorking,
         },
       )}
       onClick={() => push(`${routes.OWNER_FACILITIES}/${id}`)}
     >
-      <div className="relative">
+      <div className="flex justify-between gap-x-7">
         <ImageAvatar
           image={images.length > 0 ? images[0].image : null}
           imageName={name}
-          className="w-full h-[280px] rounded-xl"
+          className="w-[260px] h-[246px] rounded-xl shrink-0"
         />
-        <div className="absolute top-0 left-0 p-2 flex flex-col justify-between w-full h-full">
-          <div className="flex items-center justify-between">
-            <Badge variant="background" className="text-xl">
-              {name}
-            </Badge>
-            <div className="bg-background rounded-lg px-2 py-1 border border-transparent">
-              <CompactRatingFrame
-                avgRating={avgRating}
-                ratingCount={ratingCount}
-              />
-            </div>
-          </div>
-          <div className="flex justify-start gap-x-1">
-            <Badge variant="background">
-              {avgPrice
-                ? `${avgPrice} ₴/${MIN_PER_SLOT} ${tTtl("min")}`
-                : tTtl("noSchedule")}
+        <div className="grow flex flex-col pt-2 gap-y-1 min-w-0">
+          <p className="truncate text-xl">{name}</p>
+          <div className="mt-1 flex flex-col gap-y-2">
+            <Badge variant="outline">{tTtl(district.name)}</Badge>
+            <Badge variant="outline" Icon={MapPin}>
+              {address}
             </Badge>
           </div>
+          <p className="text-2xl mx-auto my-auto">
+            {avgPrice
+              ? `${avgPrice} ₴/${MIN_PER_SLOT} ${tTtl("min")}`
+              : tTtl("noSchedule")}
+          </p>
         </div>
       </div>
-      <div className="flex flex-col gap-y-2">
-        <div className="flex items-start gap-x-1">
-          <Badge variant="outline" Icon={MapPin}>
-            {address}
-          </Badge>
-          <Badge variant="outline">{tTtl(district.name)}</Badge>
-        </div>
-        <div className="flex gap-x-1">
-          {sportType.map((sport) => (
-            <div key={sport}>
-              <Badge variant="primary" Icon={Hash}>
-                {tTtl(sport)}
-              </Badge>
-            </div>
-          ))}
-        </div>
-        <div className="flex gap-x-1">
-          <Badge variant="accent" Icon={Hash}>
-            {tTtl(facilityType)}
-          </Badge>
-          <Badge variant="accent" Icon={Hash}>
-            {tTtl(coveringType)}
-          </Badge>
-        </div>
-      </div>
+      <FavoritesRatingFrame
+        avgRating={avgRating}
+        ratingCount={ratingCount}
+        className="mx-auto"
+      />
     </div>
   );
 };

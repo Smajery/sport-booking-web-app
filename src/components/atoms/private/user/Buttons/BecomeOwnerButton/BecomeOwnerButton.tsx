@@ -27,7 +27,7 @@ const BecomeOwnerButton: React.FC<IBecomeOwnerButton> = ({
   };
   return (
     <Button
-      variant="gradient"
+      variant="outlineSecondary"
       size="sm"
       onClick={handleBecameOwner}
       disabled={isBecameOwner}

@@ -61,13 +61,13 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
             <RatingFrame avgRating={avgRating} ratingCount={ratingCount} />
           </div>
           <Separator />
-          <div className="flex gap-x-4">
+          <div className="flex justify-between gap-x-4">
             <div className="flex flex-col text-muted-foreground text-lg font-light">
               <p>{tLbl("sport")}:</p>
               <p>{tLbl("facility")}:</p>
               <p>{tLbl("covering")}:</p>
             </div>
-            <div className="flex flex-col text-lg">
+            <div className="flex flex-col items-end text-lg">
               <div className="flex gap-x-1">
                 {sportType.map((sport, index) => (
                   <div key={sport}>
@@ -83,9 +83,7 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
             </div>
           </div>
           <Separator />
-          <div>
-            <p className="text-lg">{description}</p>
-          </div>
+          <p className="text-lg break-words">{description}</p>
         </div>
         <div className="flex items-end flex-col gap-y-2 shrink-0">
           {avgPrice ? (
@@ -97,7 +95,7 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
                 </span>
               </p>
               <Button
-                variant="gradient"
+                variant="outlineSecondary"
                 size="lg"
                 onClick={() =>
                   push(`${routes.OWNER_FACILITIES}/${id}/${routes.SCHEDULE}`)
@@ -109,7 +107,7 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
           ) : (
             <>
               <Button
-                variant="gradient"
+                variant="outlineSecondary"
                 size="lg"
                 onClick={() =>
                   push(

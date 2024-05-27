@@ -4,30 +4,35 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
 
-const badgeVariants = cva("min-w-0 max-w-max inline-flex gap-x-2 border", {
-  variants: {
-    variant: {
-      default: "border-transparent bg-primary text-primary-foreground",
-      primary: "border-transparent bg-primary text-primary-foreground",
-      secondary: "border-transparent bg-secondary text-secondary-foreground",
-      accent: "border-transparent bg-accent text-accent-foreground",
-      background: "border-transparent bg-background text-foreground",
-      destructive:
-        "border-transparent bg-destructive text-destructive-foreground",
-      danger: "border-transparent bg-danger text-danger-foreground",
-      outline: "border-border bg-background text-foreground",
-      success: "border-transparent bg-success text-success-foreground",
+const badgeVariants = cva(
+  "transition-colors max-w-max inline-flex gap-x-2 border",
+  {
+    variants: {
+      variant: {
+        default: "border-transparent bg-primary text-primary-foreground",
+        primary: "border-transparent bg-primary text-primary-foreground",
+        secondary: "border-transparent bg-secondary text-secondary-foreground",
+        accent: "border-transparent bg-accent text-accent-foreground",
+        background: "border-transparent bg-background text-foreground",
+        destructive:
+          "border-transparent bg-destructive text-destructive-foreground",
+        danger: "border-transparent bg-danger text-danger-foreground",
+        outline: "border-border bg-transparent text-foreground",
+        outlineSecondary:
+          "bg-accent text-secondary-foreground-300 border-border hover:bg-secondary hover:bg-secondary hover:text-secondary-foreground",
+        success: "border-transparent bg-success text-success-foreground",
+      },
+      size: {
+        default: "rounded-lg px-2 py-1",
+        sm: "rounded-full px-3",
+      },
     },
-    size: {
-      default: "rounded-lg px-2 py-1",
-      sm: "rounded-full px-3",
+    defaultVariants: {
+      variant: "default",
+      size: "default",
     },
   },
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-  },
-});
+);
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,

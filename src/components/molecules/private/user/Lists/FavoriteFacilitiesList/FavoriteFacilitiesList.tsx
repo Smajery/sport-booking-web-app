@@ -12,7 +12,7 @@ const FavoriteFacilitiesList: React.FC<IFavoriteFacilitiesList> = ({
   facilities,
 }) => {
   return (
-    <div className="grid grid-cols-4 content-start gap-5">
+    <div className="flex flex-wrap gap-5">
       {facilities.map((facility: TFacility) => (
         <FavoriteFacilitiesItem facility={facility} key={facility.id} />
       ))}

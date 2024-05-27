@@ -1,14 +1,3 @@
-export const getCoveringTypeIcon = (coveringType: string) => {
-  switch (coveringType) {
-    case "artificial_lawn":
-      return;
-  }
-};
-
-export const getThemeIconsPath = (themeMode: string | undefined) => {
-  return themeMode === "dark" ? "dark-icons" : "icons";
-};
-
 export const getRatingImagePath = (
   rating: number,
   currentUserRating: number,

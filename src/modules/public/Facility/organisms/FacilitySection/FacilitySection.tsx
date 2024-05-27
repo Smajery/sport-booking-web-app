@@ -10,7 +10,6 @@ import MultiImageAvatar from "@/components/atoms/public/Avatars/MultiImageAvatar
 import RatingFrame from "@/components/molecules/public/Frames/RatingFrame/RatingFrame";
 import BookButton from "@/components/atoms/public/Buttons/BookButton/BookButton";
 import SelectFavoriteOnPageButton from "@/components/atoms/private/user/Buttons/SelectFavoriteOnPageButton/SelectFavoriteOnPageButton";
-import ShareOnPageButton from "@/components/atoms/private/user/Buttons/ShareOnPageButton/ShareOnPageButton";
 import { MIN_PER_SLOT } from "@/utils/constants/titles.constants";
 import ContactOrganizationFrame from "@/components/molecules/public/Frames/ContactOrganizationFrame/ContactOrganizationFrame";
 import UserRatingFrame from "@/components/molecules/public/Frames/UserRatingFrame/UserRatingFrame";
@@ -71,7 +70,6 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
     <section className="w-full flex flex-col pt-[40px] gap-y-10">
       <div className="flex flex-col gap-y-2">
         <div className="flex justify-end gap-x-2">
-          <ShareOnPageButton />
           <SelectFavoriteOnPageButton
             currentUserIsFavorite={currentUserIsFavorite}
             facilityId={id}
@@ -85,25 +83,27 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
       </div>
       <div className="flex justify-between">
         <div className="w-[700px] flex flex-col gap-y-5">
-          <div className="flex justify-between">
-            <div className="flex flex-col gap-y-2">
-              <div className="flex items-center justify-between">
-                <p className="text-3xl">{name}</p>
-              </div>
+          <div className="flex justify-between gap-x-2 min-w-0">
+            <div className="flex flex-col gap-y-2 min-w-0">
+              <p className="w-full truncate text-3xl">{name}</p>
               <p className="text-lg font-light">
                 {address}, {tSlct(district.name)}
               </p>
             </div>
-            <RatingFrame avgRating={avgRating} ratingCount={ratingCount} />
+            <RatingFrame
+              avgRating={avgRating}
+              ratingCount={ratingCount}
+              className="shrink-0"
+            />
           </div>
           <Separator />
-          <div className="flex gap-x-4">
+          <div className="flex justify-between gap-x-4">
             <div className="flex flex-col text-muted-foreground text-lg font-light">
               <p>{tLbl("sport")}:</p>
               <p>{tLbl("facility")}:</p>
               <p>{tLbl("covering")}:</p>
             </div>
-            <div className="flex flex-col text-lg">
+            <div className="flex flex-col items-end text-lg">
               <div className="flex gap-x-1">
                 {sportType.map((sport, index) => (
                   <div key={sport}>
@@ -119,19 +119,8 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
             </div>
           </div>
           <Separator />
-          <div>
-            <p className="text-lg">{description}</p>
-          </div>
+          <p className="text-lg text-ellipsis break-words">{description}</p>
           <Separator />
-          <div className="flex justify-between">
-            <ContactOrganizationFrame phone={owner.userOwner.phone} />
-            {!isOwnerFacility && (
-              <UserRatingFrame
-                facilityId={facilityId}
-                currentUserRate={currentUserRate}
-              />
-            )}
-          </div>
         </div>
         {avgPrice && (
           <div className="flex items-end flex-col gap-y-2 shrink-0">
@@ -147,10 +136,18 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
                 {tTtl("temporarilyNotWorking")}
               </p>
             )}
+            <div className="flex flex-col items-end gap-y-4 mt-auto">
+              {!isOwnerFacility && (
+                <UserRatingFrame
+                  facilityId={facilityId}
+                  currentUserRate={currentUserRate}
+                />
+              )}
+              <ContactOrganizationFrame phone={owner.userOwner.phone} />
+            </div>
           </div>
         )}
       </div>
-      <Separator />
     </section>
   );
 };

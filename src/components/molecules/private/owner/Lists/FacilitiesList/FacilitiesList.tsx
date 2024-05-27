@@ -11,13 +11,10 @@ interface IFacilitiesList {
 
 const FacilitiesList: React.FC<IFacilitiesList> = ({ facilities }) => {
   return (
-    <div className="ml-auto grid grid-cols-3 content-start gap-5 pt-5">
+    <div className="flex flex-wrap gap-5 p-5">
       {facilities.map((facility: TFacility) => (
         <FacilitiesItem facility={facility} key={facility.id} />
       ))}
-      <div className="flex items-center justify-center w-[340px] h-[288px]">
-        <CreateFacilityButton />
-      </div>
     </div>
   );
 };

@@ -27,12 +27,9 @@ const YearSelect: React.FC<IYearSelect> = ({
   );
 
   return (
-    <Select
-      onValueChange={(e) => onChange(Number(e))}
-      defaultValue={String(value)}
-    >
+    <Select onValueChange={(e) => onChange(Number(e))}>
       <SelectTrigger className="rounded-none border-0">
-        <SelectValue />
+        <SelectValue placeholder={String(value)} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

@@ -25,7 +25,6 @@ const ImageCart: React.FC<IImageCart> = ({
       {isImageLoading && !isImageError && (
         <Loader2
           className={`m-auto animate-spin ${iconClassname}`}
-          color="#ff8749"
           strokeWidth={iconStrokeWidth}
         />
       )}
@@ -42,7 +41,6 @@ const ImageCart: React.FC<IImageCart> = ({
       ) : (
         <ImageOff
           className={`m-auto ${iconClassname}`}
-          color="#ff8749"
           strokeWidth={iconStrokeWidth}
         />
       )}

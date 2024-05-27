@@ -14,7 +14,9 @@ module.exports = {
           DEFAULT: "hsl(var(--background))",
         },
 
-        foreground: "hsl(var( --foreground))",
+        foreground: {
+          DEFAULT: "hsl(var( --foreground))",
+        },
 
         muted: {
           DEFAULT: "hsl(var( --muted))",
@@ -24,13 +26,13 @@ module.exports = {
 
         primary: {
           DEFAULT: "hsl(var(--primary))",
-          300: "hsl(var(--primary-300))",
           foreground: "hsl(var(--primary-foreground))",
         },
 
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          "foreground-300": "hsl(var( --secondary-foreground-300))",
         },
 
         accent: {

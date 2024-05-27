@@ -28,7 +28,7 @@ const DaysOfWeekList: React.FC<IDaysOfWeekList> = ({
     },
   );
   return (
-    <div className="px-5 bg-primary text-primary-foreground flex items-center">
+    <div className="px-5 bg-secondary text-primary-foreground flex items-center">
       {facilityConfig.daysOfWeek.map((day) => (
         <div
           key={day.key}

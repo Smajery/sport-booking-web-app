@@ -111,15 +111,15 @@ const SelectFavoriteOnItemButton: React.FC<ISelectFavoriteOnItemButton> = ({
       >
         {isFavorite || isFavoriteHovered ? (
           <Image
-            width="24"
-            height="24"
+            width={30}
+            height={30}
             src="/icons/favorite.svg"
             alt="Favotire"
           />
         ) : (
           <Image
-            width="24"
-            height="24"
+            width={30}
+            height={30}
             src="/icons/not_favorite.svg"
             alt="Not favotire"
           />

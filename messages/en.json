@@ -142,6 +142,7 @@
       "cancel": "Cancel",
       "deleteSchedule": "Delete schedule",
       "updateSchedule": "Update schedule",
+      "yourRate": "Your rate",
       "editSchedule": "Edit schedule",
       "deleteScheduleCannotBeUndone": "This action cannot be undone. This will permanently delete your schedule and remove its data from our servers.",
       "allSlots": "All slots",

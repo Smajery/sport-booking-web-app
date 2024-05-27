@@ -42,7 +42,7 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
           className={clsx(
             "px-5 h-[40px] flex items-center justify-end text-lg font-light border-t border-border last:border-b cursor-pointer",
             {
-              "text-primary": selectedSlotIds.find(
+              "text-secondary": selectedSlotIds.find(
                 (selectedSlotId) => selectedSlotId === slot.id,
               ),
               "text-muted-foreground": !selectedSlotIds.find(
@@ -54,7 +54,7 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
         >
           {selectedSlotIds.find(
             (selectedSlotId) => selectedSlotId === slot.id,
-          ) && <Dot className="w-6 h-6 mr-auto" color="#ff8749" />}
+          ) && <Dot className="w-6 h-6 mr-auto" />}
           {slot.price} {tTtl("uah")}
         </div>
       ))}

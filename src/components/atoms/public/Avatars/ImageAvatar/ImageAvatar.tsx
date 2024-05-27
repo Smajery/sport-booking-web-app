@@ -19,7 +19,7 @@ const ImageAvatar: React.FC<IImageAvatar> = ({
         <div
           className={`flex items-center justify-center border border-primary border-dashed ${className}`}
         >
-          <ImageIcon className="w-8 h-8" color="#ff8749" strokeWidth={1} />
+          <ImageIcon className="w-8 h-8" strokeWidth={1} />
         </div>
       );
     default:

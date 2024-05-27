@@ -119,11 +119,10 @@ const SignUpModal: React.FC<ISignUpModal> = ({
             <p className="text-danger">{getApolloErrorMessage(error)}</p>
           )}
           <Button
-            variant="none"
+            variant="outlineSecondary"
             size="lg"
             type="submit"
             disabled={isSubmitting || (isSubmitted && !isValid)}
-            className="auth-btn-gradient text-white"
           >
             {!loading ? tTtl("signUp") : tTtl("loading")}
           </Button>

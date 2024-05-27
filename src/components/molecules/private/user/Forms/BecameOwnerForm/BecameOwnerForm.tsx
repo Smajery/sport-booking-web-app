@@ -48,6 +48,10 @@ const BecameOwnerForm: React.FC<IBecameOwnerForm> = ({ setIsBecameOwner }) => {
     skip: true,
     context: { authRequired: true },
   });
+  const { refetch: refetchUser } = useQuery(GET_USER_QUERY, {
+    skip: true,
+    context: { authRequired: true },
+  });
 
   const form = useForm<z.infer<typeof becameOwnerSchema>>({
     resolver: zodResolver(becameOwnerSchema),
@@ -72,6 +76,7 @@ const BecameOwnerForm: React.FC<IBecameOwnerForm> = ({ setIsBecameOwner }) => {
           const decodedAccessToken: { exp: number } = jwtDecode(accessToken);
           setCookie("accessToken", accessToken, decodedAccessToken.exp);
 
+          await refetchUser();
           await refetchUserInfo();
         },
       });

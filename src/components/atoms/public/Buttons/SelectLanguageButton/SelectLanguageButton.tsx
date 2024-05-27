@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { useHeaderContext } from "@/layouts/Header/Header";
 import { clsx } from "clsx";
 import { namespaces } from "@/utils/constants/namespaces.constants";
+import { ChevronDown } from "lucide-react";
 
 const SelectLanguageButton = () => {
   const t = useTranslations(namespaces.LAYOUTS_HEADER_TITLES);
@@ -35,11 +36,11 @@ const SelectLanguageButton = () => {
         <Button
           variant="none"
           size="none"
-          className={clsx("mt-[2px] uppercase", {
+          className={clsx("gap-x-2 mt-[2px] uppercase", {
             "text-primary-foreground": isHeaderScrolled,
           })}
         >
-          {t(locale)}
+          {t(locale)} <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-min">

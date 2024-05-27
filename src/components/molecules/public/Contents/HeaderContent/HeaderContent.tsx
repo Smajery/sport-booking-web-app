@@ -5,15 +5,12 @@ import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 import { NavigationMenu } from "@/components/ui/navigation-menu";
 import NavLinksList from "@/components/molecules/public/Lists/NavLinksList/NavLinksList";
 import { siteConfig } from "@/config/site";
-import SportBookingLogo from "@/components/atoms/public/Logos/SportBookingLogo/SportBookingLogo";
+import FacilityBookingLogo from "@/components/atoms/public/Logos/FacilityBookingLogo/FacilityBookingLogo";
 import NavAuthButtonsList from "@/components/molecules/public/Lists/NavAuthButtonsList/NavAuthButtonsList";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { names, routes } from "@/utils/constants/routes.constants";
 import UserHeaderAvatar from "@/components/atoms/private/user/Avatars/UserHeaderAvatar/UserHeaderAvatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import SwitchThemeButton from "@/components/atoms/public/Buttons/SwitchThemeButton/SwitchThemeButton";
 import SelectLanguageButton from "@/components/atoms/public/Buttons/SelectLanguageButton/SelectLanguageButton";
 import { useHeaderContext } from "@/layouts/Header/Header";
 import { clsx } from "clsx";
@@ -75,9 +72,8 @@ const HeaderContent = () => {
     <div className="py-5 container mx-auto">
       <NavigationMenu className="max-w-full justify-between hidden md:flex">
         <div className="flex items-center gap-x-4">
-          <SportBookingLogo className="mr-5" />
+          <FacilityBookingLogo className="mr-5" />
           <NavLinksList navItems={siteConfig.publicNavItems} />
-          <SwitchThemeButton />
           <SelectLanguageButton />
           {/*{renderLeftNavContent()}*/}
         </div>

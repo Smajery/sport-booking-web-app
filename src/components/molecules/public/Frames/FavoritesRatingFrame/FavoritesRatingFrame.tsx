@@ -3,13 +3,13 @@ import Image from "next/image";
 import { getAvgRatingImagePath } from "@/utils/helpers/icon.helpers";
 import { useTheme } from "next-themes";
 
-interface IRatingFrame {
+interface IFavoritesRatingFrame {
   avgRating: number;
   ratingCount: number;
   className?: string;
 }
 
-const RatingFrame: React.FC<IRatingFrame> = ({
+const FavoritesRatingFrame: React.FC<IFavoritesRatingFrame> = ({
   avgRating,
   ratingCount,
   className = "",
@@ -17,10 +17,10 @@ const RatingFrame: React.FC<IRatingFrame> = ({
   const { theme } = useTheme();
 
   return (
-    <div className={`flex flex-col items-center ${className}`}>
-      <div className="relative flex">
+    <div className={`flex items-center gap-x-2 ${className}`}>
+      <div className="h-6 flex">
         <p className="text-2xl">{avgRating}</p>
-        <p className="absolute left-full text-xs text-muted-foreground font-light">
+        <p className="text-xs text-muted-foreground font-light">
           ({ratingCount})
         </p>
       </div>
@@ -30,8 +30,8 @@ const RatingFrame: React.FC<IRatingFrame> = ({
             key={rating}
             src={`/icons/${getAvgRatingImagePath(rating, avgRating)}`}
             alt={`Rating ${rating}`}
-            width={20}
-            height={20}
+            width={30}
+            height={30}
           />
         ))}
       </div>
@@ -39,4 +39,4 @@ const RatingFrame: React.FC<IRatingFrame> = ({
   );
 };
 
-export default RatingFrame;
+export default FavoritesRatingFrame;

@@ -8,8 +8,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@apollo/client";
 import { TUserAvatar } from "@/types/private/user/profileTypes";
 import { GET_USER_AVATAR_QUERY } from "@/apollo/query/private/user/profile";
+import { useRouter } from "next/navigation";
+import { routes } from "@/utils/constants/routes.constants";
 
 const UserHeaderAvatar = () => {
+  const { push } = useRouter();
+
   const { data, loading, error } = useQuery(GET_USER_AVATAR_QUERY, {
     fetchPolicy: "cache-and-network",
     context: { authRequired: true },
@@ -25,7 +29,10 @@ const UserHeaderAvatar = () => {
   const { avatar, fullname } = data.getProfile as TUserAvatar;
 
   return (
-    <Avatar className="h-[50px] w-[50px]">
+    <Avatar
+      className="h-[50px] w-[50px] cursor-pointer"
+      onClick={() => push(routes.PROFILE)}
+    >
       {avatar && (
         <AvatarImage src={`${process.env.NEXT_PUBLIC_IMG_URL}/${avatar}`} />
       )}

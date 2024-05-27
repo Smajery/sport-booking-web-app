@@ -15,10 +15,7 @@ import { Loader2 } from "lucide-react";
 import { GET_ONE_FACILITY_QUERY } from "@/apollo/query/public/facility";
 import { clsx } from "clsx";
 import { useTheme } from "next-themes";
-import {
-  getRatingImagePath,
-  getThemeIconsPath,
-} from "@/utils/helpers/icon.helpers";
+import { getRatingImagePath } from "@/utils/helpers/icon.helpers";
 
 interface IUpdateRatingForm {
   ratingsCount: number;
@@ -117,7 +114,7 @@ const UpdateRatingForm: React.FC<IUpdateRatingForm> = ({
                 >
                   <div className="pr-1 pl-1 last-of-type:pr-0 first-of-type:pl-0">
                     <Image
-                      src={`/${getThemeIconsPath(theme)}/${getRatingImagePath(rating, currentUserRating)}`}
+                      src={`/icons/${getRatingImagePath(rating, currentUserRating)}`}
                       alt={`Rating ${rating}`}
                       width={20}
                       height={20}

@@ -1,7 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { getThemeIconsPath } from "@/utils/helpers/icon.helpers";
 import { useTheme } from "next-themes";
 
 interface IAvgRatingFrame {
@@ -22,7 +20,7 @@ const CompactRatingFrame: React.FC<IAvgRatingFrame> = ({
       <Image
         width={12}
         height={12}
-        src={`/${getThemeIconsPath(theme)}/rating-star.svg`}
+        src={`/icons/rating-star.svg`}
         alt="Average rating"
       />
       <p className="mb-auto text-xs text-muted-foreground font-light">

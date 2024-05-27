@@ -4,7 +4,6 @@ import { Roboto } from "next/font/google";
 import React from "react";
 
 import { AuthProvider } from "@/providers/AuthProvider/AuthProvider";
-import { ThemeProvider } from "@/providers/ThemeProvider/ThemeProvider";
 import { ApolloProvider } from "@/providers/ApolloProvider/ApolloProvider";
 import { ModalProvider } from "@/providers/ModalProvider/ModalProvider";
 import { IntlClientProvider } from "@/providers/IntlClientProvider/IntlClientProvider";
@@ -41,19 +40,17 @@ export default async function LocaleLayout({
   unstable_setRequestLocale(locale);
 
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${roboto.className}`}>
         <link rel="icon" href="/icons/logo.ico" sizes="any" />
         <ApolloProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <IntlClientProvider>
-              <AuthProvider>
-                <GoogleOAuthProvider>
-                  <ModalProvider>{children}</ModalProvider>
-                </GoogleOAuthProvider>
-              </AuthProvider>
-            </IntlClientProvider>
-          </ThemeProvider>
+          <IntlClientProvider>
+            <AuthProvider>
+              <GoogleOAuthProvider>
+                <ModalProvider>{children}</ModalProvider>
+              </GoogleOAuthProvider>
+            </AuthProvider>
+          </IntlClientProvider>
         </ApolloProvider>
       </body>
     </html>

@@ -96,10 +96,10 @@ const HomeSection = () => {
         {!isShowMap ? (
           <>
             <Button
-              variant="none"
+              variant="outlineSecondary"
               size="lg"
               onClick={() => setIsShowMap(true)}
-              className="fixed top-108 w-[1000px] h-[56px] border-2 border-border bg-background/50 z-10 hover:bg-background"
+              className="fixed top-108 w-[1000px] h-[56px] z-10"
             >
               <div className="flex items-start gap-x-1">
                 {tTtl("showMap")} <Map className="w-5 h-5" />
