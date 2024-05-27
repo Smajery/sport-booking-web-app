@@ -5,18 +5,22 @@ import CreateRatingForm from "@/components/molecules/private/user/Forms/CreateRa
 import UpdateRatingForm from "@/components/molecules/private/user/Forms/UpdateRatingForm/UpdateRatingForm";
 import { TCurrentUserRate } from "@/types/public/facilityTypes";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
-interface IUserRatingFrame {
+interface IUserRateFrame {
   facilityId: number;
   currentUserRate: TCurrentUserRate | null;
   className?: string;
 }
 
-const UserRatingFrame: React.FC<IUserRatingFrame> = ({
+const UserRateFrame: React.FC<IUserRateFrame> = ({
   facilityId,
   currentUserRate,
   className = "",
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   return (
     <div
       className={cn(
@@ -24,7 +28,7 @@ const UserRatingFrame: React.FC<IUserRatingFrame> = ({
         className,
       )}
     >
-      <p className="text-lg font-light">Your rate</p>
+      <p className="text-lg font-light">{tTtl("yourRate")}</p>
       {!currentUserRate ? (
         <CreateRatingForm
           facilityId={facilityId}
@@ -43,4 +47,4 @@ const UserRatingFrame: React.FC<IUserRatingFrame> = ({
   );
 };
 
-export default UserRatingFrame;
+export default UserRateFrame;

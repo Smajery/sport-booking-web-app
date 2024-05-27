@@ -13,7 +13,7 @@ import SelectFavoriteOnPageButton from "@/components/atoms/private/user/Buttons/
 import ShareOnPageButton from "@/components/atoms/private/user/Buttons/ShareOnPageButton/ShareOnPageButton";
 import { MIN_PER_SLOT } from "@/utils/constants/titles.constants";
 import ContactOrganizationFrame from "@/components/molecules/public/Frames/ContactOrganizationFrame/ContactOrganizationFrame";
-import UserRatingFrame from "@/components/molecules/public/Frames/UserRatingFrame/UserRatingFrame";
+import UserRateFrame from "@/components/molecules/private/user/UserRateFrame/UserRateFrame";
 import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
@@ -85,16 +85,20 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
       </div>
       <div className="flex justify-between">
         <div className="w-[700px] flex flex-col gap-y-5">
-          <div className="flex justify-between">
-            <div className="flex flex-col gap-y-2">
-              <div className="flex items-center justify-between">
-                <p className="text-3xl">{name}</p>
+          <div className="flex justify-between gap-x-2">
+            <div className="flex flex-col gap-y-2 min-w-0">
+              <div className="flex items-center justify-between min-w-0">
+                <p className="truncate text-3xl">{name}</p>
               </div>
               <p className="text-lg font-light">
                 {address}, {tSlct(district.name)}
               </p>
             </div>
-            <RatingFrame avgRating={avgRating} ratingCount={ratingCount} />
+            <RatingFrame
+              avgRating={avgRating}
+              ratingCount={ratingCount}
+              className="shrink-0"
+            />
           </div>
           <Separator />
           <div className="flex gap-x-4">
@@ -119,14 +123,12 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
             </div>
           </div>
           <Separator />
-          <div>
-            <p className="text-lg">{description}</p>
-          </div>
+          <p className="text-lg break-words">{description}</p>
           <Separator />
           <div className="flex justify-between">
             <ContactOrganizationFrame phone={owner.userOwner.phone} />
-            {!isOwnerFacility && (
-              <UserRatingFrame
+            {user && !isOwnerFacility && (
+              <UserRateFrame
                 facilityId={facilityId}
                 currentUserRate={currentUserRate}
               />

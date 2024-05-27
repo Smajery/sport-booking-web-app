@@ -53,11 +53,11 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           className="w-full h-[280px] rounded-xl"
         />
         <div className="absolute top-0 left-0 p-2 flex flex-col justify-between w-full h-full">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-x-2">
             <Badge variant="background" className="text-xl">
               {name}
             </Badge>
-            <div className="bg-background rounded-lg px-2 py-1 border border-transparent">
+            <div className="bg-background rounded-lg px-2 py-1 border border-transparent shrink-0">
               <CompactRatingFrame
                 avgRating={avgRating}
                 ratingCount={ratingCount}

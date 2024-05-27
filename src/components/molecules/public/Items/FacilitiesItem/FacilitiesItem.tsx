@@ -71,10 +71,10 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           </div>
         </div>
       </div>
-      <div className="grow flex flex-col py-2 gap-y-1">
+      <div className="grow flex flex-col py-2 gap-y-1 min-w-0">
         <div className="flex items-center justify-between gap-x-6">
-          <div className="flex gap-x-1">
-            <p className="truncate text-xl">{name} </p>
+          <div className="flex gap-x-1 min-w-0">
+            <p className="truncate text-xl">{name}</p>
             {!isWorking && (
               <p className="text-xl italic text-muted-foreground">
                 ({tTtl("temporarilyNotWorking")})
@@ -92,7 +92,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           </div>
           <Badge
             variant="outline"
-            textClassname="text-ellipsis line-clamp-2"
+            textClassname="text-ellipsis line-clamp-2 break-words"
             Icon={Text}
           >
             {description}

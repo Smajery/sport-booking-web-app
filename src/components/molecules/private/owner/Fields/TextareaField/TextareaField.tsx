@@ -20,6 +20,7 @@ interface ITextArea extends TextareaProps {
   labelText?: string;
   noValidate?: boolean;
   isRequestError?: boolean;
+  placeholder?: string;
   className?: string;
 }
 
@@ -29,10 +30,12 @@ const TextareaField: React.FC<ITextArea> = ({
   labelText,
   noValidate = false,
   isRequestError = false,
+  placeholder = "",
   className = "",
   ...props
 }) => {
   const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+  const tPlh = useTranslations(namespaces.COMPONENTS_PLACEHOLDERS);
 
   const {
     formState: { isSubmitted },
@@ -68,6 +71,7 @@ const TextareaField: React.FC<ITextArea> = ({
               <Textarea
                 autoComplete="off"
                 value={value ?? ""}
+                placeholder={placeholder ? tPlh(placeholder) : ""}
                 onChange={(e) => {
                   onChange(e.target.value);
                 }}

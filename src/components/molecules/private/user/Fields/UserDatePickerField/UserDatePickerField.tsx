@@ -113,7 +113,7 @@ const UserDatePickerField: React.FC<IUserDatePickerField> = ({
                         </p>
                       </div>
                       <YearSelect
-                        value={getYear(dateWatch)}
+                        value={endYear}
                         onChange={handleYearChange}
                         startYear={startYear}
                         endYear={endYear}

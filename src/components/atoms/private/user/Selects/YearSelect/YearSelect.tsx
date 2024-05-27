@@ -7,6 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IYearSelect {
   value: number;
@@ -21,18 +23,17 @@ const YearSelect: React.FC<IYearSelect> = ({
   startYear,
   endYear,
 }) => {
+  const tPlh = useTranslations(namespaces.COMPONENTS_PLACEHOLDERS);
+
   const years = Array.from(
     { length: endYear - startYear + 1 },
     (_, i) => endYear - i,
   );
 
   return (
-    <Select
-      onValueChange={(e) => onChange(Number(e))}
-      defaultValue={String(value)}
-    >
+    <Select onValueChange={(e) => onChange(Number(e))}>
       <SelectTrigger className="rounded-none border-0">
-        <SelectValue />
+        <SelectValue placeholder={value ? String(value) : tPlh("select")} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

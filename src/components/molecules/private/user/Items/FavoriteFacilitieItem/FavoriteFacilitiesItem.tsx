@@ -59,7 +59,7 @@ const FavoriteFacilitiesItem: React.FC<IFavoriteFacilitiesItem> = ({
             <Badge variant="background" className="text-xl">
               {name}
             </Badge>
-            <div className="bg-background rounded-lg px-2 py-1 border border-transparent">
+            <div className="bg-background rounded-lg px-2 py-1 border border-transparent shrink-0">
               <CompactRatingFrame
                 avgRating={avgRating}
                 ratingCount={ratingCount}

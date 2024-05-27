@@ -49,16 +49,18 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
       />
       <div className="flex justify-between">
         <div className="w-[700px] flex flex-col gap-y-5">
-          <div className="flex justify-between">
-            <div className="flex flex-col gap-y-2">
-              <div className="flex items-center justify-between">
-                <p className="text-3xl">{name}</p>
-              </div>
+          <div className="flex justify-between gap-x-2">
+            <div className="flex flex-col gap-y-2 min-w-0">
+              <p className="truncate text-3xl">{name}</p>
               <p className="text-lg font-light">
                 {address}, {tTtl(district.name)}
               </p>
             </div>
-            <RatingFrame avgRating={avgRating} ratingCount={ratingCount} />
+            <RatingFrame
+              avgRating={avgRating}
+              ratingCount={ratingCount}
+              className="shrink-0"
+            />
           </div>
           <Separator />
           <div className="flex gap-x-4">
@@ -83,9 +85,7 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
             </div>
           </div>
           <Separator />
-          <div>
-            <p className="text-lg">{description}</p>
-          </div>
+          <p className="text-lg break-words">{description}</p>
         </div>
         <div className="flex items-end flex-col gap-y-2 shrink-0">
           {avgPrice ? (

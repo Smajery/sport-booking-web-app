@@ -34,7 +34,7 @@ const ReservationsItem: React.FC<IBookingItem> = ({ booking }) => {
         </Badge>
         <Link
           href={`${routes.FACILITY}/${id}`}
-          className="text-2xl hover:underline"
+          className="w-full truncate text-2xl hover:underline"
         >
           {name}
         </Link>

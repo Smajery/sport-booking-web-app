@@ -36,7 +36,7 @@ const CropUserProfileAvatarFrame: React.FC<ICropUserProfileAvatarFrame> = ({
   const { fullname, avatar } = user;
   const [selectedAvatar, setSelectedAvatar] = React.useState<
     string | undefined
-  >(`${process.env.NEXT_PUBLIC_IMG_URL}/${avatar}`);
+  >(avatar ? `${process.env.NEXT_PUBLIC_IMG_URL}/${avatar}` : undefined);
 
   const [isCropping, setIsCropping] = React.useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -79,13 +79,17 @@ const CropUserProfileAvatarFrame: React.FC<ICropUserProfileAvatarFrame> = ({
 
   //Temporary solution for changing avatar
   React.useEffect(() => {
-    setSelectedAvatar(`${process.env.NEXT_PUBLIC_IMG_URL}/${avatar}`);
+    setSelectedAvatar(
+      avatar ? `${process.env.NEXT_PUBLIC_IMG_URL}/${avatar}` : undefined,
+    );
   }, [avatar]);
 
   //Temporary solution for resetting avatar
   React.useEffect(() => {
     if (!isEdit) {
-      setSelectedAvatar(`${process.env.NEXT_PUBLIC_IMG_URL}/${avatar}`);
+      setSelectedAvatar(
+        avatar ? `${process.env.NEXT_PUBLIC_IMG_URL}/${avatar}` : undefined,
+      );
     }
   }, [isEdit]);
 
