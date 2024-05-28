@@ -7,7 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import TimeSlotsList from "@/components/molecules/public/Lists/TimeSlotsList/TimeSlotsList";
 import { Button } from "@/components/ui/button";
 import { clsx } from "clsx";
-import { TTimeSlot } from "@/types/commonTypes";
+import { TSchedule, TTimeSlot } from "@/types/commonTypes";
 import { Clock } from "lucide-react";
 import PreviewUpdatePriceSlots from "@/components/molecules/private/owner/Lists/PreviewUpdatePriceSlotsList/PreviewUpdatePriceSlotsList";
 import ApproveActionCard from "@/components/atoms/private/user/Cards/ApproveActionCard/ApproveActionCard";
@@ -23,7 +23,7 @@ import { namespaces } from "@/utils/constants/namespaces.constants";
 import DaysOfWeekList from "@/components/molecules/public/Lists/DaysOfWeekList/DaysOfWeekList";
 
 interface IScheduleUpdatePreviewFrame {
-  timeSlots: TTimeSlot[];
+  schedule: TSchedule[];
   selectedSlotIds: number[];
   setSelectedSlotIds: (value: number[]) => void;
   isSelectAvailable: boolean;
@@ -36,7 +36,7 @@ interface IScheduleUpdatePreviewFrame {
 }
 
 const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
-  timeSlots,
+  schedule,
   selectedSlotIds,
   setSelectedSlotIds,
   isSelectAvailable,
@@ -57,13 +57,11 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
     ApolloError | undefined
   >(undefined);
 
-  const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<number>(0);
-
-  const filteredTimeSlots = timeSlots.filter(
-    (timeSlot) =>
-      timeSlot.dayOfWeek === selectedDayOfWeek &&
-      timeSlot.status === "available",
-  );
+  const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<
+    number | null
+  >(null);
+  const [selectedDayOfWeekTimeSlots, setSelectedDayOfWeekTimeSlots] =
+    React.useState<TTimeSlot[]>([]);
 
   const handleDeleteSchedule = async () => {
     try {
@@ -82,14 +80,22 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
   };
 
   React.useEffect(() => {
-    if (!timeSlots.length) {
-      setSelectedDayOfWeek(0);
-    } else {
-      if (timeSlots[0].dayOfWeek !== selectedDayOfWeek) {
-        setSelectedDayOfWeek(timeSlots[0].dayOfWeek);
+    if (schedule.length) {
+      const initDayOfWeek = schedule[0].dayOfWeek;
+      setSelectedDayOfWeek(schedule[0].dayOfWeek);
+
+      const selectedDayOfWeekSchedule = schedule.find(
+        (item) => item.dayOfWeek === initDayOfWeek,
+      );
+      if (selectedDayOfWeekSchedule) {
+        setSelectedDayOfWeekTimeSlots(selectedDayOfWeekSchedule.timeSlots);
+      } else {
+        setSelectedDayOfWeekTimeSlots([]);
       }
+    } else {
+      setSelectedDayOfWeek(null);
     }
-  }, [timeSlots]);
+  }, [schedule]);
 
   return (
     <>
@@ -106,14 +112,16 @@ const ScheduleUpdatePreviewFrame: React.FC<IScheduleUpdatePreviewFrame> = ({
               <DaysOfWeekList
                 selectedDayOfWeek={selectedDayOfWeek}
                 setSelectedDayOfWeek={setSelectedDayOfWeek}
-                timeSlots={timeSlots}
+                timeSlotsDaysOfWeek={schedule.map(
+                  (dayOfWeek) => dayOfWeek.dayOfWeek,
+                )}
               />
             </div>
             <ScrollArea className="h-[500px]">
               <div className="min-h-[500px] flex">
-                <TimeSlotsList filteredTimeSlots={filteredTimeSlots} />
+                <TimeSlotsList timeSlots={selectedDayOfWeekTimeSlots} />
                 <PreviewUpdatePriceSlots
-                  filteredTimeSlots={filteredTimeSlots}
+                  timeSlots={selectedDayOfWeekTimeSlots}
                   selectedSlotIds={selectedSlotIds}
                   setSelectedSlotIds={setSelectedSlotIds}
                   isSelectAvailable={isSelectAvailable}

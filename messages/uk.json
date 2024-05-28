@@ -119,7 +119,10 @@
       "endTime": "Час закінчення",
       "pricePerSlot": "Ціна за слот (30 хв)",
       "cityDistrict": "Місто/Район",
-      "location": "Місцезнаходження"
+      "location": "Місцезнаходження",
+      "facilityInventory": "Інвентар",
+      "inventoryName": "Список інвентарю",
+      "inventoryPrice": "Ціна інвентарю"
     },
     "placeholders": {
       "search": "Пошук...",
@@ -132,21 +135,26 @@
       "facilityAddress": "Адреса спортивного поля...",
       "facilityDescription": "Опис спортивного поля...",
       "select": "Вибрати",
-      "price": "Ціна",
+      "price": "Ціна...",
       "loading": "Завантаження...",
       "somethingWentWrong": "Щось пішло не так",
       "selectCityFirst": "Спочатку виберіть місто",
-      "selectDistrictSecond": "Потім виберіть район"
+      "selectDistrictSecond": "Потім виберіть район",
+      "inventoryName": "Введіть перелік інвентарю...",
+      "inventoryPrice": "Введіть ціну інвентарю..."
     },
     "titles": {
       "cancel": "Скасувати",
       "deleteSchedule": "Видалити розклад",
       "yourRate": "Ваша оцінка",
       "updateSchedule": "Оновити розклад",
+      "inStock": "У наявності",
       "editSchedule": "Редагувати розклад",
+      "unavailable": "Недоступно",
       "deleteScheduleCannotBeUndone": "Цю дію не можна скасувати. Це назавжди видалить ваш розклад і видалить його дані з наших серверів.",
       "allSlots": "Всі слоти",
       "selectedSlots": "Вибрані слоти",
+      "withInventory": "З інвентарем",
       "close": "Закрити",
       "favorites": "Улюблені",
       "preview": "Попередній перегляд",

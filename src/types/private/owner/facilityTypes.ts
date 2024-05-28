@@ -3,6 +3,7 @@ import {
   TCity,
   TDistrict,
   TImage,
+  TSchedule,
   TTimeSlot,
 } from "@/types/commonTypes";
 import { TUser } from "@/types/private/user/profileTypes";
@@ -55,11 +56,13 @@ export type TFacility = {
   ratingCount: number;
   sportType: ESportType[];
   minBookingTime: number;
+  inventoryName: string | null;
+  inventoryPrice: number | null;
   isWorking: boolean;
 };
 
 export type TFacilitySchedule = {
   id: number;
   minBookingTime: number;
-  timeSlots: TTimeSlot[];
+  schedule: TSchedule[];
 };

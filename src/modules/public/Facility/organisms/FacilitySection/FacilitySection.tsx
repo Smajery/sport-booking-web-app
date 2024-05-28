@@ -58,6 +58,8 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
     isWorking,
     owner,
     currentUserRate,
+    inventoryPrice,
+    inventoryName,
   } = data.facility as TFacility;
 
   const isOwnerFacility = !!(user && user.id && user.id === owner.id);
@@ -118,6 +120,21 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
               <p>{tSlct(coveringType)}</p>
             </div>
           </div>
+          {inventoryPrice && (
+            <>
+              <Separator />
+              <div className="flex justify-between gap-x-4">
+                <div className="flex flex-col text-muted-foreground text-lg font-light">
+                  <p>{tLbl("inventoryPrice")}:</p>
+                  <p>{tLbl("inventoryName")}:</p>
+                </div>
+                <div className="flex flex-col items-end text-lg">
+                  <p>{inventoryPrice} ₴</p>
+                  <p>{inventoryName}</p>
+                </div>
+              </div>
+            </>
+          )}
           <Separator />
           <p className="text-lg text-ellipsis break-words">{description}</p>
           <Separator />

@@ -25,6 +25,12 @@ export type TBooking = {
   status: string;
 };
 
+export type TSchedule = {
+  date: string;
+  dayOfWeek: number;
+  timeSlots: TTimeSlot[];
+};
+
 export type TTimeSlot = {
   id: number;
   dayOfWeek: number;

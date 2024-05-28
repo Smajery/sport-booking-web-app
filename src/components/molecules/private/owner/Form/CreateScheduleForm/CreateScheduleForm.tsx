@@ -102,12 +102,7 @@ const CreateScheduleForm = () => {
 
   //Temporary solution
   React.useEffect(() => {
-    if (
-      daysOfWeekWatch.length &&
-      startTimeWatch &&
-      endTimeWatch &&
-      priceWatch
-    ) {
+    if (daysOfWeekWatch && startTimeWatch && endTimeWatch && priceWatch) {
       const values = form.getValues();
       const { price, daysOfWeek, ...otherValues } = values;
       const modifiedValues = {

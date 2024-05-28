@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/utils/constants/routes.constants";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
+import FormErrorsFrame from "@/components/molecules/public/Frames/FormErrorsFrame/FormErrorsFrame";
 
 type TItem = {
   key: string;
@@ -34,30 +35,51 @@ interface IUpdateFacilityForm {
   refetchFacility: () => void;
 }
 
-const updateFacilityFormSchema = z.object({
-  name: z.string().min(1),
-  address: z.string().min(1),
-  sportType: z
-    .array(
-      z.object({
-        key: z.string(),
-        name: z.string(),
-      }),
-    )
-    .min(1, "At least one sport type"),
-  coveringType: z.object({
-    key: z.string(),
-    name: z.string(),
-  }),
-  facilityType: z.object({
-    key: z.string(),
-    name: z.string(),
-  }),
-  description: z.string().min(1),
-  isWorking: z.boolean().optional(),
-  photos: z.any().optional(),
-});
-
+const updateFacilityFormSchema = z
+  .object({
+    name: z.string().min(1),
+    address: z.string().min(1),
+    sportType: z
+      .array(
+        z.object({
+          key: z.string(),
+          name: z.string(),
+        }),
+      )
+      .min(1, "At least one sport type"),
+    coveringType: z.object({
+      key: z.string(),
+      name: z.string(),
+    }),
+    facilityType: z.object({
+      key: z.string(),
+      name: z.string(),
+    }),
+    description: z.string().min(1),
+    isWorking: z.boolean().optional(),
+    isInventory: z.boolean().optional(),
+    inventoryName: z.string().nullable().optional(),
+    inventoryPrice: z.string().nullable().optional(),
+    photos: z.any().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.isInventory) {
+      if (!data.inventoryName || data.inventoryName.length < 1) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Required",
+          path: ["inventoryName"],
+        });
+      }
+      if (!data.inventoryPrice || data.inventoryPrice.length < 1) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Required",
+          path: ["inventoryPrice"],
+        });
+      }
+    }
+  });
 const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
   facility,
   refetchFacility,
@@ -75,6 +97,8 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
     coveringType,
     images,
     isWorking,
+    inventoryName,
+    inventoryPrice,
   } = facility;
 
   const [isEditFacility, setIsEditFacility] = React.useState<boolean>(false);
@@ -88,9 +112,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
   const [updateFacilityPhotos, { loading: updateFacilityPhotosLoading }] =
     useMutation(UPDATE_FACILITY_PHOTOS_MUTATION);
 
-  const [deleteFacility, { loading: deleteFacilityLoading }] = useMutation(
-    DELETE_FACILITY_MUTATION,
-  );
+  const [deleteFacility] = useMutation(DELETE_FACILITY_MUTATION);
 
   const form = useForm<z.infer<typeof updateFacilityFormSchema>>({
     resolver: zodResolver(updateFacilityFormSchema),
@@ -103,6 +125,9 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
       facilityType: { key: facilityType, name: facilityType },
       photos: images,
       isWorking: isWorking,
+      isInventory: !!inventoryPrice,
+      inventoryName: inventoryName ?? "",
+      inventoryPrice: inventoryPrice ? String(inventoryPrice) : undefined,
     },
   });
 
@@ -112,6 +137,8 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
       coveringType: (value: TItem) => value.key,
       facilityType: (value: TItem) => value.key,
       districtId: (value: string) => Number(value),
+      inventoryPrice: (value: string) => (value.length ? Number(value) : null),
+      inventoryName: (value: string) => (value.length ? value : null),
     };
     const applyTransformation = (
       key: keyof typeof transformDictionary,
@@ -138,7 +165,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
     });
 
     if (Object.keys(changedValues).length !== 0) {
-      const { photos, ...otherChangedValues } = changedValues;
+      const { photos, isInventory, ...otherChangedValues } = changedValues;
       //Temporary solution
       const headers: {
         "Content-Type"?: string;
@@ -194,6 +221,8 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
           });
         }
       }
+    } else {
+      handleCancel();
     }
   };
 
@@ -207,6 +236,9 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
           id,
         },
       });
+
+      refetchFacility();
+
       push(routes.OWNER_FACILITIES);
     } catch (e) {
       setRequestError(e as ApolloError);
@@ -280,7 +312,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
                 variant="outlineDestructive"
                 size="lg"
                 className="ml-auto"
-                disabled={isEditFacility || true}
+                disabled={isEditFacility}
               >
                 {tTtl("deleteFacility")}
               </Button>

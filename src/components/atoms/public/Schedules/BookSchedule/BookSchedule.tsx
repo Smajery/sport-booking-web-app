@@ -23,6 +23,9 @@ import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { TLocale } from "@/navigation";
 import { namespaces } from "@/utils/constants/namespaces.constants";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckedState } from "@radix-ui/react-checkbox";
+import { TTimeSlot } from "@/types/commonTypes";
 
 const createBookingFormSchema = z.object({
   timeSlotIds: z.array(z.number()).min(1, "At least one booking"),
@@ -44,19 +47,24 @@ const BookSchedule: React.FC<IBookSchedule> = ({
 
   const pathname = usePathname();
   const locale = useLocale() as TLocale;
-  const { minBookingTime, timeSlots } = facilitySchedule;
+  const { minBookingTime, schedule, inventoryPrice } = facilitySchedule;
 
   const [createBooking, { loading: isBookLoading, error: errorBooking }] =
     useMutation(CREATE_BOOKING_MUTATION);
   const [createPayment, { loading: isPaymentLoading, error: errorPayment }] =
     useMutation(CREATE_PAYMENT_MUTATION);
 
-  const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<number>(
-    new Date().getDay(),
-  );
+  const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<
+    number | null
+  >(null);
+  const [selectedDayOfWeekTimeSlots, setSelectedDayOfWeekTimeSlots] =
+    React.useState<TTimeSlot[]>([]);
   const [selectedSlotIds, setSelectedSlotIds] = React.useState<number[]>([]);
-  const [isMinBookingTime, setIsBookingTime] = React.useState<boolean>(false);
   const [amount, setAmount] = React.useState<number>(0);
+
+  const [isMinBookingTime, setIsBookingTime] = React.useState<boolean>(false);
+  const [isInventoryPrice, setIsInventoryPrice] =
+    React.useState<CheckedState>(false);
   const orderId = uuidv4();
 
   const form = useForm<z.infer<typeof createBookingFormSchema>>({
@@ -108,15 +116,47 @@ const BookSchedule: React.FC<IBookSchedule> = ({
     }
   };
 
-  const filteredTimeSlots = timeSlots.filter(
-    (timeSlot) =>
-      timeSlot.dayOfWeek === selectedDayOfWeek &&
-      timeSlot.status === "available",
-  );
+  const handleSelectSlotIds = (newSelectedSlotIds: number[]) => {
+    form.setValue("timeSlotIds", newSelectedSlotIds);
+    setSelectedSlotIds(newSelectedSlotIds);
 
-  const handleSelectSlotIds = (selectedSlotIds: number[]) => {
-    form.setValue("timeSlotIds", selectedSlotIds);
-    setSelectedSlotIds(selectedSlotIds);
+    let total = isInventoryPrice && inventoryPrice ? inventoryPrice : 0;
+    newSelectedSlotIds.forEach((selectedSlotId) => {
+      const timeSlot = selectedDayOfWeekTimeSlots.find(
+        (timeSlot) => timeSlot.id === selectedSlotId,
+      );
+      if (timeSlot) {
+        total += timeSlot.price;
+      }
+    });
+    setAmount(total);
+
+    const totalDuration = newSelectedSlotIds.reduce((total, id) => {
+      const slot = selectedDayOfWeekTimeSlots.find((slot) => slot.id === id);
+      if (slot) {
+        const startTime = getMinutesFromIsoTime(slot.startTime);
+        const endTime = getMinutesFromIsoTime(slot.endTime);
+        const duration = endTime - startTime;
+        return total + duration;
+      }
+      return total;
+    }, 0);
+    setIsBookingTime(totalDuration < minBookingTime);
+  };
+
+  const handleSelectDayOfWeek = (dayOfWeek: number) => {
+    setSelectedDayOfWeek(dayOfWeek);
+
+    const selectedDayOfWeekSchedule = schedule.find(
+      (item) => item.dayOfWeek === dayOfWeek,
+    );
+    if (selectedDayOfWeekSchedule) {
+      setSelectedDayOfWeekTimeSlots(selectedDayOfWeekSchedule.timeSlots);
+    } else {
+      setSelectedDayOfWeekTimeSlots([]);
+    }
+
+    handleSelectSlotIds([]);
   };
 
   //Payment
@@ -131,7 +171,10 @@ const BookSchedule: React.FC<IBookSchedule> = ({
       order_id: orderId,
       language: locale,
       result_url: pathname,
-      // expired_date: new Date(new Date().getTime() + 5 * 60000).toISOString(), //5 min to pay
+      expired_date: new Date(
+        new Date().getTime() +
+          Number(process.env.NEXT_PUBLIC_BOOKING_EXPIRE_TIME_MIN) * 60000,
+      ).toISOString(),
     };
     const jsonData = JSON.stringify(requestData);
     const base64Data = Buffer.from(jsonData).toString("base64");
@@ -168,38 +211,23 @@ const BookSchedule: React.FC<IBookSchedule> = ({
     }
   };
 
-  //Temporary solution
-  React.useEffect(() => {
-    const totalDuration = selectedSlotIds.reduce((total, id) => {
-      const slot = timeSlots.find((slot) => slot.id === id);
-      if (slot) {
-        const startTime = getMinutesFromIsoTime(slot.startTime);
-        const endTime = getMinutesFromIsoTime(slot.endTime);
-        const duration = endTime - startTime;
-        return total + duration;
-      }
-      return total;
-    }, 0);
-    setIsBookingTime(totalDuration < minBookingTime);
-  }, [selectedSlotIds]);
-
-  React.useEffect(() => {
-    let total = 0;
-    selectedSlotIds.forEach((selectedSlotId) => {
-      const timeSlot = filteredTimeSlots.find(
-        (timeSlot) => timeSlot.id === selectedSlotId,
-      );
-      if (timeSlot) {
-        total += timeSlot.price;
-      }
-    });
-    setAmount(total);
-  }, [selectedSlotIds]);
+  const handleAddInventoryPrice = (e: CheckedState) => {
+    setIsInventoryPrice(e);
+    if (e) {
+      setAmount((prevState) => prevState + (inventoryPrice ?? 0));
+    } else {
+      setAmount((prevState) => prevState - (inventoryPrice ?? 0));
+    }
+  };
 
   const handleCancel = () => {
     setSelectedSlotIds([]);
     handleCloseModal();
   };
+
+  React.useEffect(() => {
+    handleSelectDayOfWeek(new Date().getDay());
+  }, []);
 
   return (
     <FormProvider {...form}>
@@ -214,28 +242,48 @@ const BookSchedule: React.FC<IBookSchedule> = ({
             </div>
             <DaysOfWeekList
               selectedDayOfWeek={selectedDayOfWeek}
-              setSelectedDayOfWeek={setSelectedDayOfWeek}
-              timeSlots={timeSlots}
+              setSelectedDayOfWeek={handleSelectDayOfWeek}
+              timeSlotsDaysOfWeek={schedule.map(
+                (dayOfWeek) => dayOfWeek.dayOfWeek,
+              )}
             />
           </div>
           <ScrollArea className="h-[500px]">
             <div className="min-h-[500px] flex">
-              <TimeSlotsList filteredTimeSlots={filteredTimeSlots} />
+              <TimeSlotsList timeSlots={selectedDayOfWeekTimeSlots} />
               <PriceSlotsList
-                filteredTimeSlots={filteredTimeSlots}
+                timeSlots={selectedDayOfWeekTimeSlots}
                 selectedSlotIds={selectedSlotIds}
                 setSelectedSlotIds={handleSelectSlotIds}
               />
             </div>
           </ScrollArea>
           <div className="flex flex-col py-5 border-t border-border gap-y-5">
-            <div className="flex text-xl">
-              <div className="px-5 w-[98px] flex items-center">
-                {tLbl("total")}:
+            <div className="px-5 flex justify-between">
+              <div className="flex text-xl">
+                <div className="w-[98px] flex items-center">
+                  {tLbl("total")}:
+                </div>
+                <div className="font-light text-primary">
+                  {amount} {tTtl("uah")}
+                </div>
               </div>
-              <div className="font-light text-primary">
-                {amount} {tTtl("uah")}
-              </div>
+              {inventoryPrice && (
+                <div className="pl-5 flex items-center gap-x-2">
+                  <label
+                    htmlFor="all-slotts-check"
+                    className="-mb-[2px] text-xl font-light leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    {tTtl("withInventory")}
+                  </label>
+                  <Checkbox
+                    id="inventory-price-check"
+                    checked={isInventoryPrice}
+                    onCheckedChange={handleAddInventoryPrice}
+                    className="rounded-full w-5 h-5"
+                  />
+                </div>
+              )}
             </div>
             <ApolloErrorFrame error={errorBooking} />
             <div className="flex justify-end gap-x-4 px-5">

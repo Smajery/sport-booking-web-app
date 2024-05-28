@@ -34,6 +34,8 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
     facilityType,
     coveringType,
     avgPrice,
+    inventoryPrice,
+    inventoryName,
   } = facility;
 
   const isComma = (index: number, arrayLength: number) => {
@@ -82,6 +84,21 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
               <p>{tTtl(coveringType)}</p>
             </div>
           </div>
+          {inventoryPrice && (
+            <>
+              <Separator />
+              <div className="flex justify-between gap-x-4">
+                <div className="flex flex-col text-muted-foreground text-lg font-light">
+                  <p>{tLbl("inventoryPrice")}:</p>
+                  <p>{tLbl("inventoryName")}:</p>
+                </div>
+                <div className="flex flex-col items-end text-lg">
+                  <p>{inventoryPrice} ₴</p>
+                  <p>{inventoryName}</p>
+                </div>
+              </div>
+            </>
+          )}
           <Separator />
           <p className="text-lg break-words">{description}</p>
         </div>

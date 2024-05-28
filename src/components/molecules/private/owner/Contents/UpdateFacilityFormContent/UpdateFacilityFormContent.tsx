@@ -9,6 +9,7 @@ import MultiImageAvatarField from "@/components/molecules/private/owner/Fields/M
 import FormErrorsFrame from "@/components/molecules/public/Frames/FormErrorsFrame/FormErrorsFrame";
 import ErrorMessageField from "@/components/molecules/public/Fields/ErrorMessageField/ErrorMessageField";
 import CheckboxField from "@/components/molecules/private/owner/Fields/CheckboxField/CheckboxField";
+import { clsx } from "clsx";
 
 interface IUpdateFacilityFormContent {
   form: any;
@@ -78,6 +79,37 @@ const UpdateFacilityFormContent: React.FC<IUpdateFacilityFormContent> = ({
             placeholder="facilityDescription"
             maxLength={400}
           />
+          <Separator />
+          <CheckboxField
+            form={form}
+            labelText="facilityInventory"
+            name="isInventory"
+            checkboxId="inventory-check"
+            checkboxLabelText="inStock"
+          />
+          <div
+            className={clsx("flex flex-col gap-y-2", {
+              "opacity-50 pointer-events-none": !form.watch("isInventory"),
+            })}
+          >
+            <TextareaField
+              form={form}
+              name="inventoryName"
+              labelText="inventoryName"
+              className="text-lg max-h-[200px] min-h-[98px]"
+              placeholder="inventoryName"
+              maxLength={400}
+            />
+            <InputField
+              form={form}
+              name="inventoryPrice"
+              type="number"
+              labelText="inventoryPrice"
+              placeholder="inventoryPrice"
+              min={0}
+            />
+          </div>
+          <Separator />
           <CheckboxField
             form={form}
             labelText="facilityStatus"

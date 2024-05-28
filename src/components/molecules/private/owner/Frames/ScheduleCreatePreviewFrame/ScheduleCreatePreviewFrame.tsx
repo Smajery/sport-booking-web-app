@@ -23,19 +23,35 @@ const ScheduleCreatePreviewFrame: React.FC<IScheduleCreatePreviewFrame> = ({
 }) => {
   const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
 
-  const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<number>(0);
+  const [selectedDayOfWeek, setSelectedDayOfWeek] = React.useState<
+    number | null
+  >(null);
+  const [selectedDayOfWeekTimeSlots, setSelectedDayOfWeekTimeSlots] =
+    React.useState<TTimeSlot[]>([]);
+  const [availableDaysOfWeek, setAvailableDaysOfWeek] = React.useState<
+    number[]
+  >([]);
 
-  const filteredTimeSlots = timeSlots.filter(
-    (timeSlot) => timeSlot.dayOfWeek === selectedDayOfWeek,
-  );
+  const handleSelectDayOfWeek = (dayOfWeek: number | null) => {
+    setSelectedDayOfWeek(dayOfWeek);
+
+    setSelectedDayOfWeekTimeSlots(
+      timeSlots.filter((timeSlot) => timeSlot.dayOfWeek === dayOfWeek),
+    );
+  };
 
   React.useEffect(() => {
-    if (!timeSlots.length) {
-      setSelectedDayOfWeek(0);
+    if (timeSlots.length) {
+      const newSelectedDayOfWeek = timeSlots[0].dayOfWeek;
+      setSelectedDayOfWeek(newSelectedDayOfWeek);
+      handleSelectDayOfWeek(newSelectedDayOfWeek);
+      setAvailableDaysOfWeek(
+        timeSlots.length ? timeSlots.map((timeSlot) => timeSlot.dayOfWeek) : [],
+      );
     } else {
-      if (timeSlots[0].dayOfWeek !== selectedDayOfWeek) {
-        setSelectedDayOfWeek(timeSlots[0].dayOfWeek);
-      }
+      setSelectedDayOfWeek(null);
+      setAvailableDaysOfWeek([]);
+      handleSelectDayOfWeek(null);
     }
   }, [timeSlots]);
   return (
@@ -51,14 +67,14 @@ const ScheduleCreatePreviewFrame: React.FC<IScheduleCreatePreviewFrame> = ({
             </div>
             <DaysOfWeekList
               selectedDayOfWeek={selectedDayOfWeek}
-              setSelectedDayOfWeek={setSelectedDayOfWeek}
-              timeSlots={timeSlots}
+              setSelectedDayOfWeek={handleSelectDayOfWeek}
+              timeSlotsDaysOfWeek={availableDaysOfWeek}
             />
           </div>
           <ScrollArea className="h-[500px]">
             <div className="min-h-[500px] flex">
-              <TimeSlotsList filteredTimeSlots={filteredTimeSlots} />
-              <PreviewPriceSlotsList filteredTimeSlots={filteredTimeSlots} />
+              <TimeSlotsList timeSlots={selectedDayOfWeekTimeSlots} />
+              <PreviewPriceSlotsList timeSlots={selectedDayOfWeekTimeSlots} />
             </div>
           </ScrollArea>
           <div className="flex flex-col py-10 border-t border-border gap-y-5"></div>

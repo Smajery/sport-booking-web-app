@@ -63,6 +63,8 @@ export const GET_ONE_FACILITY_QUERY = gql`
       }
       ratingCount
       avgRating
+      inventoryName
+      inventoryPrice
       currentUserIsFavorite
       currentUserRate {
         id
@@ -83,14 +85,18 @@ export const GET_ONE_FACILITY_QUERY = gql`
 export const GET_FACILITY_SCHEDULE_QUERY = gql`
   query FindFacilitySchedule($id: Int!) {
     facility(id: $id) {
+      inventoryPrice
       minBookingTime
-      timeSlots {
-        id
+      schedule {
+        date
         dayOfWeek
-        startTime
-        endTime
-        price
-        status
+        timeSlots {
+          id
+          startTime
+          endTime
+          price
+          status
+        }
       }
     }
   }

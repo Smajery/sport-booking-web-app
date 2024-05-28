@@ -6,14 +6,14 @@ import format from "@/lib/format";
 import { parseISO } from "date-fns";
 
 interface ITimeSlotsList {
-  filteredTimeSlots: TTimeSlot[];
+  timeSlots: TTimeSlot[];
 }
 
-const TimeSlotsList: React.FC<ITimeSlotsList> = ({ filteredTimeSlots }) => {
+const TimeSlotsList: React.FC<ITimeSlotsList> = ({ timeSlots }) => {
   const locale = useLocale() as TLocale;
   return (
     <div className="flex flex-col p-5 w-[98px] gap-y-5 border-r border-border">
-      {filteredTimeSlots.map((slot, index) =>
+      {timeSlots.map((slot, index) =>
         index === 0 ? (
           <React.Fragment key={`${slot.id}-fragment`}>
             <div

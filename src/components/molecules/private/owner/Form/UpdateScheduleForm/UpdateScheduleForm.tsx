@@ -11,7 +11,7 @@ import UpdateScheduleFormContent from "@/components/molecules/private/owner/Cont
 import { TFacilitySchedule } from "@/types/private/owner/facilityTypes";
 import ScheduleUpdatePreviewFrame from "@/components/molecules/private/owner/Frames/ScheduleUpdatePreviewFrame/ScheduleUpdatePreviewFrame";
 import { CheckedState } from "@radix-ui/react-checkbox";
-import { TTimeSlot } from "@/types/commonTypes";
+import { TSchedule, TTimeSlot } from "@/types/commonTypes";
 import { Separator } from "@/components/ui/separator";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
@@ -30,13 +30,12 @@ const UpdateScheduleForm: React.FC<IUpdateScheduleForm> = ({
 }) => {
   const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
 
-  const { timeSlots, minBookingTime, id } = facilitySchedule;
+  const { schedule, minBookingTime, id } = facilitySchedule;
   const [updateSchedule, { loading }] = useMutation(UPDATE_SCHEDULE_MUTATION);
 
   const [isEditSchedule, setIsEditSchedule] = React.useState<boolean>(false);
   const [isAllSlots, setIsAllSlots] = React.useState<CheckedState>(true);
-  const [initTimeSlots, setInitTimeSlots] =
-    React.useState<TTimeSlot[]>(timeSlots);
+  const [initSchedule, setInitSchedule] = React.useState<TSchedule[]>(schedule);
   const [selectedSlotIds, setSelectedSlotIds] = React.useState<number[]>([]);
 
   const form = useForm<z.infer<typeof updateScheduleFormSchema>>({
@@ -79,30 +78,41 @@ const UpdateScheduleForm: React.FC<IUpdateScheduleForm> = ({
   //Temporary solution for price updating
   React.useEffect(() => {
     if (priceWatch) {
-      let updatedTimeSlots: TTimeSlot[] = [];
+      let updatedSchedule: TSchedule[] = [];
       if (isAllSlots) {
-        timeSlots.forEach((timeSlot) =>
-          updatedTimeSlots.push({ ...timeSlot, price: Number(priceWatch) }),
-        );
+        schedule.forEach((item) => {
+          let updatedTimeSlots: TTimeSlot[] = [];
+          item.timeSlots.forEach((timeSlot) =>
+            updatedTimeSlots.push({ ...timeSlot, price: Number(priceWatch) }),
+          );
+          updatedSchedule.push({ ...item, timeSlots: updatedTimeSlots });
+        });
       } else {
-        timeSlots.forEach((timeSlot) => {
-          if (selectedSlotIds.includes(timeSlot.id)) {
-            updatedTimeSlots.push({ ...timeSlot, price: Number(priceWatch) });
-          } else {
-            updatedTimeSlots.push(timeSlot);
-          }
+        schedule.forEach((item) => {
+          let updatedTimeSlots: TTimeSlot[] = [];
+          item.timeSlots.forEach((timeSlot) => {
+            if (selectedSlotIds.includes(timeSlot.id)) {
+              updatedTimeSlots.push({ ...timeSlot, price: Number(priceWatch) });
+            } else {
+              updatedTimeSlots.push(timeSlot);
+            }
+          });
+          updatedSchedule.push({ ...item, timeSlots: updatedTimeSlots });
         });
       }
-      setInitTimeSlots(updatedTimeSlots);
+      setInitSchedule(updatedSchedule);
     }
   }, [priceWatch, isAllSlots, selectedSlotIds]);
 
   React.useEffect(() => {
     if (!isEditSchedule) return;
     if (isAllSlots) {
-      const allTimeSlotIds = timeSlots.map((timeSlot) => timeSlot.id);
-      form.setValue("timeSlotIds", allTimeSlotIds);
-      setSelectedSlotIds(allTimeSlotIds);
+      schedule.forEach((item) => {
+        const allTimeSlotIds = item.timeSlots.map((timeSlot) => timeSlot.id);
+        const initTimeSLotsIds = form.getValues("timeSlotIds");
+        form.setValue("timeSlotIds", [...initTimeSLotsIds, ...allTimeSlotIds]);
+        setSelectedSlotIds([...selectedSlotIds, ...allTimeSlotIds]);
+      });
     } else {
       form.setValue("timeSlotIds", []);
       setSelectedSlotIds([]);
@@ -112,7 +122,7 @@ const UpdateScheduleForm: React.FC<IUpdateScheduleForm> = ({
   const handleCancel = () => {
     form.reset();
     setSelectedSlotIds([]);
-    setInitTimeSlots(timeSlots);
+    setInitSchedule(schedule);
     setIsAllSlots(true);
     setIsEditSchedule(false);
   };
@@ -140,7 +150,7 @@ const UpdateScheduleForm: React.FC<IUpdateScheduleForm> = ({
             {tTtl("preview")}
           </p>
           <ScheduleUpdatePreviewFrame
-            timeSlots={initTimeSlots}
+            schedule={initSchedule}
             selectedSlotIds={selectedSlotIds}
             setSelectedSlotIds={handleSelectSlotIds}
             isSelectAvailable={!isAllSlots}
