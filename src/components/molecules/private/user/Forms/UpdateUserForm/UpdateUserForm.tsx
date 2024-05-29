@@ -176,14 +176,14 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
                   {tTtl("edit")}
                 </Button>
               )}
-              <Button
-                variant="outlineSecondary"
-                size="md"
-                type="button"
-                disabled
-              >
-                {tTtl("changePassword")}
-              </Button>
+              {/*<Button*/}
+              {/*  variant="outlineSecondary"*/}
+              {/*  size="md"*/}
+              {/*  type="button"*/}
+              {/*  disabled*/}
+              {/*>*/}
+              {/*  {tTtl("changePassword")}*/}
+              {/*</Button>*/}
             </div>
           )}
         </form>
