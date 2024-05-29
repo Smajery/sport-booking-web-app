@@ -20,6 +20,7 @@ const ModalCard: React.FC<IModalCard> = ({
   title,
 }) => {
   const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+  const modalContentRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -29,12 +30,30 @@ const ModalCard: React.FC<IModalCard> = ({
     };
   }, []);
 
+  // const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   if (
+  //     modalContentRef.current &&
+  //     !modalContentRef.current.contains(e.target as Node)
+  //   ) {
+  //     handleCloseModal();
+  //   }
+  // };
+
+  const handleOnModalMouseDown = (e: React.MouseEvent) => {
+    if (
+      !e.nativeEvent.composedPath().includes(modalContentRef.current as Node)
+    ) {
+      handleCloseModal();
+    }
+  };
+
   return (
     <div
       className="fixed left-0 top-0 w-screen h-screen bg-black/30 flex items-center justify-center z-[2000]"
-      onClick={handleCloseModal}
+      onMouseDown={handleOnModalMouseDown}
     >
       <Card
+        ref={modalContentRef}
         className="bg-background w-[568px]"
         onClick={(e) => e.stopPropagation()}
       >

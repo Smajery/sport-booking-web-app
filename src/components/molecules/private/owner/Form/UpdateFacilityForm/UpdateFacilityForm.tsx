@@ -266,6 +266,7 @@ const UpdateFacilityForm: React.FC<IUpdateFacilityForm> = ({
           ) : (
             <FacilityCardFrame facility={facility} />
           )}
+          <FormErrorsFrame formErrors={form.formState.errors} />
           <Separator />
           <div className="flex gap-x-2">
             {isEditFacility ? (

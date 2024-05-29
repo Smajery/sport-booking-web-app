@@ -154,7 +154,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
               </p>
             )}
             <div className="flex flex-col items-end gap-y-4 mt-auto">
-              {!isOwnerFacility && (
+              {user && !isOwnerFacility && (
                 <UserRatingFrame
                   facilityId={facilityId}
                   currentUserRate={currentUserRate}
