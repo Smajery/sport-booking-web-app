@@ -171,10 +171,10 @@ const BookSchedule: React.FC<IBookSchedule> = ({
       order_id: orderId,
       language: locale,
       result_url: pathname,
-      expired_date: new Date(
+      expired_date: Math.floor(
         new Date().getTime() +
-          Number(process.env.NEXT_PUBLIC_BOOKING_EXPIRE_TIME_MIN) * 60000,
-      ).toISOString(),
+          Number(process.env.NEXT_PUBLIC_BOOKING_EXPIRE_TIME_MIN) * 60,
+      ),
     };
     const jsonData = JSON.stringify(requestData);
     const base64Data = Buffer.from(jsonData).toString("base64");
@@ -226,7 +226,7 @@ const BookSchedule: React.FC<IBookSchedule> = ({
   };
 
   React.useEffect(() => {
-    handleSelectDayOfWeek(new Date().getDay());
+    handleSelectDayOfWeek(new Date().getDay() - 1);
   }, []);
 
   return (
