@@ -6,27 +6,18 @@ import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IDaysOfWeekList {
-  selectedDayOfWeek: number;
+  selectedDayOfWeek: number | null;
   setSelectedDayOfWeek: (value: number) => void;
-  timeSlots: TTimeSlot[];
+  timeSlotsDaysOfWeek: number[];
 }
 
 const DaysOfWeekList: React.FC<IDaysOfWeekList> = ({
   selectedDayOfWeek,
   setSelectedDayOfWeek,
-  timeSlots,
+  timeSlotsDaysOfWeek,
 }) => {
   const tSlct = useTranslations(namespaces.COMPONENTS_SELECTS);
 
-  const dayAvailability = facilityConfig.daysOfWeek.reduce(
-    (acc, day) => {
-      acc[day.key] = timeSlots.some((slot) => slot.dayOfWeek === day.key);
-      return acc;
-    },
-    {} as {
-      [key: number]: boolean;
-    },
-  );
   return (
     <div className="px-5 bg-primary text-primary-foreground flex items-center">
       {facilityConfig.daysOfWeek.map((day) => (
@@ -36,7 +27,9 @@ const DaysOfWeekList: React.FC<IDaysOfWeekList> = ({
             "px-5 py-1 rounded-xl flex justify-center cursor-pointer text-2xl",
             {
               "bg-black/10": selectedDayOfWeek === day.key,
-              "opacity-50 ": !dayAvailability[day.key],
+              "opacity-50 ": !timeSlotsDaysOfWeek.some(
+                (dayOfWeek) => dayOfWeek === day.key,
+              ),
             },
           )}
           onClick={() => setSelectedDayOfWeek(day.key)}

@@ -1,4 +1,4 @@
-import { TDistrict, TImage, TTimeSlot } from "@/types/commonTypes";
+import { TDistrict, TImage, TSchedule, TTimeSlot } from "@/types/commonTypes";
 
 export enum ESportType {
   basketball = "basketball",
@@ -63,6 +63,9 @@ export type TFacility = {
   coveringType: ECoveringType;
   currentUserIsFavorite: boolean;
   currentUserRate: TCurrentUserRate;
+  userHasAttended: boolean;
+  inventoryPrice: number;
+  inventoryName: string;
   description: string;
   district: TDistrict;
   facilityType: EFacilityType;
@@ -78,5 +81,6 @@ export type TFacility = {
 
 export type TFacilitySchedule = {
   minBookingTime: number;
-  timeSlots: TTimeSlot[];
+  inventoryPrice: number;
+  schedule: TSchedule[];
 };

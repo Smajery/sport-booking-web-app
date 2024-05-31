@@ -26,8 +26,8 @@
         "description": "Сторінка бронювань"
       },
       "favorites": {
-        "title": "Улюблені",
-        "description": "Сторінка улюблених"
+        "title": "Обране",
+        "description": "Сторінка обраних"
       },
       "dashboard": {
         "title": "Панель керування",
@@ -39,7 +39,7 @@
       },
       "dashboardFacilityCreate": {
         "title": "Створення спортивного поля",
-        "description": "Сторінка для створення спортивного поля"
+        "description": "Сторінка створення спортивного поля"
       },
       "dashboardFacility": {
         "title": "Спортивне поле",
@@ -47,11 +47,15 @@
       },
       "dashboardScheduleCreate": {
         "title": "Створення розкладу",
-        "description": "Сторінка для створення розкладу"
+        "description": "Сторінка створення розкладу"
       },
       "dashboardSchedule": {
         "title": "Розкладу",
         "description": "Сторінка розкладу"
+      },
+      "resetPassword": {
+        "title": "Скинути пароль",
+        "description": "Сторінка скидання пароля"
       }
     }
   },
@@ -61,7 +65,7 @@
         "uk": "укр",
         "en": "en",
         "profile": "Профіль",
-        "favorites": "Улюблені",
+        "favorites": "Обране",
         "reservations": "Бронювання",
         "dashboard": "Панель керування",
         "login": "Увійти",
@@ -119,14 +123,19 @@
       "endTime": "Час закінчення",
       "pricePerSlot": "Ціна за слот (30 хв)",
       "cityDistrict": "Місто/Район",
-      "location": "Місцезнаходження"
+      "location": "Місцезнаходження",
+      "inventoryName": "Список інвентарю",
+      "inventoryPrice": "Ціна інвентарю",
+      "facilityInventory": "Інвентар",
+      "oldPassword": "Старий пароль",
+      "newPassword": "Новий пароль"
     },
     "placeholders": {
       "search": "Пошук...",
       "email": "example@gmail.com",
       "password": "Мінімум 6 символів",
       "fullName": "Фамілія та ім'я...",
-      "orgPhoneNumber": "Номер телефону організації...",
+      "orgPhoneNumber": "+380...",
       "organizationName": "Назва організації...",
       "facilityName": "Назва спортивного поля...",
       "facilityAddress": "Адреса спортивного поля...",
@@ -136,18 +145,24 @@
       "loading": "Завантаження...",
       "somethingWentWrong": "Щось пішло не так",
       "selectCityFirst": "Спочатку виберіть місто",
-      "selectDistrictSecond": "Потім виберіть район"
+      "selectDistrictSecond": "Потім виберіть район",
+      "inventoryName": "Список...",
+      "inventoryPrice": "Ціна..."
     },
     "titles": {
       "cancel": "Скасувати",
       "deleteSchedule": "Видалити розклад",
+      "resetPassword": "Скинути пароль",
+      "inStock": "В наявності",
       "updateSchedule": "Оновити розклад",
       "editSchedule": "Редагувати розклад",
       "deleteScheduleCannotBeUndone": "Цю дію не можна скасувати. Це назавжди видалить ваш розклад і видалить його дані з наших серверів.",
       "allSlots": "Всі слоти",
       "selectedSlots": "Вибрані слоти",
+      "forgotPassword": "Забули пароль",
       "close": "Закрити",
-      "favorites": "Улюблені",
+      "favorites": "Обране",
+      "confirm": "Підтвердити",
       "preview": "Попередній перегляд",
       "working": "Працює",
       "thirtyMinutes": "30 хв",
@@ -165,7 +180,7 @@
       "approve": "Підтвердити",
       "youHaveNotCreatedAnyReservationsYet": "Ви ще не створили жодного бронювання",
       "becomeOwner": "Стати власником",
-      "youHaveNotAddedAnyFacilityToFavoritesYet": "Ви ще не додали жодного закладу до улюблених",
+      "youHaveNotAddedAnyFacilityToFavoritesYet": "Ви ще не додали жодного закладу до обраніх",
       "reservations": "Бронювання",
       "pay": "Оплатити",
       "pickBirthDate": "Виберіть дату свого народження",
@@ -192,10 +207,10 @@
       "signUpWithGoogle": "Зареєструватися через Google",
       "facilityBooking": "Бронювання спортивного поля",
       "noTimeSlotsForCurrentDayOfWeek": "Немає слотів для поточного дня тижня",
-      "inFavorite": "В улюблених",
+      "inFavorite": "В обраному",
       "cMinimum": "Мін",
       "book": "Забронювати",
-      "addToFavorite": "Додати в улюблені",
+      "addToFavorite": "Додати в обране",
       "copyLink": "Копіювати посилання",
       "copied": "Скопійовано",
       "uah": "ГРН",
@@ -246,7 +261,9 @@
       "Франківський": "Франківський",
       "Залізничний": "Залізничний",
       "Галицький": "Галицький",
-      "Холодногірський": "Холодногірський"
+      "Холодногірський": "Холодногірський",
+      "Хаджибейський": "Хаджибейський",
+      "Пересипський": "Пересипський"
     },
     "selects": {
       "price_asc": "Ціна зростає",
@@ -294,6 +311,8 @@
       "Залізничний": "Залізничний",
       "Галицький": "Галицький",
       "Холодногірський": "Холодногірський",
+      "Хаджибейський": "Хаджибейський",
+      "Пересипський": "Пересипський",
       "mon": "Пн",
       "tue": "Вт",
       "wed": "Ср",

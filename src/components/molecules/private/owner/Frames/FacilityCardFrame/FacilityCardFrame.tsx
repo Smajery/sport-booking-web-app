@@ -34,6 +34,8 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
     facilityType,
     coveringType,
     avgPrice,
+    inventoryPrice,
+    inventoryName,
   } = facility;
 
   const isComma = (index: number, arrayLength: number) => {
@@ -49,27 +51,25 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
       />
       <div className="flex justify-between">
         <div className="w-[700px] flex flex-col gap-y-5">
-          <div className="flex justify-between gap-x-2">
-            <div className="flex flex-col gap-y-2 min-w-0">
-              <p className="truncate text-3xl">{name}</p>
+          <div className="flex justify-between">
+            <div className="flex flex-col gap-y-2">
+              <div className="flex items-center justify-between">
+                <p className="text-3xl">{name}</p>
+              </div>
               <p className="text-lg font-light">
                 {address}, {tTtl(district.name)}
               </p>
             </div>
-            <RatingFrame
-              avgRating={avgRating}
-              ratingCount={ratingCount}
-              className="shrink-0"
-            />
+            <RatingFrame avgRating={avgRating} ratingCount={ratingCount} />
           </div>
           <Separator />
-          <div className="flex gap-x-4">
+          <div className="flex justify-between gap-x-4">
             <div className="flex flex-col text-muted-foreground text-lg font-light">
               <p>{tLbl("sport")}:</p>
               <p>{tLbl("facility")}:</p>
               <p>{tLbl("covering")}:</p>
             </div>
-            <div className="flex flex-col text-lg">
+            <div className="flex flex-col items-end text-lg">
               <div className="flex gap-x-1">
                 {sportType.map((sport, index) => (
                   <div key={sport}>
@@ -84,6 +84,21 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
               <p>{tTtl(coveringType)}</p>
             </div>
           </div>
+          {inventoryPrice && (
+            <>
+              <Separator />
+              <div className="flex justify-between gap-x-4">
+                <div className="flex flex-col text-muted-foreground text-lg font-light">
+                  <p>{tLbl("inventoryPrice")}:</p>
+                  <p>{tLbl("inventoryName")}:</p>
+                </div>
+                <div className="flex flex-col items-end text-lg">
+                  <p>{inventoryPrice} ₴</p>
+                  <p>{inventoryName}</p>
+                </div>
+              </div>
+            </>
+          )}
           <Separator />
           <p className="text-lg break-words">{description}</p>
         </div>
@@ -91,7 +106,7 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
           {avgPrice ? (
             <div className="flex items-end flex-col gap-y-2 shrink-0">
               <p className="text-xl font-light">
-                {avgPrice ?? 0} {tTtl("uah")}
+                {Math.ceil(avgPrice) ?? 0} {tTtl("uah")}
                 <span className="text-muted-foreground text-lg">
                   {`/${MIN_PER_SLOT} ${tTtl("min")}`}
                 </span>
@@ -109,7 +124,7 @@ const FacilityCardFrame: React.FC<IFacilityCardFrame> = ({ facility }) => {
           ) : (
             <>
               <Button
-                variant="gradient"
+                variant="outlineSecondary"
                 size="lg"
                 onClick={() =>
                   push(

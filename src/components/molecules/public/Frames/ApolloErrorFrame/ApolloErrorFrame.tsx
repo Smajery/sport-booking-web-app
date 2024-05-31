@@ -13,7 +13,7 @@ const ApolloErrorFrame: React.FC<IApolloErrorFrame> = ({
   className = "",
 }) => {
   return error ? (
-    <div className={cn("px-5 text-sm text-destructive", className)}>
+    <div className={cn("text-sm text-destructive", className)}>
       <p>{getApolloErrorMessage(error)}</p>
     </div>
   ) : null;

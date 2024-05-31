@@ -24,3 +24,24 @@ export const REMOVE_FROM_FAVORITE_MUTATION = gql`
     removeFavorite(facilityId: $facilityId)
   }
 `;
+
+export const CHANGE_PASSWORD_MUTATION = gql`
+  mutation ChangePassword($oldPassword: String!, $newPassword: String!) {
+    changePassword(oldPassword: $oldPassword, newPassword: $newPassword) {
+      id
+      email
+    }
+  }
+`;
+
+export const RESTORE_PASSWORD_MUTATION = gql`
+  mutation RestorePassword($email: String!) {
+    restorePassword(email: $email)
+  }
+`;
+
+export const RESET_PASSWORD_MUTATION = gql`
+  mutation ResetPassword($token: String!, $newPassword: String!) {
+    resetPassword(token: $token, newPassword: $newPassword)
+  }
+`;

@@ -11,6 +11,7 @@ export const GET_USER_QUERY = gql`
       createdAt
       updatedAt
       activationLink
+      googleId
       isActivated
       userOwner {
         phone

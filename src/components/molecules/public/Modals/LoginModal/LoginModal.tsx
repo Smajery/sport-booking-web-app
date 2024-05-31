@@ -21,9 +21,11 @@ import { setCookie } from "@/utils/helpers/cookie.helpers";
 import { useAuthContext } from "@/providers/AuthProvider/AuthProvider";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
+import ApolloErrorFrame from "@/components/molecules/public/Frames/ApolloErrorFrame/ApolloErrorFrame";
 
 interface ILoginModal {
   setIsLoginModal: (value: boolean) => void;
+  setIsRestorePasswordModal: (value: boolean) => void;
 }
 
 const loginFormSchema = z.object({
@@ -31,30 +33,25 @@ const loginFormSchema = z.object({
   password: z.string().min(6).max(16),
 });
 
-const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
+const LoginModal: React.FC<ILoginModal> = ({
+  setIsLoginModal,
+  setIsRestorePasswordModal,
+}) => {
   const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
 
   const { setIsAuth } = useAuthContext();
 
-  const [loginUserMutation, { loading, error }] =
-    useMutation(LOGIN_USER_MUTATION);
+  const [login, { loading, error }] = useMutation(LOGIN_USER_MUTATION);
 
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
   });
 
   const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     try {
-      const { data } = await loginUserMutation({
+      const { data } = await login({
         variables: {
-          loginInput: {
-            email: values.email,
-            password: values.password,
-          },
+          loginInput: values,
         },
       });
       const accessToken = data.login.accessToken;
@@ -74,19 +71,22 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
     }
   };
 
+  const handleResetPassword = () => {
+    setIsLoginModal(false);
+    setIsRestorePasswordModal(true);
+  };
+
   const handleCloseModal = () => {
     setIsLoginModal(false);
     form.reset();
   };
-
-  const { isSubmitted, isValid, isSubmitting } = form.formState;
 
   return (
     <ModalCard handleCloseModal={handleCloseModal} title="welcome">
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-y-[30px] flex-grow"
+          className="flex flex-col gap-y-4 flex-grow"
           noValidate
         >
           <div className="flex flex-col gap-y-[8px]">
@@ -109,27 +109,31 @@ const LoginModal: React.FC<ILoginModal> = ({ setIsLoginModal }) => {
               isRequestError={!!error}
             />
           </div>
-
-          {error && (
-            <p className="text-danger">{getApolloErrorMessage(error)}</p>
-          )}
+          <Button
+            variant="none"
+            size="none"
+            type="button"
+            className="ml-auto underline text-sm text-secondary"
+            onClick={handleResetPassword}
+          >
+            {tTtl("forgotPassword")}
+          </Button>
+          <ApolloErrorFrame error={error} />
           <Button
             variant="none"
             size="lg"
             type="submit"
-            disabled={isSubmitting || (isSubmitted && !isValid)}
+            disabled={loading}
             className="auth-btn-gradient text-white"
           >
             {!loading ? tTtl("login") : tTtl("loading")}
           </Button>
         </form>
       </FormProvider>
-      <div className="text-with-separators lowercase my-[16px]">
-        {tTtl("or")}
-      </div>
-      <div className="flex flex-col gap-y-[16px]">
-        <GoogleAuthButton>{tTtl("loginWithGoogle")}</GoogleAuthButton>
-      </div>
+      <div className="text-with-separators lowercase my-4">{tTtl("or")}</div>
+      <GoogleAuthButton disabled={loading} className="w-full">
+        {tTtl("loginWithGoogle")}
+      </GoogleAuthButton>
     </ModalCard>
   );
 };

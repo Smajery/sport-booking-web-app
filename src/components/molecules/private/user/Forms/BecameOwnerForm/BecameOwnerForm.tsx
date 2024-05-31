@@ -25,7 +25,10 @@ import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
 
 const becameOwnerSchema = z.object({
-  phone: z.string().min(1).max(20),
+  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, {
+    message:
+      "The phone number must be in the format +380XXXXXXXXXX and contain 9 digits after the country code",
+  }),
   organizationName: z.string().min(1).max(50),
 });
 

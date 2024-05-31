@@ -58,10 +58,10 @@ const PriceSliderField: React.FC<IPriceSliderField> = ({
                 step={1}
               />
               <div className="absolute -top-7 left-0">
-                {value?.minPrice ?? min}
+                {value?.minPrice ?? Math.ceil(min)}
               </div>
               <div className="absolute -top-7 right-0">
-                {value?.maxPrice ?? max}
+                {value?.maxPrice ?? Math.ceil(max)}
               </div>
             </div>
           </FormControl>

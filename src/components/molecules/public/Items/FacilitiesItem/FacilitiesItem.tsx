@@ -65,7 +65,7 @@ const FacilitiesItem: React.FC<IFacilitiesItem> = ({ facility }) => {
           <div className="flex justify-start gap-x-1">
             <Badge variant="background">
               {avgPrice
-                ? `${avgPrice} ₴/${MIN_PER_SLOT} ${tTtl("min")}`
+                ? `${Math.ceil(avgPrice)} ₴/${MIN_PER_SLOT} ${tTtl("min")}`
                 : tTtl("noSchedule")}
             </Badge>
           </div>

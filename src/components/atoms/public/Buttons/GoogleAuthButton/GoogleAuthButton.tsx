@@ -12,6 +12,9 @@ import { GOOGLE_AUTH_MUTATION } from "@/apollo/mutations/auth";
 import { jwtDecode } from "jwt-decode";
 import { setCookie } from "@/utils/helpers/cookie.helpers";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useTranslations } from "next-intl";
+import { namespaces } from "@/utils/constants/namespaces.constants";
+import { cn } from "@/lib/utils";
 
 interface IGoogleAuthButton extends ButtonProps {
   children: React.ReactNode;
@@ -23,6 +26,8 @@ const GoogleAuthButton: React.FC<IGoogleAuthButton> = ({
   className = "",
   ...props
 }) => {
+  const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
+
   const { setIsAuth } = useAuthContext();
   const { setIsLoginModal, setIsSignUpModal, isSignUpModal, isLoginModal } =
     useModalContext();
@@ -68,11 +73,11 @@ const GoogleAuthButton: React.FC<IGoogleAuthButton> = ({
     <Button
       variant="none"
       size="lg"
-      className="google-gradient text-white"
+      className={cn("google-gradient text-white", className)}
       onClick={() => handleGoogleLogin()}
       {...props}
     >
-      {!loading ? children : "Loading..."}
+      {!loading ? children : tTtl("loading")}
     </Button>
   );
 };

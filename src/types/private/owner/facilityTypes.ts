@@ -3,6 +3,7 @@ import {
   TCity,
   TDistrict,
   TImage,
+  TSchedule,
   TTimeSlot,
 } from "@/types/commonTypes";
 import { TUser } from "@/types/private/user/profileTypes";
@@ -27,15 +28,6 @@ export enum EFacilityType {
   outdoor = "outdoor",
 }
 
-export type TFacilityFilter = {
-  search?: string | null;
-  coveringType?: string | null;
-  facilityType?: string | null;
-  sportType?: string | null;
-  district?: string | null;
-  ownerId?: number | null;
-};
-
 export type TFacility = {
   address: string;
   avgRating: number;
@@ -49,6 +41,8 @@ export type TFacility = {
   id: number;
   images: TImage[];
   location: string;
+  inventoryPrice: string;
+  inventoryName: string;
   name: string;
   owner: TUser;
   ownerId: number;
@@ -61,5 +55,5 @@ export type TFacility = {
 export type TFacilitySchedule = {
   id: number;
   minBookingTime: number;
-  timeSlots: TTimeSlot[];
+  schedule: TSchedule[];
 };

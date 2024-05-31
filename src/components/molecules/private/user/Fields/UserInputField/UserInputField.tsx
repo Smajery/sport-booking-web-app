@@ -19,6 +19,7 @@ interface IUserInputField extends InputProps {
   form: any;
   name: string;
   labelText?: string;
+  placeholder?: string;
   noValidate?: boolean;
 }
 
@@ -27,9 +28,11 @@ const UserInputField: React.FC<IUserInputField> = ({
   name,
   labelText,
   noValidate = false,
+  placeholder = "",
   ...props
 }) => {
   const tLbl = useTranslations(namespaces.COMPONENTS_LABELS);
+  const tPlh = useTranslations(namespaces.COMPONENTS_PLACEHOLDERS);
 
   const {
     formState: { isSubmitted },
@@ -55,6 +58,7 @@ const UserInputField: React.FC<IUserInputField> = ({
               <Input
                 autoComplete="off"
                 value={value ?? ""}
+                placeholder={placeholder ? tPlh(placeholder) : ""}
                 onChange={(e) => {
                   onChange(e.target.value);
                 }}

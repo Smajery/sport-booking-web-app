@@ -13,6 +13,7 @@ export type TUser = {
   activationLink: string;
   avatar: string | null;
   dateOfBirth: string | null;
+  googleId: string | null;
   email: string;
   fullname: string | null;
   id: number;

@@ -55,6 +55,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
     facilityType,
     coveringType,
     currentUserIsFavorite,
+    userHasAttended,
     avgPrice,
     isWorking,
     owner,
@@ -127,7 +128,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
           <Separator />
           <div className="flex justify-between">
             <ContactOrganizationFrame phone={owner.userOwner.phone} />
-            {user && !isOwnerFacility && (
+            {user && !isOwnerFacility && userHasAttended && (
               <UserRateFrame
                 facilityId={facilityId}
                 currentUserRate={currentUserRate}
@@ -138,7 +139,7 @@ const FacilitySection: React.FC<IFacilitySection> = ({ facilityId }) => {
         {avgPrice && (
           <div className="flex items-end flex-col gap-y-2 shrink-0">
             <p className="text-xl font-light">
-              {avgPrice} {tTtl("uah")}
+              {Math.ceil(avgPrice)} {tTtl("uah")}
               <span className="text-muted-foreground text-lg">
                 {`/${MIN_PER_SLOT} ${tTtl("min")}`}
               </span>

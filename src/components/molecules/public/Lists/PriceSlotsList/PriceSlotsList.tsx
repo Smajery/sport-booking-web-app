@@ -6,13 +6,13 @@ import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IPriceSlotsList {
-  filteredTimeSlots: TTimeSlot[];
+  timeSlots: TTimeSlot[];
   selectedSlotIds: number[];
   setSelectedSlotIds: (value: number[]) => void;
 }
 
 const PriceSlotsList: React.FC<IPriceSlotsList> = ({
-  filteredTimeSlots,
+  timeSlots,
   setSelectedSlotIds,
   selectedSlotIds,
 }) => {
@@ -27,7 +27,7 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
     }
   };
 
-  if (!filteredTimeSlots.length)
+  if (!timeSlots.length)
     return (
       <div className="p-5 text-lg italic text-muted-foreground">
         {tTtl("noTimeSlotsForCurrentDayOfWeek")}
@@ -36,7 +36,7 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
 
   return (
     <div className="grow flex flex-col py-[30px]">
-      {filteredTimeSlots.map((slot, index) => (
+      {timeSlots.map((slot, index) => (
         <div
           key={slot.id}
           className={clsx(
@@ -48,14 +48,24 @@ const PriceSlotsList: React.FC<IPriceSlotsList> = ({
               "text-muted-foreground": !selectedSlotIds.find(
                 (selectedSlotId) => selectedSlotId === slot.id,
               ),
+              "pointer-events-none bg-black/10":
+                slot.status === "booked" || slot.status === "unavailable",
             },
           )}
           onClick={() => handleSelectSlot(slot.id)}
         >
-          {selectedSlotIds.find(
-            (selectedSlotId) => selectedSlotId === slot.id,
-          ) && <Dot className="w-6 h-6 mr-auto" color="#ff8749" />}
-          {slot.price} {tTtl("uah")}
+          {slot.status === "available" ? (
+            <>
+              {selectedSlotIds.find(
+                (selectedSlotId) => selectedSlotId === slot.id,
+              ) && <Dot className="w-6 h-6 mr-auto" />}
+              <p>
+                {slot.price} {tTtl("uah")}
+              </p>
+            </>
+          ) : (
+            <p>{tTtl("unavailable")}</p>
+          )}
         </div>
       ))}
     </div>

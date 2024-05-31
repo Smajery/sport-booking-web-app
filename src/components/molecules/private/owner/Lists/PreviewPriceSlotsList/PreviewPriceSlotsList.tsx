@@ -2,15 +2,15 @@ import React from "react";
 import { TTimeSlot } from "@/types/commonTypes";
 
 interface IPreviewPriceSlotsList {
-  filteredTimeSlots: TTimeSlot[];
+  timeSlots: TTimeSlot[];
 }
 
 const PreviewPriceSlotsList: React.FC<IPreviewPriceSlotsList> = ({
-  filteredTimeSlots,
+  timeSlots,
 }) => {
   return (
     <div className="grow flex flex-col py-[30px]">
-      {filteredTimeSlots.map((slot, index) => (
+      {timeSlots.map((slot, index) => (
         <div
           key={slot.id}
           className="px-5 h-[40px] flex items-center justify-end text-lg font-light border-t border-border last:border-b text-muted-foreground"

@@ -6,14 +6,14 @@ import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
 
 interface IPreviewUpdatePriceSlotsList {
-  filteredTimeSlots: TTimeSlot[];
+  timeSlots: TTimeSlot[];
   selectedSlotIds: number[];
   setSelectedSlotIds: (value: number[]) => void;
   isSelectAvailable: boolean;
 }
 
 const PreviewUpdatePriceSlotsList: React.FC<IPreviewUpdatePriceSlotsList> = ({
-  filteredTimeSlots,
+  timeSlots,
   setSelectedSlotIds,
   selectedSlotIds,
   isSelectAvailable,
@@ -34,7 +34,7 @@ const PreviewUpdatePriceSlotsList: React.FC<IPreviewUpdatePriceSlotsList> = ({
   };
   return (
     <div className="grow flex flex-col py-[30px]">
-      {filteredTimeSlots.map((slot, index) => (
+      {timeSlots.map((slot, index) => (
         <div
           key={slot.id}
           className={clsx(
@@ -53,7 +53,7 @@ const PreviewUpdatePriceSlotsList: React.FC<IPreviewUpdatePriceSlotsList> = ({
         >
           {selectedSlotIds.find(
             (selectedSlotId) => selectedSlotId === slot.id,
-          ) && <Dot className="w-6 h-6 mr-auto" color="#ff8749" />}
+          ) && <Dot className="w-6 h-6 mr-auto" />}
           {slot.price} {tTtl("uah")}
         </div>
       ))}

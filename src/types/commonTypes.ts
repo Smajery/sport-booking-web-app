@@ -35,6 +35,12 @@ export type TTimeSlot = {
   temporaryBlockDate: string;
 };
 
+export type TSchedule = {
+  date: string;
+  dayOfWeek: number;
+  timeSlots: TTimeSlot[];
+};
+
 export type TCity = {
   id: number;
   name: string;

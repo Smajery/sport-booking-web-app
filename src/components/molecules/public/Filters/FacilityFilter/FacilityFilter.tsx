@@ -163,7 +163,7 @@ const FilterForm: React.FC<ISearchForm> = ({
     <FormProvider {...form}>
       <form
         noValidate
-        className="flex flex-col gap-y-4 sticky top-[110px] z-50" //Temporary solution for sticky
+        className="flex flex-col gap-y-4 sticky top-[110px] z-30" //Temporary solution for sticky
       >
         <FloatingField
           form={form}

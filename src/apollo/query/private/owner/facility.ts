@@ -55,6 +55,8 @@ export const GET_ONE_FACILITY_QUERY = gql`
       facilityType
       description
       minBookingTime
+      inventoryPrice
+      inventoryName
       location
       images {
         image
@@ -73,13 +75,16 @@ export const GET_FACILITY_SCHEDULE_QUERY = gql`
     facility(id: $id) {
       id
       minBookingTime
-      timeSlots {
-        id
+      schedule {
+        date
         dayOfWeek
-        startTime
-        endTime
-        price
-        status
+        timeSlots {
+          id
+          startTime
+          endTime
+          price
+          status
+        }
       }
     }
   }

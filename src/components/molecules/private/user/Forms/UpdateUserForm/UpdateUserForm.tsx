@@ -19,6 +19,7 @@ import ShowErrorModal from "@/components/molecules/public/Modals/ShowErrorModal/
 import CropUserProfileAvatarFrame from "@/components/molecules/private/user/Frames/CropUserProfileAvatarFrame/CropUserProfileAvatarFrame";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
+import ChangePasswordModal from "@/components/molecules/private/user/Modals/ChangePasswordModal/ChangePasswordModal";
 
 interface IUpdateUserForm {
   user: TUser;
@@ -37,12 +38,15 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
 }) => {
   const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
 
+  const { fullname, dateOfBirth, avatar, userOwner, isActivated, googleId } =
+    user;
+
   const [isEdit, setIsEdit] = React.useState<boolean>(false);
+  const [isChangePasswordModal, setIsChangePasswordModal] =
+    React.useState<boolean>(false);
   const [requestError, setRequestError] = React.useState<
     ApolloError | undefined
   >(undefined);
-
-  const { fullname, dateOfBirth, avatar, userOwner, isActivated } = user;
 
   const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION);
 
@@ -180,18 +184,23 @@ const UpdateUserFrame: React.FC<IUpdateUserForm> = ({
                   {tTtl("edit")}
                 </Button>
               )}
-              <Button
-                variant="outlineSecondary"
-                size="md"
-                type="button"
-                disabled
-              >
-                {tTtl("changePassword")}
-              </Button>
+              {!googleId && (
+                <Button
+                  variant="outlineSecondary"
+                  size="md"
+                  type="button"
+                  onClick={() => setIsChangePasswordModal(true)}
+                >
+                  {tTtl("changePassword")}
+                </Button>
+              )}
             </div>
           )}
         </form>
       </FormProvider>
+      {isChangePasswordModal && (
+        <ChangePasswordModal setIsModal={setIsChangePasswordModal} />
+      )}
       <ShowErrorModal error={requestError} setError={setRequestError} />
     </>
   );

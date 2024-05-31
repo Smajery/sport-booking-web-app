@@ -10,68 +10,78 @@ import { Button } from "@/components/ui/button";
 import { Form as FormProvider } from "@/components/ui/form";
 
 import ErrorHandler from "@/utils/handlers/ErrorHandler";
-import GoogleAuthButton from "@/components/atoms/public/Buttons/GoogleAuthButton/GoogleAuthButton";
-import { REGISTER_USER_MUTATION } from "@/apollo/mutations/auth";
 import ModalCard from "@/components/atoms/public/Cards/ModalCard/ModalCard";
 import { useMutation } from "@apollo/client";
-import { Mail, Lock } from "lucide-react";
-import { getApolloErrorMessage } from "@/utils/helpers/error.helpers";
+import { Lock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { namespaces } from "@/utils/constants/namespaces.constants";
 import ApolloErrorFrame from "@/components/molecules/public/Frames/ApolloErrorFrame/ApolloErrorFrame";
+import { RESET_PASSWORD_MUTATION } from "@/apollo/mutations/private/user/user";
+import { useRouter, useSearchParams } from "next/navigation";
+import { routes } from "@/utils/constants/routes.constants";
+import ErrorMessageField from "@/components/molecules/public/Fields/ErrorMessageField/ErrorMessageField";
 
-interface ISignUpModal {
-  setIsSignUpModal: (value: boolean) => void;
+interface IResetPasswordModal {
+  setIsResetPasswordModal: (value: boolean) => void;
   setIsLoginModal: (value: boolean) => void;
 }
 
-const signUpFormSchema = z
+const restorePasswordFormSchema = z
   .object({
-    email: z.string().min(1).email().max(320),
-    password: z.string().min(6).max(16),
+    token: z.string(),
+    newPassword: z.string().min(6).max(16),
     confirmPassword: z.string().min(6).max(16),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
 
-const SignUpModal: React.FC<ISignUpModal> = ({
-  setIsSignUpModal,
+const ResetPasswordModal: React.FC<IResetPasswordModal> = ({
+  setIsResetPasswordModal,
   setIsLoginModal,
 }) => {
   const tTtl = useTranslations(namespaces.COMPONENTS_TITLES);
 
-  const [register, { loading, error }] = useMutation(REGISTER_USER_MUTATION);
+  const searchParams = useSearchParams();
+  const { push } = useRouter();
 
-  const form = useForm<z.infer<typeof signUpFormSchema>>({
-    resolver: zodResolver(signUpFormSchema),
+  const [resetPassword, { loading, error }] = useMutation(
+    RESET_PASSWORD_MUTATION,
+  );
+
+  const form = useForm<z.infer<typeof restorePasswordFormSchema>>({
+    resolver: zodResolver(restorePasswordFormSchema),
+    defaultValues: {
+      token: searchParams.get("token") ?? undefined,
+    },
   });
 
-  const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
+  const onSubmit = async (
+    values: z.infer<typeof restorePasswordFormSchema>,
+  ) => {
+    const { confirmPassword, ...otherValues } = values;
     try {
-      await register({
-        variables: {
-          registerInput: values,
-        },
+      await resetPassword({
+        variables: otherValues,
       });
 
-      setIsSignUpModal(false);
-      setIsLoginModal(true);
+      handleCloseModal();
 
-      form.reset();
+      push(routes.HOME);
+      setIsLoginModal(true);
     } catch (e) {
-      ErrorHandler.handle(e, { componentName: "SignUpModal__onSubmit" });
+      ErrorHandler.handle(e, { componentName: "ResetPasswordModal__onSubmit" });
     }
   };
 
   const handleCloseModal = () => {
-    setIsSignUpModal(false);
+    setIsResetPasswordModal(false);
     form.reset();
   };
 
   return (
-    <ModalCard handleCloseModal={handleCloseModal} title="signUp">
+    <ModalCard handleCloseModal={handleCloseModal} title="resetPassword">
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -81,19 +91,10 @@ const SignUpModal: React.FC<ISignUpModal> = ({
           <div className="flex flex-col gap-y-[8px]">
             <FloatingField
               form={form}
-              type="email"
-              name="email"
-              labelText="email"
-              placeholder="email"
-              IconComponent={Mail}
-              isRequestError={!!error}
-            />
-            <FloatingField
-              form={form}
               type="password"
-              name="password"
+              name="newPassword"
               placeholder="password"
-              labelText="password"
+              labelText="newPassword"
               IconComponent={Lock}
               isRequestError={!!error}
             />
@@ -107,6 +108,7 @@ const SignUpModal: React.FC<ISignUpModal> = ({
               isRequestError={!!error}
             />
           </div>
+          <ErrorMessageField form={form} name="token" />
           <ApolloErrorFrame error={error} />
           <Button
             variant="none"
@@ -115,16 +117,12 @@ const SignUpModal: React.FC<ISignUpModal> = ({
             disabled={loading}
             className="auth-btn-gradient text-white"
           >
-            {!loading ? tTtl("signUp") : tTtl("loading")}
+            {!loading ? tTtl("confirm") : tTtl("loading")}
           </Button>
         </form>
       </FormProvider>
-      <div className="text-with-separators lowercase my-4">{tTtl("or")}</div>
-      <GoogleAuthButton disabled={loading} className="w-full">
-        {tTtl("signUpWithGoogle")}
-      </GoogleAuthButton>
     </ModalCard>
   );
 };
 
-export default SignUpModal;
+export default ResetPasswordModal;

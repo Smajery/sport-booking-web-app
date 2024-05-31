@@ -52,6 +52,10 @@
       "dashboardSchedule": {
         "title": "Schedule",
         "description": "Schedule page"
+      },
+      "resetPassword": {
+        "title": "Reset password",
+        "description": "Reset password page"
       }
     }
   },
@@ -119,14 +123,19 @@
       "endTime": "End Time",
       "pricePerSlot": "Price per slot (30 min)",
       "cityDistrict": "City/District",
-      "location": "Location"
+      "location": "Location",
+      "facilityInventory": "Inventory",
+      "inventoryName": "Inventory list",
+      "inventoryPrice": "Inventory Price",
+      "oldPassword": "Old password",
+      "newPassword": "New password"
     },
     "placeholders": {
       "search": "Search...",
       "email": "example@gmail.com",
       "password": "At least 6 characters",
       "fullName": "Full name...",
-      "orgPhoneNumber": "Organization's phone number...",
+      "orgPhoneNumber": "+380...",
       "organizationName": "Organization name...",
       "facilityName": "Facility name...",
       "facilityAddress": "Facility address...",
@@ -136,22 +145,28 @@
       "loading": "Loading...",
       "somethingWentWrong": "Something went wrong",
       "selectCityFirst": "Select city first",
-      "selectDistrictSecond": "Then select district"
+      "selectDistrictSecond": "Then select district",
+      "inventoryName": "List...",
+      "inventoryPrice": "Price..."
     },
     "titles": {
       "cancel": "Cancel",
       "deleteSchedule": "Delete schedule",
+      "inStock": "In stock",
       "updateSchedule": "Update schedule",
+      "resetPassword": "Reset password",
       "editSchedule": "Edit schedule",
       "deleteScheduleCannotBeUndone": "This action cannot be undone. This will permanently delete your schedule and remove its data from our servers.",
       "allSlots": "All slots",
       "selectedSlots": "Selected slots",
       "close": "Close",
       "favorites": "Favorites",
+      "confirm": "Confirm",
       "preview": "Preview",
       "working": "Working",
       "thirtyMinutes": "30 min",
       "yourRate": "Your rate",
+      "forgotPassword": "Forgot password",
       "oneHour": "1 hour",
       "oneHourThirtyMinutes": "1 hour 30 min",
       "twoHours": "2 hours",
@@ -246,7 +261,9 @@
       "Франківський": "Frankivskyi",
       "Залізничний": "Zaliznychnyi",
       "Галицький": "Halytskyi",
-      "Холодногірський": "Kholodnohirskyi"
+      "Холодногірський": "Kholodnohirskyi",
+      "Хаджибейський": "Khadzhibeyskyi",
+      "Пересипський": "Peresypsky"
     },
     "selects": {
       "price_asc": "Price ascending",
@@ -294,6 +311,8 @@
       "Залізничний": "Zaliznychnyi",
       "Галицький": "Halytskyi",
       "Холодногірський": "Kholodnohirskyi",
+      "Хаджибейський": "Khadzhibeyskyi",
+      "Пересипський": "Peresypsky",
       "mon": "Mon",
       "tue": "Tue",
       "wed": "Wed",
